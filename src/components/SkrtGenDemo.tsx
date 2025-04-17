@@ -103,13 +103,13 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
         )}
       </Button>
 
-      {imageUrl && (
-        <Card className="overflow-hidden">
-          <CardContent className="p-0">
+      <Card className="overflow-hidden">
+        <CardContent className="p-0">
+          {imageUrl ? (
             <img 
               src={imageUrl} 
               alt="Сгенерированное изображение" 
-              className="w-full h-auto"
+              className="w-full h-auto aspect-video object-cover"
               onError={() => {
                 toast({
                   title: "Ошибка",
@@ -118,9 +118,15 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
                 });
               }}
             />
-          </CardContent>
-        </Card>
-      )}
+          ) : (
+            <img 
+              src="https://h.uguu.se/sWQRLidf.png" 
+              alt="Placeholder" 
+              className="w-full h-auto aspect-video object-cover" 
+            />
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };

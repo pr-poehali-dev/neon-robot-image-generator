@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ApiLimitsInfo from "@/components/ApiLimitsInfo";
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
-import { Zap } from "lucide-react";
+import { Zap, Sparkles, ShieldCheck, Code } from "lucide-react";
 
 const Index = () => {
   const typescriptCode = `// Пример использования SKRT.GEN в TypeScript
@@ -41,7 +41,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
     <div className="container mx-auto py-8 px-4 max-w-6xl">
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-bold mb-4 lightning-title">
-          <Zap className="h-10 w-10 text-yellow-500" />
+          <Zap className="h-10 w-10 text-yellow-400" />
           <span>SKRT.GEN</span>
         </h1>
         <p className="text-xl text-muted-foreground">
@@ -49,17 +49,20 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="md:col-span-2">
           <SkrtGenDemo />
         </div>
-        <div className="space-y-4">
+        <div>
           <ApiLimitsInfo />
         </div>
       </div>
 
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Интеграция в ваш проект</h2>
+        <h2 className="text-2xl font-bold mb-4 flex items-center">
+          <Code className="mr-2 h-6 w-6 text-primary" />
+          Интеграция в ваш проект
+        </h2>
         <p className="mb-4 text-muted-foreground">
           Для доступа к API требуется секретный ключ X-Auth, который необходимо передать в заголовке запроса.
           Используйте приведенные ниже примеры для интеграции SKRT.GEN в ваш проект.
@@ -87,13 +90,28 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
         </Tabs>
       </div>
 
-      <div className="bg-primary/5 p-6 rounded-lg">
-        <h2 className="text-2xl font-bold mb-4">Рекомендации по использованию</h2>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Всегда обрабатывайте ошибки при превышении лимита (код 429)</li>
-          <li>При получении кода 429 рекомендуется ждать минимум 5 секунд перед повторной попыткой</li>
-          <li>Используйте очередь запросов при необходимости генерации большого количества изображений</li>
-          <li>Не хардкодьте ключ аутентификации в клиентском коде, используйте серверный прокси</li>
+      <div className="bg-primary/10 p-6 rounded-lg">
+        <h2 className="text-2xl font-bold mb-4 flex items-center">
+          <Sparkles className="mr-2 h-6 w-6 text-primary" />
+          Рекомендации по использованию
+        </h2>
+        <ul className="space-y-3">
+          <li className="flex items-start">
+            <ShieldCheck className="h-5 w-5 mr-2 mt-0.5 text-primary/80" />
+            <span>Всегда обрабатывайте ошибки при превышении лимита (код 429)</span>
+          </li>
+          <li className="flex items-start">
+            <ShieldCheck className="h-5 w-5 mr-2 mt-0.5 text-primary/80" />
+            <span>При получении кода 429 рекомендуется ждать минимум 5 секунд перед повторной попыткой</span>
+          </li>
+          <li className="flex items-start">
+            <ShieldCheck className="h-5 w-5 mr-2 mt-0.5 text-primary/80" />
+            <span>Используйте очередь запросов при необходимости генерации большого количества изображений</span>
+          </li>
+          <li className="flex items-start">
+            <ShieldCheck className="h-5 w-5 mr-2 mt-0.5 text-primary/80" />
+            <span>Не хардкодьте ключ аутентификации в клиентском коде, используйте серверный прокси</span>
+          </li>
         </ul>
       </div>
     </div>
