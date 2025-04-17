@@ -2,12 +2,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ApiFeatures from "@/components/ApiFeatures";
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
-import { Sparkles, ShieldCheck, Code } from "lucide-react";
+import { Zap, Sparkles, ShieldCheck, Code } from "lucide-react";
 
 const Index = () => {
-  const typescriptCode = `// Пример использования SKRT.GEN в TypeScript
+  const typescriptCode = `// Пример использования SKRT.POEHALI в TypeScript
 
-interface SkrtGenResponse {
+interface SkrtPoehaliResponse {
   imageURL: string;
 }
 
@@ -28,7 +28,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
     throw new Error(\`Error: \${response.status}\`);
   }
 
-  const data: SkrtGenResponse = await response.json();
+  const data: SkrtPoehaliResponse = await response.json();
   return data.imageURL;
 }`;
 
@@ -41,20 +41,20 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
     <div className="container mx-auto py-12 px-4 max-w-6xl">
       <div className="mb-10 text-center">
         <h1 className="text-5xl font-bold mb-4 lightning-title flex items-center justify-center">
-          <div className="flex items-center h-12">
+          <div className="flex items-center">
+            <span className="mr-2">POEHALI</span>
             <img 
               src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg" 
               alt="Poehali" 
-              className="h-12 mr-1"
-            />
-            <span className="text-yellow-400 mx-1">&</span>
-            <img 
-              src="https://sokratic.ru/favicon.ico" 
-              alt="Sokratic" 
-              className="h-10 ml-1"
+              className="h-10"
             />
           </div>
-          <span className="ml-2">SKRT.GEN</span>
+          <img 
+            src="https://sokratic.ru/favicon.ico" 
+            alt="Sokratic" 
+            className="h-8 mx-3"
+          />
+          <span>SKRT.POEHALI</span>
         </h1>
         <p className="text-xl text-muted-foreground">
           интерактивная инструкция для инженеров sokratic.ru
@@ -100,7 +100,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
 
       <div className="rounded-xl bg-[#151925] p-8 border border-[#252535]">
         <h2 className="text-2xl font-medium mb-6 flex items-center gap-2">
-          <Sparkles className="h-6 w-6 text-primary" />
+          <Zap className="h-6 w-6 text-yellow-400" />
           Рекомендации по использованию
         </h2>
         <ul className="grid gap-4 md:grid-cols-3">
