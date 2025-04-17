@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ApiLimitsInfo from "@/components/ApiLimitsInfo";
+import ApiFeatures from "@/components/ApiFeatures";
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
 import { Zap, Sparkles, ShieldCheck, Code } from "lucide-react";
@@ -38,10 +38,10 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   -d '{"prompt": "neon robot test"}'`;
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-6xl">
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-4 lightning-title">
-          <Zap className="h-10 w-10 text-yellow-400" />
+    <div className="container mx-auto py-12 px-4 max-w-6xl">
+      <div className="mb-10 text-center">
+        <h1 className="text-5xl font-bold mb-4 lightning-title">
+          <Zap className="h-12 w-12 text-yellow-400" />
           <span>SKRT.GEN</span>
         </h1>
         <p className="text-xl text-muted-foreground">
@@ -49,64 +49,74 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="md:col-span-2">
+      <div className="flex flex-col xl:flex-row gap-8 mb-16">
+        <div className="flex-1">
           <SkrtGenDemo />
         </div>
-        <div>
-          <ApiLimitsInfo />
+        <div className="xl:w-[400px]">
+          <ApiFeatures />
         </div>
       </div>
 
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4 flex items-center">
-          <Code className="mr-2 h-6 w-6 text-primary" />
-          Интеграция в ваш проект
-        </h2>
-        <p className="mb-4 text-muted-foreground">
-          Для доступа к API требуется секретный ключ X-Auth, который необходимо передать в заголовке запроса.
-          Используйте приведенные ниже примеры для интеграции SKRT.GEN в ваш проект.
-        </p>
+      <div className="mb-12 rounded-xl overflow-hidden border border-[#252535]">
+        <div className="bg-[#151520] p-8">
+          <h2 className="text-2xl font-medium mb-4 flex items-center gap-2">
+            <Code className="h-6 w-6 text-primary" />
+            Интеграция в ваш проект
+          </h2>
+          <p className="mb-6 text-muted-foreground">
+            Для доступа к API требуется секретный ключ X-Auth, который необходимо передать в заголовке запроса.
+          </p>
 
-        <Tabs defaultValue="typescript" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="typescript">TypeScript</TabsTrigger>
-            <TabsTrigger value="curl">cURL</TabsTrigger>
-          </TabsList>
-          <TabsContent value="typescript">
-            <CodeSnippet 
-              code={typescriptCode} 
-              language="typescript" 
-              title="TypeScript"
-            />
-          </TabsContent>
-          <TabsContent value="curl">
-            <CodeSnippet 
-              code={curlCode} 
-              language="bash" 
-              title="cURL"
-            />
-          </TabsContent>
-        </Tabs>
+          <Tabs defaultValue="typescript" className="w-full">
+            <TabsList className="mb-4">
+              <TabsTrigger value="typescript" className="px-6">TypeScript</TabsTrigger>
+              <TabsTrigger value="curl" className="px-6">cURL</TabsTrigger>
+            </TabsList>
+            <TabsContent value="typescript">
+              <CodeSnippet 
+                code={typescriptCode} 
+                language="typescript" 
+                title="TypeScript"
+              />
+            </TabsContent>
+            <TabsContent value="curl">
+              <CodeSnippet 
+                code={curlCode} 
+                language="bash" 
+                title="cURL"
+              />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
 
-      <div className="bg-primary/10 p-6 rounded-lg">
-        <h2 className="text-2xl font-bold mb-4 flex items-center">
-          <Sparkles className="mr-2 h-6 w-6 text-primary" />
+      <div className="rounded-xl bg-[#151925] p-8 border border-[#252535]">
+        <h2 className="text-2xl font-medium mb-6 flex items-center gap-2">
+          <Sparkles className="h-6 w-6 text-primary" />
           Рекомендации по использованию
         </h2>
-        <ul className="space-y-3">
-          <li className="flex items-start">
-            <ShieldCheck className="h-5 w-5 mr-2 mt-0.5 text-primary/80" />
-            <span>Всегда обрабатывайте ошибки при превышении лимита (код 429)</span>
+        <ul className="grid gap-4 md:grid-cols-3">
+          <li className="p-4 bg-[#101520] rounded-xl border border-[#252535]">
+            <div className="flex items-center gap-3 mb-2">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              <span className="font-medium">Обработка ошибок</span>
+            </div>
+            <p className="text-sm text-muted-foreground">Всегда обрабатывайте ошибки при превышении лимита (код 429)</p>
           </li>
-          <li className="flex items-start">
-            <ShieldCheck className="h-5 w-5 mr-2 mt-0.5 text-primary/80" />
-            <span>При получении кода 429 рекомендуется ждать минимум 5 секунд перед повторной попыткой</span>
+          <li className="p-4 bg-[#101520] rounded-xl border border-[#252535]">
+            <div className="flex items-center gap-3 mb-2">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              <span className="font-medium">Повторные запросы</span>
+            </div>
+            <p className="text-sm text-muted-foreground">При коде 429 ждите минимум 5 секунд перед повторной попыткой</p>
           </li>
-          <li className="flex items-start">
-            <ShieldCheck className="h-5 w-5 mr-2 mt-0.5 text-primary/80" />
-            <span>Кайфуйте от самой выгодной цены на картинки</span>
+          <li className="p-4 bg-[#101520] rounded-xl border border-[#252535]">
+            <div className="flex items-center gap-3 mb-2">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              <span className="font-medium">Выгодная цена</span>
+            </div>
+            <p className="text-sm text-muted-foreground">Кайфуйте от самой выгодной цены на картинки</p>
           </li>
         </ul>
       </div>

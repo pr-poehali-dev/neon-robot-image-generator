@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -71,21 +70,25 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
   };
 
   return (
-    <div className="w-full space-y-4">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="sm:col-span-2">
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4">
+        <div>
+          <label className="text-sm font-medium mb-2 block text-muted-foreground">Запрос для генерации</label>
           <Input
-            placeholder="Введите запрос для генерации (например: neon robot test)"
+            placeholder="Например: neon robot test"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
+            className="h-12"
           />
         </div>
         <div>
+          <label className="text-sm font-medium mb-2 block text-muted-foreground">X-Auth секрет</label>
           <Input
-            placeholder="Введите X-Auth секрет"
+            placeholder="Введите ключ API"
             type="password"
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
+            className="h-12"
           />
         </div>
       </div>
@@ -93,11 +96,12 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
       <Button 
         onClick={generateImage} 
         disabled={isLoading}
-        className="w-full"
+        className="w-full h-12 text-base"
+        size="lg"
       >
         {isLoading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
             Генерирую...
           </>
         ) : (
@@ -105,30 +109,28 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
         )}
       </Button>
 
-      <Card className="overflow-hidden">
-        <CardContent className="p-0">
-          {imageUrl ? (
-            <img 
-              src={imageUrl} 
-              alt="Сгенерированное изображение" 
-              className="w-full h-auto aspect-square object-cover"
-              onError={() => {
-                toast({
-                  title: "Ошибка",
-                  description: "Не удалось загрузить изображение",
-                  variant: "destructive",
-                });
-              }}
-            />
-          ) : (
-            <img 
-              src="https://h.uguu.se/sWQRLidf.png" 
-              alt="Placeholder" 
-              className="w-full h-auto aspect-square object-cover" 
-            />
-          )}
-        </CardContent>
-      </Card>
+      <div className="aspect-square w-full rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm border border-[#252535]">
+        {imageUrl ? (
+          <img 
+            src={imageUrl} 
+            alt="Сгенерированное изображение" 
+            className="w-full h-full object-cover"
+            onError={() => {
+              toast({
+                title: "Ошибка",
+                description: "Не удалось загрузить изображение",
+                variant: "destructive",
+              });
+            }}
+          />
+        ) : (
+          <img 
+            src="https://h.uguu.se/sWQRLidf.png" 
+            alt="Placeholder" 
+            className="w-full h-full object-cover" 
+          />
+        )}
+      </div>
     </div>
   );
 };
