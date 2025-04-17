@@ -94,36 +94,6 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
           </Tabs>
         </div>
       </div>
-
-      <div className="rounded-xl bg-[#151925] p-8 border border-[#252535]">
-        <h2 className="text-2xl font-medium mb-6 flex items-center gap-2">
-          <div className="h-6 w-6 text-yellow-400 flex items-center justify-center">🚀</div>
-          Рекомендации по использованию
-        </h2>
-        <ul className="grid gap-4 md:grid-cols-3">
-          <li className="p-4 bg-[#101520] rounded-xl border border-[#252535]">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="h-5 w-5 text-yellow-400 flex items-center justify-center">🚀</div>
-              <span className="font-medium">Скорость</span>
-            </div>
-            <p className="text-sm text-muted-foreground">72 img / min</p>
-          </li>
-          <li className="p-4 bg-[#101520] rounded-xl border border-[#252535]">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="h-5 w-5 text-primary flex items-center justify-center">🧠</div>
-              <span className="font-medium">Повторные запросы</span>
-            </div>
-            <p className="text-sm text-muted-foreground">При коде 429 ждите минимум 5 секунд перед повторной попыткой</p>
-          </li>
-          <li className="p-4 bg-[#101520] rounded-xl border border-[#252535]">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="h-5 w-5 text-primary flex items-center justify-center">🧠</div>
-              <span className="font-medium">Выгодная цена</span>
-            </div>
-            <p className="text-sm text-muted-foreground">Кайфуйте от самой выгодной цены на картинки</p>
-          </li>
-        </ul>
-      </div>
     </div>
   );
 };

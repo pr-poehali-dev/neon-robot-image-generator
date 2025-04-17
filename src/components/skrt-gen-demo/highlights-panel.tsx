@@ -1,5 +1,4 @@
 import HighlightItem from "./highlight-item";
-import UsageRecommendations from "./usage-recommendations";
 
 const HighlightsPanel = () => {
   return (
@@ -26,8 +25,6 @@ const HighlightsPanel = () => {
           description="При превышении лимита будет выдан код 429. Подождите 5 секунд или обратитесь в FallBack."
         />
       </div>
-      
-      <UsageRecommendations />
     </div>
   );
 };
