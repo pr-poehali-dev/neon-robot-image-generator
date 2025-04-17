@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Clock, Zap, AlertCircle } from "lucide-react";
+import { Loader2, Clock, Zap, AlertCircle, Dices } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import {
   Dialog,
@@ -20,8 +20,32 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const generateImage = async () => {
-    if (!prompt || !apiKey) {
+  const generateRandomPrompt = () => {
+    const nouns = [
+      "astronaut", "cat", "robot", "dragon", "wizard", "landscape",
+      "cityscape", "forest", "ocean", "portrait",
+    ];
+    const styles = [
+      "neon", "low‑poly", "oil painting", "watercolor", "photorealistic",
+    ];
+    
+    const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+    const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+    const randomLetters = Array(4).fill(0).map(() => 
+      String.fromCharCode(97 + Math.floor(Math.random() * 26))
+    ).join("");
+    
+    const randomPrompt = `${randomStyle} ${randomNoun} ${randomLetters}`;
+    setPrompt(randomPrompt);
+    
+    // Автоматически запустить генерацию с новым случайным запросом
+    generateImage(randomPrompt);
+  };
+
+  const generateImage = async (customPrompt?: string) => {
+    const currentPrompt = customPrompt || prompt;
+    
+    if (!currentPrompt || !apiKey) {
       toast({
         title: "Ошибка",
         description: "Введите запрос и API ключ",
@@ -40,7 +64,7 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
           "Content-Type": "application/json",
           "X-Auth": apiKey,
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt: currentPrompt }),
       });
 
       if (!response.ok) {
@@ -161,12 +185,23 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="md:col-span-2">
             <label className="text-sm font-medium mb-2 block text-muted-foreground">Запрос для генерации</label>
-            <Input
-              placeholder="Например: neon robot test"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              className="h-12"
-            />
+            <div className="flex gap-2">
+              <Input
+                placeholder="Например: neon robot test"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                className="h-12 flex-1"
+              />
+              <Button 
+                onClick={generateRandomPrompt}
+                disabled={isLoading}
+                className="h-12 aspect-square"
+                variant="outline"
+                title="Сгенерировать случайный запрос"
+              >
+                <Dices className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
           <div>
             <label className="text-sm font-medium mb-2 block text-muted-foreground">X-Auth секрет</label>
@@ -182,7 +217,7 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
         
         <div className="mt-4">
           <Button 
-            onClick={generateImage} 
+            onClick={() => generateImage()}
             disabled={isLoading}
             className="w-full h-12 text-base"
             size="lg"
