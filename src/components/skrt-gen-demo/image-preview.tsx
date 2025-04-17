@@ -1,0 +1,42 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { ImagePreviewProps } from "./types";
+
+const ImagePreview = ({ imageUrl, onImageError }: ImagePreviewProps) => {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <div className="aspect-square w-full rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm border border-[#252535] cursor-pointer transition-transform hover:scale-[1.02]">
+          {imageUrl ? (
+            <img 
+              src={imageUrl} 
+              alt="Сгенерированное изображение" 
+              className="w-full h-full object-cover"
+              onError={onImageError}
+            />
+          ) : (
+            <img 
+              src="https://h.uguu.se/sWQRLidf.png" 
+              alt="Placeholder" 
+              className="w-full h-full object-cover" 
+            />
+          )}
+        </div>
+      </DialogTrigger>
+      <DialogContent className="max-w-3xl p-1 bg-transparent border-0">
+        {imageUrl && (
+          <img 
+            src={imageUrl} 
+            alt="Сгенерированное изображение" 
+            className="w-full h-auto object-contain max-h-[80vh] rounded-lg" 
+          />
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default ImagePreview;
