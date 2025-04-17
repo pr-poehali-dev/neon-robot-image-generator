@@ -12,6 +12,7 @@ export interface HighlightItemProps {
 export interface ImagePreviewProps {
   imageUrl: string | null;
   onImageError: () => void;
+  isLoading: boolean;
 }
 
 export interface GeneratorFormProps {

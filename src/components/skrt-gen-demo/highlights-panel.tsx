@@ -1,4 +1,3 @@
-import { Clock, AlertCircle } from "lucide-react";
 import HighlightItem from "./highlight-item";
 
 const HighlightsPanel = () => {
@@ -8,25 +7,19 @@ const HighlightsPanel = () => {
       
       <div className="space-y-3">
         <HighlightItem 
-          icon={<Clock className="h-5 w-5 text-yellow-400" />}
+          icon={<span className="text-2xl">⏱️</span>}
           title="Холодный раундтрип"
           value="2.5 секунды"
         />
         
         <HighlightItem 
-          icon={
-            <div className="flex items-center justify-center h-5 w-12">
-              <span className="text-2xl">👨‍🚀</span>
-              <span className="text-yellow-400 mx-0.5">&</span>
-              <span className="text-2xl">💻</span>
-            </div>
-          }
+          icon={<span className="text-2xl">🚀</span>}
           title="Скорость"
           value="72 картинки"
         />
         
         <HighlightItem 
-          icon={<AlertCircle className="h-5 w-5 text-yellow-400" />}
+          icon={<span className="text-2xl">⚠️</span>}
           title="Рейтлимит"
           value="30 картинок"
           description="При превышении лимита будет выдан код 429. Подождите 5 секунд или обратитесь в FallBack."

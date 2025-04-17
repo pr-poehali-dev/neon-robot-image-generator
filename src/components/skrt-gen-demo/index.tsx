@@ -71,7 +71,8 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
         <div className="md:w-[300px] lg:w-[360px] xl:w-[400px] shrink-0">
           <ImagePreview 
             imageUrl={imageUrl} 
-            onImageError={handleImageError} 
+            onImageError={handleImageError}
+            isLoading={isLoading} 
           />
         </div>
         

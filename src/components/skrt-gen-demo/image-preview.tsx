@@ -3,14 +3,19 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Loader2 } from "lucide-react";
 import { ImagePreviewProps } from "./types";
 
-const ImagePreview = ({ imageUrl, onImageError }: ImagePreviewProps) => {
+const ImagePreview = ({ imageUrl, onImageError, isLoading }: ImagePreviewProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="aspect-square w-full rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm border border-[#252535] cursor-pointer transition-transform hover:scale-[1.02]">
-          {imageUrl ? (
+        <div className="aspect-square w-full rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm border border-[#252535] cursor-pointer transition-transform hover:scale-[1.02] flex items-center justify-center">
+          {isLoading ? (
+            <div className="flex items-center justify-center h-full w-full">
+              <Loader2 className="h-12 w-12 animate-spin text-white/70" />
+            </div>
+          ) : imageUrl ? (
             <img 
               src={imageUrl} 
               alt="Сгенерированное изображение" 
