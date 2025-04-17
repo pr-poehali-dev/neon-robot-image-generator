@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
+import { Loader2, Clock, Zap, AlertCircle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 interface SkrtGenDemoProps {
@@ -99,24 +99,39 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
         
         <div className="flex-1 flex flex-col">
           <div className="p-5 rounded-xl bg-[#151520] backdrop-blur-sm border border-[#252535] flex-1">
-            <div className="text-lg font-medium mb-4">Результат</div>
-            <div className="rounded-lg bg-[#0d0d14] p-4 mb-4 h-[70px] overflow-auto">
-              <p className="text-sm font-mono text-muted-foreground break-all">
-                {imageUrl ? imageUrl : "Здесь будет отображен URL сгенерированного изображения"}
-              </p>
-            </div>
+            <div className="text-lg font-medium mb-4">Хайлайты</div>
             
-            <div className="text-lg font-medium mb-2">Информация о запросе</div>
             <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Запрос:</span>
-                <span className="text-sm font-medium">{prompt}</span>
+              <div className="flex items-center p-3 rounded-lg bg-[#0d0d14] border border-[#252535]">
+                <Clock className="h-5 w-5 mr-3 text-yellow-400" />
+                <div className="flex-1">
+                  <div className="text-sm font-medium">Время генерации</div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xl font-bold">2.5 секунды</span>
+                    <span className="text-xs text-muted-foreground">на одно изображение</span>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Статус:</span>
-                <span className="text-sm font-medium">
-                  {isLoading ? "Генерация..." : (imageUrl ? "Готово" : "Ожидание")}
-                </span>
+              
+              <div className="flex items-center p-3 rounded-lg bg-[#0d0d14] border border-[#252535]">
+                <Zap className="h-5 w-5 mr-3 text-yellow-400" />
+                <div className="flex-1">
+                  <div className="text-sm font-medium">Максимальная скорость</div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xl font-bold">72 картинки</span>
+                    <span className="text-xs text-muted-foreground">в минуту</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex items-center p-3 rounded-lg bg-[#0d0d14] border border-[#252535]">
+                <AlertCircle className="h-5 w-5 mr-3 text-yellow-400" />
+                <div className="flex-1">
+                  <div className="text-sm font-medium">Статус</div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xl font-bold">{isLoading ? "Генерация..." : (imageUrl ? "Готово" : "Ожидание")}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
