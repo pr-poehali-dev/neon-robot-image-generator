@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ApiLimitsInfo from "@/components/ApiLimitsInfo";
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
+import { Zap } from "lucide-react";
 
 const Index = () => {
   const typescriptCode = `// Пример использования SKRT.GEN в TypeScript
@@ -39,7 +40,10 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return (
     <div className="container mx-auto py-8 px-4 max-w-6xl">
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-4">SKRT.GEN</h1>
+        <h1 className="text-4xl font-bold mb-4 lightning-title">
+          <Zap className="h-10 w-10 text-yellow-500" />
+          <span>SKRT.GEN</span>
+        </h1>
         <p className="text-xl text-muted-foreground">
           Сервис для генерации изображений за 2.5 секунды
         </p>
