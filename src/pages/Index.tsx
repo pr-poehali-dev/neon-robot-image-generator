@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ApiFeatures from "@/components/ApiFeatures";
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
-import { Zap, Sparkles, ShieldCheck, Code } from "lucide-react";
+import { Sparkles, ShieldCheck, Code } from "lucide-react";
 
 const Index = () => {
   const typescriptCode = `// Пример использования SKRT.GEN в TypeScript
@@ -40,9 +40,21 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return (
     <div className="container mx-auto py-12 px-4 max-w-6xl">
       <div className="mb-10 text-center">
-        <h1 className="text-5xl font-bold mb-4 lightning-title">
-          <Zap className="h-12 w-12 text-yellow-400" />
-          <span>SKRT.GEN</span>
+        <h1 className="text-5xl font-bold mb-4 lightning-title flex items-center justify-center">
+          <div className="flex items-center h-12">
+            <img 
+              src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg" 
+              alt="Poehali" 
+              className="h-12 mr-1"
+            />
+            <span className="text-yellow-400 mx-1">&</span>
+            <img 
+              src="https://sokratic.ru/favicon.ico" 
+              alt="Sokratic" 
+              className="h-10 ml-1"
+            />
+          </div>
+          <span className="ml-2">SKRT.GEN</span>
         </h1>
         <p className="text-xl text-muted-foreground">
           интерактивная инструкция для инженеров sokratic.ru
