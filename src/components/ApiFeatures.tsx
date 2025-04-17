@@ -17,12 +17,12 @@ const ApiFeatures = () => {
         </div>
         
         <div className="flex items-center gap-4">
-          <div className="bg-primary/20 p-3 rounded-full">
-            <Zap className="h-5 w-5 text-primary" />
+          <div className="bg-yellow-400/20 p-3 rounded-full">
+            <Zap className="h-5 w-5 text-yellow-400" />
           </div>
           <div>
-            <div className="text-sm font-normal text-muted-foreground">Максимальная скорость</div>
-            <div className="text-2xl font-medium tracking-tight">72 картинки <span className="text-sm font-normal text-muted-foreground">в минуту</span></div>
+            <div className="text-sm font-normal text-muted-foreground">Скорость</div>
+            <div className="text-2xl font-medium tracking-tight">72 img / min</div>
           </div>
         </div>
         
