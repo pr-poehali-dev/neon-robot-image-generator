@@ -49,13 +49,8 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
         </p>
       </div>
 
-      <div className="flex flex-col xl:flex-row gap-8 mb-16">
-        <div className="flex-1">
-          <SkrtGenDemo />
-        </div>
-        <div className="xl:w-[400px]">
-          <ApiFeatures />
-        </div>
+      <div className="mb-16">
+        <SkrtGenDemo />
       </div>
 
       <div className="mb-12 rounded-xl overflow-hidden border border-[#252535]">

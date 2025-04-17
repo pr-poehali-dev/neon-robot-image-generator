@@ -71,65 +71,98 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4">
-        <div>
-          <label className="text-sm font-medium mb-2 block text-muted-foreground">Запрос для генерации</label>
-          <Input
-            placeholder="Например: neon robot test"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            className="h-12"
-          />
+      <div className="flex flex-col md:flex-row gap-6">
+        <div className="md:w-[300px] lg:w-[360px] xl:w-[400px] shrink-0">
+          <div className="aspect-square w-full rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm border border-[#252535]">
+            {imageUrl ? (
+              <img 
+                src={imageUrl} 
+                alt="Сгенерированное изображение" 
+                className="w-full h-full object-cover"
+                onError={() => {
+                  toast({
+                    title: "Ошибка",
+                    description: "Не удалось загрузить изображение",
+                    variant: "destructive",
+                  });
+                }}
+              />
+            ) : (
+              <img 
+                src="https://h.uguu.se/sWQRLidf.png" 
+                alt="Placeholder" 
+                className="w-full h-full object-cover" 
+              />
+            )}
+          </div>
         </div>
-        <div>
-          <label className="text-sm font-medium mb-2 block text-muted-foreground">X-Auth секрет</label>
-          <Input
-            placeholder="Введите ключ API"
-            type="password"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            className="h-12"
-          />
+        
+        <div className="flex-1 flex flex-col">
+          <div className="p-5 rounded-xl bg-[#151520] backdrop-blur-sm border border-[#252535] flex-1">
+            <div className="text-lg font-medium mb-4">Результат</div>
+            <div className="rounded-lg bg-[#0d0d14] p-4 mb-4 h-[70px] overflow-auto">
+              <p className="text-sm font-mono text-muted-foreground break-all">
+                {imageUrl ? imageUrl : "Здесь будет отображен URL сгенерированного изображения"}
+              </p>
+            </div>
+            
+            <div className="text-lg font-medium mb-2">Информация о запросе</div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Запрос:</span>
+                <span className="text-sm font-medium">{prompt}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Статус:</span>
+                <span className="text-sm font-medium">
+                  {isLoading ? "Генерация..." : (imageUrl ? "Готово" : "Ожидание")}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <Button 
-        onClick={generateImage} 
-        disabled={isLoading}
-        className="w-full h-12 text-base"
-        size="lg"
-      >
-        {isLoading ? (
-          <>
-            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-            Генерирую...
-          </>
-        ) : (
-          "Сгенерировать изображение"
-        )}
-      </Button>
-
-      <div className="aspect-square w-full rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm border border-[#252535]">
-        {imageUrl ? (
-          <img 
-            src={imageUrl} 
-            alt="Сгенерированное изображение" 
-            className="w-full h-full object-cover"
-            onError={() => {
-              toast({
-                title: "Ошибка",
-                description: "Не удалось загрузить изображение",
-                variant: "destructive",
-              });
-            }}
-          />
-        ) : (
-          <img 
-            src="https://h.uguu.se/sWQRLidf.png" 
-            alt="Placeholder" 
-            className="w-full h-full object-cover" 
-          />
-        )}
+      
+      <div className="p-5 rounded-xl bg-[#151520] backdrop-blur-sm border border-[#252535]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="md:col-span-2">
+            <label className="text-sm font-medium mb-2 block text-muted-foreground">Запрос для генерации</label>
+            <Input
+              placeholder="Например: neon robot test"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              className="h-12"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium mb-2 block text-muted-foreground">X-Auth секрет</label>
+            <Input
+              placeholder="Введите ключ API"
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              className="h-12"
+            />
+          </div>
+        </div>
+        
+        <div className="mt-4">
+          <Button 
+            onClick={generateImage} 
+            disabled={isLoading}
+            className="w-full h-12 text-base"
+            size="lg"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Генерирую...
+              </>
+            ) : (
+              "Сгенерировать изображение"
+            )}
+          </Button>
+        </div>
       </div>
     </div>
   );
