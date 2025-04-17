@@ -3,6 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, Clock, Zap, AlertCircle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface SkrtGenDemoProps {
   onImageGenerated?: (imageUrl: string) => void;
@@ -73,28 +78,41 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row gap-6">
         <div className="md:w-[300px] lg:w-[360px] xl:w-[400px] shrink-0">
-          <div className="aspect-square w-full rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm border border-[#252535]">
-            {imageUrl ? (
-              <img 
-                src={imageUrl} 
-                alt="Сгенерированное изображение" 
-                className="w-full h-full object-cover"
-                onError={() => {
-                  toast({
-                    title: "Ошибка",
-                    description: "Не удалось загрузить изображение",
-                    variant: "destructive",
-                  });
-                }}
-              />
-            ) : (
-              <img 
-                src="https://h.uguu.se/sWQRLidf.png" 
-                alt="Placeholder" 
-                className="w-full h-full object-cover" 
-              />
-            )}
-          </div>
+          <Dialog>
+            <DialogTrigger asChild>
+              <div className="aspect-square w-full rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm border border-[#252535] cursor-pointer transition-transform hover:scale-[1.02]">
+                {imageUrl ? (
+                  <img 
+                    src={imageUrl} 
+                    alt="Сгенерированное изображение" 
+                    className="w-full h-full object-cover"
+                    onError={() => {
+                      toast({
+                        title: "Ошибка",
+                        description: "Не удалось загрузить изображение",
+                        variant: "destructive",
+                      });
+                    }}
+                  />
+                ) : (
+                  <img 
+                    src="https://h.uguu.se/sWQRLidf.png" 
+                    alt="Placeholder" 
+                    className="w-full h-full object-cover" 
+                  />
+                )}
+              </div>
+            </DialogTrigger>
+            <DialogContent className="max-w-3xl p-1 bg-transparent border-0">
+              {imageUrl && (
+                <img 
+                  src={imageUrl} 
+                  alt="Сгенерированное изображение" 
+                  className="w-full h-auto object-contain max-h-[80vh] rounded-lg" 
+                />
+              )}
+            </DialogContent>
+          </Dialog>
         </div>
         
         <div className="flex-1 flex flex-col">
@@ -105,10 +123,9 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
               <div className="flex items-center p-3 rounded-lg bg-[#0d0d14] border border-[#252535]">
                 <Clock className="h-5 w-5 mr-3 text-yellow-400" />
                 <div className="flex-1">
-                  <div className="text-sm font-medium">Время генерации</div>
+                  <div className="text-sm font-medium">Холодный раундтрип</div>
                   <div className="flex items-baseline gap-1">
                     <span className="text-xl font-bold">2.5 секунды</span>
-                    <span className="text-xs text-muted-foreground">на одно изображение</span>
                   </div>
                 </div>
               </div>
@@ -116,10 +133,9 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
               <div className="flex items-center p-3 rounded-lg bg-[#0d0d14] border border-[#252535]">
                 <Zap className="h-5 w-5 mr-3 text-yellow-400" />
                 <div className="flex-1">
-                  <div className="text-sm font-medium">Максимальная скорость</div>
+                  <div className="text-sm font-medium">Скорость</div>
                   <div className="flex items-baseline gap-1">
                     <span className="text-xl font-bold">72 картинки</span>
-                    <span className="text-xs text-muted-foreground">в минуту</span>
                   </div>
                 </div>
               </div>
@@ -127,9 +143,12 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
               <div className="flex items-center p-3 rounded-lg bg-[#0d0d14] border border-[#252535]">
                 <AlertCircle className="h-5 w-5 mr-3 text-yellow-400" />
                 <div className="flex-1">
-                  <div className="text-sm font-medium">Статус</div>
+                  <div className="text-sm font-medium">Рейтлимит</div>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-xl font-bold">{isLoading ? "Генерация..." : (imageUrl ? "Готово" : "Ожидание")}</span>
+                    <span className="text-xl font-bold">30 картинок</span>
+                  </div>
+                  <div className="text-xs mt-1 text-yellow-300">
+                    При превышении лимита будет выдан код 429. Подождите 5 секунд или обратитесь в FallBack.
                   </div>
                 </div>
               </div>
