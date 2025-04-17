@@ -103,10 +103,10 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
         <ul className="grid gap-4 md:grid-cols-3">
           <li className="p-4 bg-[#101520] rounded-xl border border-[#252535]">
             <div className="flex items-center gap-3 mb-2">
-              <ShieldCheck className="h-5 w-5 text-primary" />
-              <span className="font-medium">Обработка ошибок</span>
+              <Zap className="h-5 w-5 text-yellow-400" />
+              <span className="font-medium">Скорость</span>
             </div>
-            <p className="text-sm text-muted-foreground">Всегда обрабатывайте ошибки при превышении лимита (код 429)</p>
+            <p className="text-sm text-muted-foreground">72 img / min</p>
           </li>
           <li className="p-4 bg-[#101520] rounded-xl border border-[#252535]">
             <div className="flex items-center gap-3 mb-2">
