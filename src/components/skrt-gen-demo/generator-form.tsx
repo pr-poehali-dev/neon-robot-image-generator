@@ -35,6 +35,20 @@ const GeneratorForm = ({
             >
               <Dices className="h-5 w-5" />
             </Button>
+            <Button 
+              onClick={onGenerateClick}
+              disabled={isLoading}
+              className="h-12"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Генерирую...
+                </>
+              ) : (
+                "Сгенерировать"
+              )}
+            </Button>
           </div>
         </div>
         <div>
@@ -49,24 +63,6 @@ const GeneratorForm = ({
             className="h-12"
           />
         </div>
-      </div>
-      
-      <div className="mt-4">
-        <Button 
-          onClick={onGenerateClick}
-          disabled={isLoading}
-          className="w-full h-12 text-base"
-          size="lg"
-        >
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-              Генерирую...
-            </>
-          ) : (
-            "Сгенерировать изображение"
-          )}
-        </Button>
       </div>
     </div>
   );
