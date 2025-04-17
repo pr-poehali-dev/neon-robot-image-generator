@@ -41,20 +41,17 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
     <div className="container mx-auto py-12 px-4 max-w-6xl">
       <div className="mb-10 text-center">
         <h1 className="text-5xl font-bold mb-4 lightning-title flex items-center justify-center">
-          <div className="flex items-center">
-            <span className="mr-2">POEHALI</span>
-            <img 
-              src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg" 
-              alt="Poehali" 
-              className="h-10"
-            />
-          </div>
           <img 
             src="https://sokratic.ru/favicon.ico" 
             alt="Sokratic" 
-            className="h-8 mx-3"
+            className="h-8 mr-3"
           />
           <span>SKRT.POEHALI</span>
+          <img 
+            src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg" 
+            alt="Poehali" 
+            className="h-10 ml-3"
+          />
         </h1>
         <p className="text-xl text-muted-foreground">
           интерактивная инструкция для инженеров sokratic.ru
