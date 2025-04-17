@@ -45,7 +45,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
           <span>SKRT.GEN</span>
         </h1>
         <p className="text-xl text-muted-foreground">
-          Сервис для генерации изображений за 2.5 секунды
+          интерактивная инструкция для инженеров sokratic.ru
         </p>
       </div>
 
@@ -106,11 +106,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
           </li>
           <li className="flex items-start">
             <ShieldCheck className="h-5 w-5 mr-2 mt-0.5 text-primary/80" />
-            <span>Используйте очередь запросов при необходимости генерации большого количества изображений</span>
-          </li>
-          <li className="flex items-start">
-            <ShieldCheck className="h-5 w-5 mr-2 mt-0.5 text-primary/80" />
-            <span>Не хардкодьте ключ аутентификации в клиентском коде, используйте серверный прокси</span>
+            <span>Кайфуйте от самой выгодной цены на картинки</span>
           </li>
         </ul>
       </div>

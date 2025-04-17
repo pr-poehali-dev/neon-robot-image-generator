@@ -1,13 +1,11 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Zap, AlertCircle } from "lucide-react";
 
 const ApiLimitsInfo = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Ограничения API</CardTitle>
-        <CardDescription>Важная информация о лимитах сервиса SKRT.GEN</CardDescription>
+        <CardTitle>Особенности API</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
@@ -39,7 +37,7 @@ const ApiLimitsInfo = () => {
               <div className="text-sm font-medium">Рейт-лимит</div>
               <div className="flex items-baseline gap-1">
                 <span className="text-xl font-bold">30 картинок</span>
-                <span className="text-xs text-muted-foreground">в одном запросе</span>
+                <span className="text-xs text-muted-foreground">в одновременной генерации</span>
               </div>
             </div>
           </div>

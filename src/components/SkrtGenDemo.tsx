@@ -42,6 +42,8 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
       if (!response.ok) {
         if (response.status === 429) {
           throw new Error("Превышен лимит запросов. Пожалуйста, подождите и попробуйте снова.");
+        } else if (response.status === 405) {
+          throw new Error("Метод не разрешен. Проверьте настройки CORS на сервере.");
         }
         throw new Error(`Ошибка: ${response.status}`);
       }
@@ -109,7 +111,7 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
             <img 
               src={imageUrl} 
               alt="Сгенерированное изображение" 
-              className="w-full h-auto aspect-video object-cover"
+              className="w-full h-auto aspect-square object-cover"
               onError={() => {
                 toast({
                   title: "Ошибка",
@@ -122,7 +124,7 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
             <img 
               src="https://h.uguu.se/sWQRLidf.png" 
               alt="Placeholder" 
-              className="w-full h-auto aspect-video object-cover" 
+              className="w-full h-auto aspect-square object-cover" 
             />
           )}
         </CardContent>
