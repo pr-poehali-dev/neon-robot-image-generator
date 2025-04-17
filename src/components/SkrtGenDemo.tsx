@@ -156,17 +156,9 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
               
               <div className="flex items-center p-3 rounded-lg bg-[#0d0d14] border border-[#252535]">
                 <div className="flex items-center justify-center h-5 w-12 mr-3">
-                  <img 
-                    src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg" 
-                    alt="Poehali" 
-                    className="h-5 mr-1"
-                  />
+                  <span className="text-2xl">👨‍🚀</span>
                   <span className="text-yellow-400 mx-0.5">&</span>
-                  <img 
-                    src="https://sokratic.ru/favicon.ico" 
-                    alt="Sokratic" 
-                    className="h-5 ml-1"
-                  />
+                  <span className="text-2xl">💻</span>
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-medium">Скорость</div>
