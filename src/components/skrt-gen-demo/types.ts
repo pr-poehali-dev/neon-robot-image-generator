@@ -2,11 +2,14 @@ export interface SkrtGenDemoProps {
   onImageGenerated?: (imageUrl: string) => void;
 }
 
-export interface HighlightItemProps {
-  icon: React.ReactNode;
-  title: string;
-  value: string;
-  description?: string;
+export interface GeneratorFormProps {
+  prompt: string;
+  setPrompt: (prompt: string) => void;
+  apiKey: string;
+  setApiKey: (apiKey: string) => void;
+  isLoading: boolean;
+  onGenerateClick: () => void;
+  onRandomPromptClick: () => void;
 }
 
 export interface ImagePreviewProps {
@@ -15,12 +18,9 @@ export interface ImagePreviewProps {
   isLoading: boolean;
 }
 
-export interface GeneratorFormProps {
-  prompt: string;
-  setPrompt: (value: string) => void;
-  apiKey: string;
-  setApiKey: (value: string) => void;
-  isLoading: boolean;
-  onGenerateClick: () => void;
-  onRandomPromptClick: () => void;
+export interface HighlightItemProps {
+  icon: React.ReactNode;
+  title: string;
+  value: string;
+  description?: string;
 }
