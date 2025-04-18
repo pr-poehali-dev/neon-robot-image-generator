@@ -32,17 +32,15 @@ const ImagePreview = ({ imageUrl, onImageError, isLoading }: ImagePreviewProps) 
           )}
         </div>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl sm:max-w-[800px] p-2 bg-background border">
+      <DialogContent className="max-w-[90vw] w-auto h-auto max-h-[90vh] p-3 bg-background border flex items-center justify-center">
         <DialogTitle className="sr-only">Просмотр сгенерированного изображения</DialogTitle>
         {imageUrl && (
-          <div className="flex items-center justify-center w-full">
-            <img 
-              src={imageUrl} 
-              alt="Сгенерированное изображение" 
-              className="w-full h-auto object-contain max-h-[80vh] rounded-lg" 
-              onError={onImageError}
-            />
-          </div>
+          <img 
+            src={imageUrl} 
+            alt="Сгенерированное изображение" 
+            className="max-w-full max-h-[80vh] object-contain rounded-lg" 
+            onError={onImageError}
+          />
         )}
       </DialogContent>
     </Dialog>
