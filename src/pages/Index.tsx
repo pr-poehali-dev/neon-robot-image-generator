@@ -1,6 +1,6 @@
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
-import { Zap } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index = () => {
   const typescriptCode = `// Пример использования SKRT.POEHALI в TypeScript
@@ -30,6 +30,11 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return data.imageURL;
 }`;
 
+  const curlCode = `curl -X POST https://skrt.poehali.dev/generate \\
+  -H "Content-Type: application/json" \\
+  -H "X-Auth: ваш_ключ_доступа" \\
+  -d '{"prompt": "ваш запрос для генерации изображения"}'`;
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex items-center justify-center gap-4 mb-12">
@@ -41,7 +46,6 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
           />
           <h1 className="text-4xl font-bold lightning-title">
             <span>SKRT.POEHALI</span>
-            <Zap className="text-primary h-8 w-8" />
           </h1>
           <img 
             src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg" 
@@ -56,12 +60,30 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
           <SkrtGenDemo />
         </section>
 
-        <section>
-          <CodeSnippet 
-            code={typescriptCode} 
-            language="typescript" 
-            title="generate-image.ts" 
-          />
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold mb-4">Интеграция в ваш проект</h2>
+          <p className="mb-6">Для доступа к API требуется секретный ключ X-Auth, который необходимо передать в заголовке запроса.</p>
+          
+          <Tabs defaultValue="typescript" className="mt-4">
+            <TabsList>
+              <TabsTrigger value="typescript">TypeScript</TabsTrigger>
+              <TabsTrigger value="curl">cURL</TabsTrigger>
+            </TabsList>
+            <TabsContent value="typescript">
+              <CodeSnippet 
+                code={typescriptCode} 
+                language="typescript" 
+                title="generate-image.ts" 
+              />
+            </TabsContent>
+            <TabsContent value="curl">
+              <CodeSnippet 
+                code={curlCode} 
+                language="bash" 
+                title="request.sh" 
+              />
+            </TabsContent>
+          </Tabs>
         </section>
       </div>
     </div>
