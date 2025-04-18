@@ -23,77 +23,62 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
 
   if (!response.ok) {
     if (response.status === 429) {
-      throw new Error("Rate limit exceeded. Please wait and try again.");
+      throw new Error("Превышен лимит запросов");
     }
-    throw new Error(\`Error: \${response.status}\`);
+    throw new Error("Ошибка при генерации изображения");
   }
 
   const data: SkrtPoehaliResponse = await response.json();
   return data.imageURL;
 }`;
 
-  const curlCode = `curl -X POST "https://skrt.poehali.dev/generate" \\
-  -H "Content-Type: application/json" \\
-  -H "X-Auth: YOUR_SECRET_KEY" \\
-  -d '{"prompt": "neon robot test"}'`;
-
   return (
-    <div className="container mx-auto py-12 px-4 max-w-6xl">
-      <div className="mb-10 text-center">
-        <h1 className="text-5xl font-bold mb-4 lightning-title flex items-center justify-center">
+    <div className="container mx-auto px-4 py-8 max-w-6xl">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-4">
+        <div className="flex items-center gap-4">
           <img 
-            src="https://sokratic.ru/favicon.ico" 
+            src="/poehali-logo.svg" 
+            alt="POEHALI" 
+            className="h-10"
+          />
+          <span className="text-2xl font-bold">+</span>
+          <img 
+            src="/sokratic-favicon.ico" 
             alt="Sokratic" 
-            className="h-8 mr-3"
+            className="h-10"
           />
-          <span>SKRT.POEHALI</span>
-          <img 
-            src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg" 
-            alt="Poehali" 
-            className="h-10 ml-3"
-          />
-        </h1>
-        <p className="text-xl text-muted-foreground">
-          интерактивная инструкция для инженеров sokratic.ru
-        </p>
-      </div>
-
-      <div className="mb-16">
-        <SkrtGenDemo />
-      </div>
-
-      <div className="mb-12 rounded-xl overflow-hidden border border-[#252535]">
-        <div className="bg-[#151520] p-8">
-          <h2 className="text-2xl font-medium mb-4 flex items-center gap-2">
-            <Code className="h-6 w-6 text-primary" />
-            Интеграция в ваш проект
-          </h2>
-          <p className="mb-6 text-muted-foreground">
-            Для доступа к API требуется секретный ключ X-Auth, который необходимо передать в заголовке запроса.
-          </p>
-
-          <Tabs defaultValue="typescript" className="w-full">
-            <TabsList className="mb-4">
-              <TabsTrigger value="typescript" className="px-6">TypeScript</TabsTrigger>
-              <TabsTrigger value="curl" className="px-6">cURL</TabsTrigger>
-            </TabsList>
-            <TabsContent value="typescript">
-              <CodeSnippet 
-                code={typescriptCode} 
-                language="typescript" 
-                title="TypeScript"
-              />
-            </TabsContent>
-            <TabsContent value="curl">
-              <CodeSnippet 
-                code={curlCode} 
-                language="bash" 
-                title="cURL"
-              />
-            </TabsContent>
-          </Tabs>
         </div>
+        <h1 className="text-3xl md:text-4xl font-bold lightning-title">
+          <span>SKRT.POEHALI</span>
+          <Zap className="text-primary h-8 w-8" />
+        </h1>
       </div>
+
+      <Tabs defaultValue="demo" className="w-full">
+        <TabsList className="grid grid-cols-3 mb-8">
+          <TabsTrigger value="demo" className="text-lg">
+            <Sparkles className="mr-2 h-4 w-4" />
+            Демо
+          </TabsTrigger>
+          <TabsTrigger value="features" className="text-lg">
+            <ShieldCheck className="mr-2 h-4 w-4" />
+            Возможности
+          </TabsTrigger>
+          <TabsTrigger value="code" className="text-lg">
+            <Code className="mr-2 h-4 w-4" />
+            Код
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="demo" className="mt-0">
+          <SkrtGenDemo />
+        </TabsContent>
+        <TabsContent value="features" className="mt-0">
+          <ApiFeatures />
+        </TabsContent>
+        <TabsContent value="code" className="mt-0">
+          <CodeSnippet code={typescriptCode} language="typescript" filename="generate-image.ts" />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
