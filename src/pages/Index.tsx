@@ -1,8 +1,6 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ApiFeatures from "@/components/ApiFeatures";
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
-import { Zap, Sparkles, ShieldCheck, Code } from "lucide-react";
+import { Zap } from "lucide-react";
 
 const Index = () => {
   const typescriptCode = `// Пример использования SKRT.POEHALI в TypeScript
@@ -34,38 +32,38 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <div className="flex items-center justify-center mb-12">
-        <h1 className="text-4xl font-bold lightning-title">
-          <span>SKRT.POEHALI</span>
-          <Zap className="text-primary h-8 w-8" />
-        </h1>
+      <div className="flex items-center justify-center gap-4 mb-12">
+        <div className="flex items-center gap-6">
+          <img 
+            src="https://sokratic.ru/favicon.ico" 
+            alt="Sokratic" 
+            className="h-10"
+          />
+          <h1 className="text-4xl font-bold lightning-title">
+            <span>SKRT.POEHALI</span>
+            <Zap className="text-primary h-8 w-8" />
+          </h1>
+          <img 
+            src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg" 
+            alt="POEHALI" 
+            className="h-10"
+          />
+        </div>
       </div>
 
-      <Tabs defaultValue="demo" className="w-full">
-        <TabsList className="grid grid-cols-3 mb-8">
-          <TabsTrigger value="demo" className="text-lg">
-            <Sparkles className="mr-2 h-4 w-4" />
-            Демо
-          </TabsTrigger>
-          <TabsTrigger value="features" className="text-lg">
-            <ShieldCheck className="mr-2 h-4 w-4" />
-            Возможности
-          </TabsTrigger>
-          <TabsTrigger value="code" className="text-lg">
-            <Code className="mr-2 h-4 w-4" />
-            Код
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="demo" className="mt-0">
+      <div className="space-y-10">
+        <section>
           <SkrtGenDemo />
-        </TabsContent>
-        <TabsContent value="features" className="mt-0">
-          <ApiFeatures />
-        </TabsContent>
-        <TabsContent value="code" className="mt-0">
-          <CodeSnippet code={typescriptCode} language="typescript" filename="generate-image.ts" />
-        </TabsContent>
-      </Tabs>
+        </section>
+
+        <section>
+          <CodeSnippet 
+            code={typescriptCode} 
+            language="typescript" 
+            title="generate-image.ts" 
+          />
+        </section>
+      </div>
     </div>
   );
 };
