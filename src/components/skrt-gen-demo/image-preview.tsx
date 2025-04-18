@@ -26,8 +26,8 @@ const ImagePreview = ({ imageUrl, onImageError, isLoading }: ImagePreviewProps) 
         />
       ) : (
         <img 
-          src="https://h.uguu.se/sWQRLidf.png" 
-          alt="Placeholder" 
+          src="https://cdn.poehali.dev/files/bb454bce-5115-4d88-ac49-93654463d839.png" 
+          alt="Космонавт" 
           className="w-full h-full object-cover" 
         />
       )}
