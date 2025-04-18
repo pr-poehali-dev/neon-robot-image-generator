@@ -42,7 +42,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <div className="flex items-center justify-center gap-4 mb-12">
+      <div className="flex flex-col items-center justify-center gap-2 mb-12">
         <div className="flex items-center gap-3 md:gap-6">
           <img 
             src="https://sokratic.ru/favicon.ico" 
@@ -58,6 +58,9 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
             className="h-8 md:h-10"
           />
         </div>
+        <p className={`${isMobile ? 'text-sm' : 'text-base'} text-muted-foreground text-center`}>
+          интерактивная инструкция для инженеров sokratic.ru
+        </p>
       </div>
 
       <div className="space-y-10">
