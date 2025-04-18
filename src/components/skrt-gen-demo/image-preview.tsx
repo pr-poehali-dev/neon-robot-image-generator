@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
 import { ImagePreviewProps } from "./types";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const ImagePreview = ({ imageUrl, onImageError, isLoading }: ImagePreviewProps) => {
   return (
@@ -33,16 +32,17 @@ const ImagePreview = ({ imageUrl, onImageError, isLoading }: ImagePreviewProps) 
           )}
         </div>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl p-1 bg-transparent border-0">
-        <VisuallyHidden>
-          <DialogTitle>Просмотр сгенерированного изображения</DialogTitle>
-        </VisuallyHidden>
+      <DialogContent className="max-w-3xl sm:max-w-[800px] p-2 bg-background border">
+        <DialogTitle className="sr-only">Просмотр сгенерированного изображения</DialogTitle>
         {imageUrl && (
-          <img 
-            src={imageUrl} 
-            alt="Сгенерированное изображение" 
-            className="w-full h-auto object-contain max-h-[80vh] rounded-lg" 
-          />
+          <div className="flex items-center justify-center w-full">
+            <img 
+              src={imageUrl} 
+              alt="Сгенерированное изображение" 
+              className="w-full h-auto object-contain max-h-[80vh] rounded-lg" 
+              onError={onImageError}
+            />
+          </div>
         )}
       </DialogContent>
     </Dialog>
