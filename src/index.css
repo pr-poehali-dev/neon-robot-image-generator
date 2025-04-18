@@ -7,43 +7,57 @@
 @layer base {
   :root {
     --background: 220 70% 13%;
-    --foreground: 210 40% 98%;
+    --foregrounПонял, давайте исd: 210 40% 98%;
 
-    --card: 222 47% 11%;
+    --card: 222 47% правим заголовок11%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+     SKRT.POEHALI на глав--popover: 222 47% ной странице:
 
-    --primary: 217 91% 60%;
-    --primary-foreground: 210 40% 98%;
+<pp11%;
+    --popover-foreground: 210 40% 98%;-code>
+<pp
 
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --primary: 217 91% -filepath>src/pages/Index60%;
+    --primary-foreground:.tsx</pp-filepath>
+<pp 210 40% 98%;
 
-    --muted: 217 32% 17%;
+    -content>import { Tabs, TabsContent, TabsList, TabsTrigger } from--secondary: 217 32% 17%;
+    --secondary-foreground:  "@/components/ui/tabs";
+import210 40% 98%;
+
+    -- ApiFeatures from "@/componentsmuted: 217 32% 17/ApiFeatures";
+import %;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 217 32% 17%;
+    SkrtGenDemo from "@/components/--accent: 217 32% 17%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 40% 98%;
+    --SkrtGenDemo";
+import CodeSndestructive: 0 62% 30%;
+    --destructive-foreground:ippet from "@/components/CodeSnipp 210 40% 98%;
 
-    --border: 217 32% 17%;
+    --border: 217et";
+import { Zap, Sparkles, 32% 17%;
     --input: 217 32% 17%;
-    --ring: 224 76% 48%;
+    --ring: 224 76%  ShieldCheck, Code } from "lucide48%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 222 47% 11%;
+    --sidebar-background:-react";
+
+const Index = () => 222 47% 11%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 224 76% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3% 15%;
+    --sidebar-primary: 224 76% 48%; {
+  const typescriptCode =
+    --sidebar-primary-foreground: 0 0%  `// Пример использ100%;
+    --sidebar-accent: ования SKRT.POEHALI в TypeScript240 3% 15%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 240 3% 15%;
-    --sidebar-ring: 217 91% 59%;
+    --sidebar-
+
+interface SkrtPoehaliborder: 240 3% 15%;
+    --sidebar-Response {
+  imageURLring: 217 91% 59%;
   }
 }
 
@@ -54,20 +68,37 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 300;
-    letter-spacing: -0.02em;
+    font-: string;
+}
+
+async function generatefamily: 'Space Grotesk',Image(prompt: string, sans-serif;
+    font-weight: apiKey: string): Promise<string 300;
+    letter-spacing: -> {
+  const response = await fetch("0.02em;
   }
 
   h1, h2, h3, h4 {
-    font-weight: 500;
-    letter-spacing: -0.03em;
+    https://skrt.poehalifont-weight: 500;
+    letter.dev/generate", {
+    metho-spacing: -0d: "POST",
+    headers: {.03em;
+      "Content-Type": "application/json
   }
 }
 
 .lightning-title {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  justify-",
+      "X-Auth": apiKey,
+    },
+    body: JSON.stringify({ prompt }),
+  });
+
+  if (!response.ok)content: center;
+  gap: 0 {
+    if (response.status ===.5rem;
+  max-width: 100%;
+  overflow: 429) {
+      throw hidden;
 }
