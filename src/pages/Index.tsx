@@ -3,8 +3,11 @@ import CodeSnippet from "@/components/CodeSnippet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Code } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
+  const isMobile = useIsMobile();
+  
   const typescriptCode = `// Пример использования SKRT.POEHALI в TypeScript
 
 interface SkrtPoehaliResponse {
@@ -40,19 +43,19 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex items-center justify-center gap-4 mb-12">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 md:gap-6">
           <img 
             src="https://sokratic.ru/favicon.ico" 
             alt="Sokratic" 
-            className="h-10"
+            className="h-8 md:h-10"
           />
-          <h1 className="text-4xl font-bold lightning-title">
+          <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold lightning-title`}>
             <span>SKRT.POEHALI</span>
           </h1>
           <img 
             src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg" 
             alt="POEHALI" 
-            className="h-10"
+            className="h-8 md:h-10"
           />
         </div>
       </div>
