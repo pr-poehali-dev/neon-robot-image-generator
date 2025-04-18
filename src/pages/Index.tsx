@@ -34,21 +34,8 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-4">
-        <div className="flex items-center gap-4">
-          <img 
-            src="/poehali-logo.svg" 
-            alt="POEHALI" 
-            className="h-10"
-          />
-          <span className="text-2xl font-bold">+</span>
-          <img 
-            src="/sokratic-favicon.ico" 
-            alt="Sokratic" 
-            className="h-10"
-          />
-        </div>
-        <h1 className="text-3xl md:text-4xl font-bold lightning-title">
+      <div className="flex items-center justify-center mb-12">
+        <h1 className="text-4xl font-bold lightning-title">
           <span>SKRT.POEHALI</span>
           <Zap className="text-primary h-8 w-8" />
         </h1>
