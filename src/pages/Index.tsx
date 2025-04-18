@@ -1,6 +1,8 @@
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Code } from "lucide-react";
 
 const Index = () => {
   const typescriptCode = `// Пример использования SKRT.POEHALI в TypeScript
@@ -61,29 +63,36 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
         </section>
 
         <section className="mt-12">
-          <h2 className="text-2xl font-semibold mb-4">Интеграция в ваш проект</h2>
-          <p className="mb-6">Для доступа к API требуется секретный ключ X-Auth, который необходимо передать в заголовке запроса.</p>
-          
-          <Tabs defaultValue="typescript" className="mt-4">
-            <TabsList>
-              <TabsTrigger value="typescript">TypeScript</TabsTrigger>
-              <TabsTrigger value="curl">cURL</TabsTrigger>
-            </TabsList>
-            <TabsContent value="typescript">
-              <CodeSnippet 
-                code={typescriptCode} 
-                language="typescript" 
-                title="generate-image.ts" 
-              />
-            </TabsContent>
-            <TabsContent value="curl">
-              <CodeSnippet 
-                code={curlCode} 
-                language="bash" 
-                title="request.sh" 
-              />
-            </TabsContent>
-          </Tabs>
+          <Card>
+            <CardHeader className="flex flex-row items-center gap-3">
+              <Code className="h-6 w-6 text-primary" />
+              <CardTitle>Интеграция в ваш проект</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-6">Для доступа к API требуется секретный ключ X-Auth, который необходимо передать в заголовке запроса.</p>
+              
+              <Tabs defaultValue="typescript" className="mt-4">
+                <TabsList>
+                  <TabsTrigger value="typescript">TypeScript</TabsTrigger>
+                  <TabsTrigger value="curl">cURL</TabsTrigger>
+                </TabsList>
+                <TabsContent value="typescript">
+                  <CodeSnippet 
+                    code={typescriptCode} 
+                    language="typescript" 
+                    title="generate-image.ts" 
+                  />
+                </TabsContent>
+                <TabsContent value="curl">
+                  <CodeSnippet 
+                    code={curlCode} 
+                    language="bash" 
+                    title="request.sh" 
+                  />
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
         </section>
       </div>
     </div>
