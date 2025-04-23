@@ -3,11 +3,11 @@ import { useHealthData, formatUptime } from "./statistics/useHealthData";
 import { StatisticsCard } from "./statistics/StatisticsCard";
 import { StatisticsDonutChart } from "./statistics/StatisticsDonutChart";
 import { GenerationIndicator } from "./statistics/GenerationIndicator";
-import { useMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const StatisticsPanel = () => {
   const { healthData, loading, error, pieData } = useHealthData();
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
 
   if (error) {
     return (
