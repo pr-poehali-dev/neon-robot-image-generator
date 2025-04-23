@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { useHealthData, formatUptime } from "./statistics/useHealthData";
+import { useHealthData } from "./statistics/useHealthData";
 import { StatisticsCard } from "./statistics/StatisticsCard";
 import { StatisticsDonutChart } from "./statistics/StatisticsDonutChart";
 import { GenerationIndicator } from "./statistics/GenerationIndicator";

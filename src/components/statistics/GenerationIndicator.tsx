@@ -1,12 +1,8 @@
-import { HealthData } from "./types";
-
 interface GenerationIndicatorProps {
-  healthData: HealthData | null;
+  isGenerating: boolean;
 }
 
-export const GenerationIndicator = ({ healthData }: GenerationIndicatorProps) => {
-  const isGenerating = healthData?.gpu_server?.queue?.is_generating;
-  
+export const GenerationIndicator = ({ isGenerating }: GenerationIndicatorProps) => {
   return (
     <div className="flex items-center justify-center gap-2">
       {isGenerating ? (
