@@ -1,24 +1,22 @@
 import { HealthData } from "./types";
 
-type GenerationIndicatorProps = {
+interface GenerationIndicatorProps {
   healthData: HealthData | null;
-};
+}
 
 export const GenerationIndicator = ({ healthData }: GenerationIndicatorProps) => {
   const isGenerating = healthData?.gpu_server?.queue?.is_generating;
-  
-  if (!healthData) return null;
   
   return (
     <div className="flex items-center justify-center gap-2">
       {isGenerating ? (
         <>
-          <span className="inline-block w-2 h-2 bg-green-500 rounded-full pulse"></span>
-          <span>Генерация активна</span>
+          <span className="inline-block h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+          <span>Идет генерация</span>
         </>
       ) : (
         <>
-          <span className="inline-block w-2 h-2 bg-gray-500 rounded-full"></span>
+          <span className="inline-block h-2 w-2 rounded-full bg-gray-500"></span>
           <span>Генерация неактивна</span>
         </>
       )}
