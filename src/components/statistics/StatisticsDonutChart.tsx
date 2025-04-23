@@ -39,9 +39,18 @@ export const StatisticsDonutChart = ({ data, loading, isMobile }: DonutChartProp
         <Tooltip
           content={({ active, payload }) => {
             if (active && payload && payload.length) {
+              const getColorClass = (name: string) => {
+                switch(name) {
+                  case 'Успешно': return 'text-emerald-400';
+                  case 'Неудачно': return 'text-red-400';
+                  case 'Рейтлимит': return 'text-gray-400';
+                  default: return 'text-blue-400';
+                }
+              };
+              
               return (
                 <div className="bg-gray-800 border border-gray-700 p-2 rounded shadow-lg">
-                  <p className={`text-${payload[0].name === 'Успешно' ? 'emerald' : 'red'}-400`}>
+                  <p className={getColorClass(payload[0].name)}>
                     {`${payload[0].name}: ${payload[0].value}`}
                   </p>
                 </div>

@@ -20,15 +20,15 @@ const StatisticsPanel = () => {
   }
 
   return (
-    <div className="w-full mt-4 mb-8">
-      <div className="bg-gray-950 rounded-lg p-4 shadow-md border border-gray-800">
+    <div className="w-full mt-6 mb-10">
+      <div className="bg-gray-950 rounded-lg p-6 shadow-md border border-gray-800">
         <h3 className="text-center text-sm font-medium text-gray-300 mb-3">
           Статистика использования сервиса
         </h3>
         
         <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-[1fr_2fr] gap-6'}`}>
           {/* Левая колонка с пай-чартом */}
-          <div className="bg-gray-900 rounded-lg p-3 flex items-center justify-center border border-gray-800 h-48">
+          <div className="bg-gray-900 rounded-lg p-5 flex items-center justify-center border border-gray-800 h-56">
             <StatisticsDonutChart 
               data={pieData}
               loading={loading}

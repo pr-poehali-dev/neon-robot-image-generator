@@ -5,6 +5,7 @@ export interface HealthData {
   today_stats: {
     success: number;
     failed: number;
+    ratelimited?: number; // Добавлено поле для учета рейтлимитов
     total: number;
   };
   prev_month_stats: {

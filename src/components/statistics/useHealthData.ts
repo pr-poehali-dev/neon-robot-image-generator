@@ -36,6 +36,7 @@ export const useHealthData = () => {
   const pieData: ChartDataItem[] = healthData ? [
     { name: 'Успешно', value: healthData.today_stats?.success ?? 0, color: '#10B981' },
     { name: 'Неудачно', value: healthData.today_stats?.failed ?? 0, color: '#EF4444' },
+    { name: 'Рейтлимит', value: healthData.today_stats?.ratelimited ?? 0, color: '#6B7280' },
   ] : [];
 
   return {
