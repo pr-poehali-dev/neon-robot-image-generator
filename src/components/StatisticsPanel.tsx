@@ -5,7 +5,7 @@ import { StatisticsDonutChart } from "./statistics/StatisticsDonutChart";
 import { GenerationIndicator } from "./statistics/GenerationIndicator";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export const StatisticsPanel = () => {
+const StatisticsPanel = () => {
   const { healthData, loading, error, pieData } = useHealthData();
   const isMobile = useIsMobile();
 
@@ -23,9 +23,9 @@ export const StatisticsPanel = () => {
   const queuePercentage = Math.min(100, Math.floor((queueSize / maxQueueSize) * 100));
   
   return (
-    <Card className="p-6 bg-gray-900 border-gray-800 text-white mt-6 mb-10">
+    <Card className="p-6 py-8 bg-gray-900 border-gray-800 text-white mt-6 mb-10">
       <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6">
-        <div className="w-full md:w-1/3 h-56 p-5 flex items-center justify-center">
+        <div className="w-full md:w-1/3 h-64 p-5 flex items-center justify-center">
           <StatisticsDonutChart
             data={pieData}
             loading={loading}
@@ -62,3 +62,5 @@ export const StatisticsPanel = () => {
     </Card>
   );
 };
+
+export default StatisticsPanel;
