@@ -42,8 +42,7 @@ export const StatisticsDonutChart = ({ data, loading, isMobile }: DonutChartProp
               const getColorClass = (name: string) => {
                 switch(name) {
                   case 'Успешно': return 'text-emerald-400';
-                  case 'Неудачно': return 'text-red-400';
-                  case 'Рейтлимит': return 'text-gray-400';
+                  case '429 RL': return 'text-gray-400';
                   default: return 'text-blue-400';
                 }
               };
