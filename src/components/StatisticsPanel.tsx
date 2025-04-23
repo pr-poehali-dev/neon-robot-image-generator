@@ -83,19 +83,19 @@ const StatisticsPanel = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <StatCard 
             title="Сегодня успешно" 
-            value={loading ? null : healthData?.today_stats.success} 
+            value={loading ? null : healthData?.today_stats?.success ?? 0} 
             color="text-emerald-600"
             isMobile={isMobile}
           />
           <StatCard 
             title="Сегодня всего" 
-            value={loading ? null : healthData?.today_stats.total} 
+            value={loading ? null : healthData?.today_stats?.total ?? 0} 
             color="text-blue-600"
             isMobile={isMobile}
           />
           <StatCard 
             title="В очереди" 
-            value={loading ? null : healthData?.queues.gen_queue} 
+            value={loading ? null : healthData?.queues?.gen_queue ?? 0} 
             color="text-amber-600"
             isMobile={isMobile}
           />
