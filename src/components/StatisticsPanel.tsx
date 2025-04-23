@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
 
 interface HealthData {
   status: string;
@@ -72,12 +71,9 @@ const StatisticsPanel = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const chartData = healthData ? [
-    {
-      name: 'Сегодня',
-      Успешно: healthData.today_stats?.success ?? 0,
-      Неудачно: healthData.today_stats?.failed ?? 0,
-    }
+  const pieData = healthData ? [
+    { name: 'Успешно', value: healthData.today_stats?.success ?? 0, color: '#10B981' },
+    { name: 'Неудачно', value: healthData.today_stats?.failed ?? 0, color: '#EF4444' },
   ] : [];
 
   if (error) {
@@ -97,60 +93,88 @@ const StatisticsPanel = () => {
           Статистика использования сервиса
         </h3>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <StatCard 
-            title="Сегодня успешно" 
-            value={loading ? null : healthData?.today_stats?.success ?? 0} 
-            color="text-emerald-400"
-            isMobile={isMobile}
-          />
-          <StatCard 
-            title="Сегодня всего" 
-            value={loading ? null : healthData?.today_stats?.total ?? 0} 
-            color="text-blue-400"
-            isMobile={isMobile}
-          />
-          <StatCard 
-            title="В очереди" 
-            value={loading ? null : healthData?.gpu_server?.queue?.queue_size ?? 0} 
-            color="text-amber-400"
-            isMobile={isMobile}
-          />
-          <StatCard 
-            title="Аптайм" 
-            value={loading ? null : formatUptime(healthData?.uptime || 0)} 
-            color="text-purple-400"
-            isText
-            isMobile={isMobile}
-          />
-        </div>
-
-        {!loading && healthData && (
-          <div className="mt-6 h-40 w-full bg-gray-900 rounded-lg p-3">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData}>
-                <XAxis dataKey="name" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip 
-                  content={({ active, payload }) => {
-                    if (active && payload && payload.length) {
-                      return (
-                        <div className="bg-gray-800 border border-gray-700 p-2 rounded shadow-lg">
-                          <p className="text-emerald-400">{`Успешно: ${payload[0].value}`}</p>
-                          <p className="text-red-400">{`Неудачно: ${payload[1].value}`}</p>
-                          <p className="text-gray-300">{`Всего: ${(payload[0].value as number) + (payload[1].value as number)}`}</p>
-                        </div>
-                      );
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-[1fr_2fr] gap-6'}`}>
+          {/* Левая колонка с пай-чартом */}
+          <div className="bg-gray-900 rounded-lg p-3 flex items-center justify-center border border-gray-800 h-48">
+            {loading ? (
+              <Skeleton className="h-36 w-36 rounded-full bg-gray-800" />
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={isMobile ? 30 : 40}
+                    outerRadius={isMobile ? 60 : 70}
+                    paddingAngle={4}
+                    dataKey="value"
+                    labelLine={false}
+                    label={({ name, percent }) => 
+                      percent > 0.05 ? `${name} ${(percent * 100).toFixed(0)}%` : ''
                     }
-                    return null;
-                  }}
-                />
-                <Bar dataKey="Успешно" fill="#10B981" />
-                <Bar dataKey="Неудачно" fill="#EF4444" />
-              </BarChart>
-            </ResponsiveContainer>
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        return (
+                          <div className="bg-gray-800 border border-gray-700 p-2 rounded shadow-lg">
+                            <p className={`text-${payload[0].name === 'Успешно' ? 'emerald' : 'red'}-400`}>
+                              {`${payload[0].name}: ${payload[0].value}`}
+                            </p>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
           </div>
-        )}
+          
+          {/* Правая колонка с карточками статистики */}
+          <div className="grid grid-cols-2 gap-3">
+            <StatCard 
+              title="Сегодня успешно" 
+              value={loading ? null : healthData?.today_stats?.success ?? 0} 
+              color="text-emerald-400"
+              isMobile={isMobile}
+            />
+            <StatCard 
+              title="Сегодня всего" 
+              value={loading ? null : healthData?.today_stats?.total ?? 0} 
+              color="text-blue-400"
+              isMobile={isMobile}
+            />
+            <StatCard 
+              title="В очереди" 
+              value={loading ? null : healthData?.gpu_server?.queue?.queue_size ?? 0} 
+              color="text-amber-400"
+              isMobile={isMobile}
+            />
+            <StatCard 
+              title="Аптайм" 
+              value={loading ? null : formatUptime(healthData?.uptime || 0)} 
+              color="text-purple-400"
+              isText
+              isMobile={isMobile}
+            />
+          </div>
+        </div>
+        
+        <div className="mt-4 text-center text-xs text-gray-500">
+          {healthData?.gpu_server?.queue?.is_generating && 
+            <span className="inline-flex items-center">
+              <span className="inline-block h-2 w-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+              Сейчас идет генерация
+            </span>
+          }
+        </div>
       </div>
     </div>
   );
