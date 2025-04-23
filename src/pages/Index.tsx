@@ -1,5 +1,6 @@
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
+import StatisticsPanel from "@/components/StatisticsPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Code } from "lucide-react";
@@ -42,14 +43,14 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <div className="flex flex-col items-center justify-center gap-2 mb-12">
+      <div className="flex flex-col items-center justify-center gap-2 mb-8">
         <div className="flex items-center gap-3 md:gap-6">
           <img 
             src="https://sokratic.ru/favicon.ico" 
             alt="Sokratic" 
             className="h-8 md:h-10"
           />
-          <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold lightning-title`}>
+          <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-bold`}>
             <span>SKRT.POEHALI</span>
           </h1>
           <img 
@@ -62,6 +63,8 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
           интерактивная инструкция для инженеров sokratic.ru
         </p>
       </div>
+
+      <StatisticsPanel />
 
       <div className="space-y-10">
         <section>
