@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 interface HealthData {
   status: string;
-  queues: {
-    gen_queue: number;
-    upload_queue: number;
-  };
+  upload_queue_size: number;
   uptime: number;
   today_stats: {
     success: number;
@@ -20,6 +19,16 @@ interface HealthData {
     failed: number;
     total: number;
   };
+  gpu_server: {
+    status: string;
+    queue: {
+      status: string;
+      model_loaded: boolean;
+      queue_size: number;
+      max_queue_size: number;
+      is_generating: boolean;
+    }
+  }
 }
 
 const formatUptime = (seconds: number): string => {
@@ -63,10 +72,18 @@ const StatisticsPanel = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  const chartData = healthData ? [
+    {
+      name: 'Сегодня',
+      Успешно: healthData.today_stats?.success ?? 0,
+      Неудачно: healthData.today_stats?.failed ?? 0,
+    }
+  ] : [];
+
   if (error) {
     return (
-      <Card className="bg-red-50 border-red-200 mb-8">
-        <CardContent className="p-4 text-center text-red-600">
+      <Card className="bg-red-950 border-red-800 mb-8 text-red-200">
+        <CardContent className="p-4 text-center">
           {error}
         </CardContent>
       </Card>
@@ -75,8 +92,8 @@ const StatisticsPanel = () => {
 
   return (
     <div className="w-full mt-4 mb-8">
-      <div className="bg-gray-50 rounded-lg p-4 shadow-sm">
-        <h3 className="text-center text-sm font-medium text-gray-700 mb-3">
+      <div className="bg-gray-950 rounded-lg p-4 shadow-md border border-gray-800">
+        <h3 className="text-center text-sm font-medium text-gray-300 mb-3">
           Статистика использования сервиса
         </h3>
         
@@ -84,29 +101,56 @@ const StatisticsPanel = () => {
           <StatCard 
             title="Сегодня успешно" 
             value={loading ? null : healthData?.today_stats?.success ?? 0} 
-            color="text-emerald-600"
+            color="text-emerald-400"
             isMobile={isMobile}
           />
           <StatCard 
             title="Сегодня всего" 
             value={loading ? null : healthData?.today_stats?.total ?? 0} 
-            color="text-blue-600"
+            color="text-blue-400"
             isMobile={isMobile}
           />
           <StatCard 
             title="В очереди" 
-            value={loading ? null : healthData?.queues?.gen_queue ?? 0} 
-            color="text-amber-600"
+            value={loading ? null : healthData?.gpu_server?.queue?.queue_size ?? 0} 
+            color="text-amber-400"
             isMobile={isMobile}
           />
           <StatCard 
             title="Аптайм" 
             value={loading ? null : formatUptime(healthData?.uptime || 0)} 
-            color="text-purple-600"
+            color="text-purple-400"
             isText
             isMobile={isMobile}
           />
         </div>
+
+        {!loading && healthData && (
+          <div className="mt-6 h-40 w-full bg-gray-900 rounded-lg p-3">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData}>
+                <XAxis dataKey="name" stroke="#9CA3AF" />
+                <YAxis stroke="#9CA3AF" />
+                <Tooltip 
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      return (
+                        <div className="bg-gray-800 border border-gray-700 p-2 rounded shadow-lg">
+                          <p className="text-emerald-400">{`Успешно: ${payload[0].value}`}</p>
+                          <p className="text-red-400">{`Неудачно: ${payload[1].value}`}</p>
+                          <p className="text-gray-300">{`Всего: ${(payload[0].value as number) + (payload[1].value as number)}`}</p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Bar dataKey="Успешно" fill="#10B981" />
+                <Bar dataKey="Неудачно" fill="#EF4444" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -122,10 +166,10 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, color, isText = false, isMobile }: StatCardProps) => {
   return (
-    <div className="bg-white rounded-md p-3 flex flex-col items-center justify-center shadow-sm border">
-      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-500 mb-1`}>{title}</div>
+    <div className="bg-gray-900 rounded-md p-3 flex flex-col items-center justify-center shadow-sm border border-gray-800">
+      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-400 mb-1`}>{title}</div>
       {value === null ? (
-        <Skeleton className="h-6 w-16" />
+        <Skeleton className="h-6 w-16 bg-gray-800" />
       ) : (
         <div className={`${color} ${isMobile ? 'text-lg' : 'text-xl'} font-semibold`}>
           {value}
