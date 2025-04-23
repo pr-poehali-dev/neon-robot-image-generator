@@ -28,8 +28,8 @@ export const StatisticsDonutChart = ({ data, loading, isMobile }: DonutChartProp
           paddingAngle={4}
           dataKey="value"
           labelLine={false}
-          label={({ name, percent }) => 
-            percent > 0.05 ? `${name} ${(percent * 100).toFixed(0)}%` : ''
+          label={({ percent }) => 
+            percent > 0.05 ? `${(percent * 100).toFixed(0)}%` : ''
           }
         >
           {data.map((entry, index) => (
