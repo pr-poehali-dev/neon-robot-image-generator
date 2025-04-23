@@ -26,16 +26,18 @@ export const useHealthData = () => {
   useEffect(() => {
     fetchHealthData();
     
+    // Обновляем каждые 3 секунды
     const intervalId = setInterval(() => {
       fetchHealthData();
-    }, 5000);
+    }, 3000);
     
     return () => clearInterval(intervalId);
   }, []);
 
+  // В API failed соответствует 429 RL
   const pieData: ChartDataItem[] = healthData ? [
     { name: 'Успешно', value: healthData.today_stats?.success ?? 0, color: '#10B981' },
-    { name: '429 RL', value: healthData.today_stats?.ratelimited ?? 0, color: '#6B7280' },
+    { name: '429 RL', value: healthData.today_stats?.failed ?? 0, color: '#6B7280' },
   ] : [];
 
   return {

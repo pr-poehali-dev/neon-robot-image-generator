@@ -41,20 +41,19 @@ const StatisticsPanel = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <StatisticsCard
-              title="Аптайм"
-              value={loading ? "Загрузка..." : formatUptime(healthData?.uptime || 0)}
+              title="Успешно"
+              value={loading ? "Загрузка..." : String(healthData?.today_stats?.success || 0)}
               loading={loading}
             />
             <StatisticsCard
-              title="Запросы сегодня"
+              title="429 RL"
+              value={loading ? "Загрузка..." : String(healthData?.today_stats?.failed || 0)}
+              loading={loading}
+            />
+            <StatisticsCard
+              title="Всего запросов"
               value={loading ? "Загрузка..." : String(healthData?.today_stats?.total || 0)}
               loading={loading}
-            />
-            <StatisticsCard
-              title="Запросов в очереди"
-              value={loading ? "Загрузка..." : `${queueSize}/${maxQueueSize} (${queuePercentage}%)`}
-              loading={loading}
-              percentage={queuePercentage}
             />
           </div>
         </div>
