@@ -4,17 +4,11 @@ interface GenerationIndicatorProps {
 
 export const GenerationIndicator = ({ isGenerating }: GenerationIndicatorProps) => {
   return (
-    <div className="flex items-center justify-center gap-2">
+    <div className="flex items-center justify-center">
       {isGenerating ? (
-        <>
-          <span className="inline-block h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-          <span>Идет генерация</span>
-        </>
+        <span className="inline-block h-4 w-4 rounded-full bg-green-500 animate-pulse"></span>
       ) : (
-        <>
-          <span className="inline-block h-2 w-2 rounded-full bg-gray-500"></span>
-          <span>Генерация неактивна</span>
-        </>
+        <span className="inline-block h-4 w-4 rounded-full bg-gray-500"></span>
       )}
     </div>
   );

@@ -5,7 +5,7 @@ import { StatisticsDonutChart } from "./statistics/StatisticsDonutChart";
 import { GenerationIndicator } from "./statistics/GenerationIndicator";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const StatisticsPanel = () => {
+export default function StatisticsPanel() {
   const { healthData, loading, error, pieData } = useHealthData();
   const isMobile = useIsMobile();
 
@@ -60,6 +60,4 @@ const StatisticsPanel = () => {
       </div>
     </Card>
   );
-};
-
-export default StatisticsPanel;
+}
