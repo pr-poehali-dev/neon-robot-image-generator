@@ -47,7 +47,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return (
     <BackgroundPathsWrapper>
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="flex flex-col items-center justify-center gap-2 mb-8">
+        <div className="flex flex-col items-center justify-center gap-2 mb-6">
           <div className="flex items-center gap-3 md:gap-6">
             <img 
               src="https://sokratic.ru/favicon.ico" 

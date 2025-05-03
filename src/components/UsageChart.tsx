@@ -38,6 +38,9 @@ export function UsageChart() {
     setRange 
   } = useRangeStats();
 
+  // Расчет стоимости на основе количества запросов
+  const totalCost = (totalCount * 0.0025).toFixed(2);
+
   // Форматирование данных для отображения на графике
   const chartData = data.map(item => ({
     ...item,
@@ -60,7 +63,7 @@ export function UsageChart() {
   };
 
   return (
-    <Card className="p-6 bg-gray-900 border-gray-800 text-white mt-8">
+    <Card className="p-6 bg-gray-900 border-gray-800 text-white mt-2 mb-8">
       <CardHeader className="p-0 pb-5">
         <div className="flex justify-between items-center">
           <CardTitle className="text-xl font-semibold">Использование API</CardTitle>
@@ -129,8 +132,9 @@ export function UsageChart() {
             <Card className="mt-5 bg-gray-900 border border-gray-700">
               <CardContent className="p-5 flex justify-between items-center">
                 <div>
-                  <div className="text-lg font-medium text-gray-400">Общая сумма запросов</div>
-                  <div className="text-4xl font-bold text-[#cae865]">{totalCount}</div>
+                  <div className="text-lg font-medium text-gray-400">Общая сумма</div>
+                  <div className="text-4xl font-bold text-[#cae865]">${totalCost}</div>
+                  <div className="text-sm text-gray-400">{totalCount} запросов × $0.0025</div>
                 </div>
                 <div className="text-5xl text-[#cae865]">$</div>
               </CardContent>
