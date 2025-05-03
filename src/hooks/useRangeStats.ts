@@ -47,7 +47,7 @@ export function useRangeStats(initialRange: DateRange = 'current_month') {
         const formattedStartDate = format(startDate, 'yyyy-MM-dd');
         const formattedEndDate = format(endDate, 'yyyy-MM-dd');
         
-        const response = await fetch(`http://skrt.poehali.dev/stats/range?start_date=${formattedStartDate}&end_date=${formattedEndDate}`);
+        const response = await fetch(`https://skrt.poehali.dev/stats/range?start_date=${formattedStartDate}&end_date=${formattedEndDate}`);
         
         if (!response.ok) {
           throw new Error('Не удалось загрузить статистику');
