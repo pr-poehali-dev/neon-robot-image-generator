@@ -81,8 +81,9 @@ export function UsageChart() {
     let monthStart, monthEnd;
     
     if (range === 'current_month') {
+      // Для текущего месяца берем все дни от начала до конца месяца
       monthStart = startOfMonth(today);
-      monthEnd = today;
+      monthEnd = endOfMonth(today); // Важное изменение: берем конец месяца вместо сегодняшнего дня
     } else { // previous_month
       const prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
       monthStart = startOfMonth(prevMonth);
