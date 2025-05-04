@@ -2,7 +2,7 @@
 import SkrtGenDemo from "@/components/SkrtGenDemo";
 import CodeSnippet from "@/components/CodeSnippet";
 import StatisticsPanel from "@/components/StatisticsPanel";
-import { UsageChart } from "@/components/usage-chart";
+import { UsageChart } from "@/components/UsageChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Code } from "lucide-react";

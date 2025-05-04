@@ -17,7 +17,7 @@ export const generateFullMonthData = (data: StatsDataItem[], range: DateRange): 
     : startOfMonth(new Date(today.getFullYear(), today.getMonth() - 1, 1));
   
   const monthEnd = range === 'current_month'
-    ? endOfMonth(today) // Изменено: всегда получаем конец месяца, а не текущую дату
+    ? today
     : endOfMonth(new Date(today.getFullYear(), today.getMonth() - 1, 1));
 
   // Получаем все дни в выбранном месяце

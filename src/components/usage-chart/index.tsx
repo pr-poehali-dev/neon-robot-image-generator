@@ -1,41 +1,71 @@
 
 import React from 'react';
-import { UsageBarChart } from './UsageBarChart';
-import { UsageSummary } from './UsageSummary';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Icon from '@/components/ui/icon';
+import { useRangeStats } from '@/hooks/useRangeStats';
 import { DateSelector } from './DateSelector';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart } from 'lucide-react';
+import { UsageSummary } from './UsageSummary';
+import { UsageBarChart } from './UsageBarChart';
+import { calculateTotalCost, exportToCSV, generateFullMonthData } from './utils';
 
-// Мока данных для отображения
-const mockData = Array.from({ length: 30 }, (_, i) => {
-  const date = new Date();
-  date.setDate(date.getDate() - 30 + i);
-  return {
-    name: date.toISOString().split('T')[0],
-    count: Math.floor(Math.random() * 100)
-  };
-});
+/**
+ * Основной компонент графика использования API
+ */
+export function UsageChart() {
+  // Константы
+  const chartColor = 'rgb(16, 185, 129)';
+  
+  // Получаем данные из хука
+  const { 
+    data, 
+    loading, 
+    error, 
+    totalCount, 
+    range, 
+    setRange 
+  } = useRangeStats();
 
-// Экспортируем компонент в том же формате, что и оригинальный UsageChart
-export const UsageChart: React.FC = () => {
+  // Расчет стоимости на основе количества запросов
+  const totalCost = calculateTotalCost(totalCount);
+
+  // Получаем полные данные для отображения всех дней
+  const chartData = generateFullMonthData(data, range);
+
+  // Обработчик экспорта данных
+  const handleExport = () => exportToCSV(data, range);
+
   return (
-    <Card className="overflow-hidden">
-      <CardHeader className="flex flex-row items-center gap-3">
-        <BarChart className="h-6 w-6 text-primary" />
-        <CardTitle>Статистика использования API</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <DateSelector />
-          <UsageSummary 
-            totalRequests={mockData.reduce((acc, item) => acc + item.count, 0)} 
-            averagePerDay={Math.round(mockData.reduce((acc, item) => acc + item.count, 0) / mockData.length)} 
+    <Card className="p-6 bg-gray-900 border-gray-800 text-white mt-2 mb-8">
+      <CardHeader className="p-0 pb-5">
+        <div className="flex justify-between items-center">
+          <CardTitle className="text-xl font-semibold">Использование API</CardTitle>
+          <DateSelector 
+            range={range} 
+            setRange={setRange} 
+            onExport={handleExport} 
           />
-          <UsageBarChart data={mockData} chartColor="#9b87f5" />
         </div>
+      </CardHeader>
+      <CardContent className="p-0">
+        <div className="mb-2 text-xl">Использование</div>
+        
+        {loading ? (
+          <div className="h-72 flex items-center justify-center">
+            <Icon name="Loader2" className="animate-spin h-8 w-8" style={{ color: chartColor }} />
+          </div>
+        ) : error ? (
+          <div className="h-72 flex items-center justify-center text-red-400">
+            {error}
+          </div>
+        ) : (
+          <>
+            <UsageBarChart data={chartData} chartColor={chartColor} />
+            <UsageSummary totalCount={totalCount} totalCost={totalCost} chartColor={chartColor} />
+          </>
+        )}
       </CardContent>
     </Card>
   );
-};
+}
 
 export default UsageChart;

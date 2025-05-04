@@ -35,9 +35,7 @@ export const UsageBarChart: React.FC<UsageBarChartProps> = ({ data, chartColor }
             tickFormatter={formatXAxis} 
             stroke="#666"
             tick={{ fill: '#999' }} 
-            // Изменяем параметры отображения тиков на оси X
-            interval={Math.ceil(data.length / 15) - 1} // Показываем примерно 15 тиков
-            minTickGap={15} // Минимальный отступ между тиками
+            interval="preserveStartEnd"
           />
           <YAxis 
             stroke="#666"
@@ -51,8 +49,7 @@ export const UsageBarChart: React.FC<UsageBarChartProps> = ({ data, chartColor }
             radius={[4, 4, 0, 0]} 
             animationDuration={300}
             name="Запросы"
-            // Уменьшаем максимальную ширину столбика для лучшего отображения
-            maxBarSize={15}
+            maxBarSize={100}
           />
         </BarChart>
       </ResponsiveContainer>
