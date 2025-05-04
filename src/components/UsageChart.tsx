@@ -3,9 +3,9 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Button } from "./ui/button";
-import { format, parseISO, getDaysInMonth, endOfMonth, startOfMonth, eachDayOfInterval } from 'date-fns';
+import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { DateRange, StatsDataItem, useRangeStats } from '@/hooks/useRangeStats';
+import { DateRange, useRangeStats } from '@/hooks/useRangeStats';
 import Icon from './ui/icon';
 
 // Компонент для отображения всплывающей подсказки при наведении на график
@@ -115,7 +115,7 @@ export function UsageChart() {
   const formatXAxis = (tickItem: string) => {
     try {
       const date = parseISO(tickItem);
-      return format(date, 'd/MM', { locale: ru });
+      return format(date, 'd', { locale: ru }); // Упрощенный формат - только день
     } catch {
       return '';
     }
@@ -131,6 +131,14 @@ export function UsageChart() {
           <div className="flex gap-2">
             <Button 
               variant="ghost" 
+              className="text-foreground"
+              onClick={exportToCSV}
+            >
+              <Icon name="FileText" className="mr-2 h-4 w-4" />
+              Экспорт .csv
+            </Button>
+            <Button 
+              variant="ghost" 
               className={isActiveButton('current_month')}
               onClick={() => setRange('current_month')}
             >
@@ -142,14 +150,6 @@ export function UsageChart() {
               onClick={() => setRange('previous_month')}
             >
               Предыдущий месяц
-            </Button>
-            <Button 
-              variant="ghost" 
-              className="text-foreground"
-              onClick={exportToCSV}
-            >
-              <Icon name="FileText" className="mr-2 h-4 w-4" />
-              Export .csv
             </Button>
           </div>
         </div>
@@ -172,7 +172,7 @@ export function UsageChart() {
                 <BarChart 
                   data={chartData} 
                   margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                  barCategoryGap={1} // Уменьшаем интервал между столбиками
+                  barCategoryGap={2} // Чуть увеличил интервал для лучшей читаемости
                   barGap={0}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
@@ -181,7 +181,9 @@ export function UsageChart() {
                     tickFormatter={formatXAxis} 
                     stroke="#666"
                     tick={{ fill: '#999' }} 
-                    interval="preserveStartEnd"
+                    interval={Math.ceil(chartData.length / 15)} // Динамический интервал в зависимости от количества дней
+                    axisLine={{ stroke: '#666' }}
+                    tickLine={{ stroke: '#666' }}
                   />
                   <YAxis 
                     stroke="#666"
@@ -195,7 +197,7 @@ export function UsageChart() {
                     radius={[4, 4, 0, 0]} 
                     animationDuration={300}
                     name="Запросы"
-                    maxBarSize={100}
+                    maxBarSize={20} // Уменьшил максимальную ширину столбца для лучшего отображения множества дней
                   />
                 </BarChart>
               </ResponsiveContainer>
