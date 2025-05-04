@@ -76,25 +76,26 @@ export function UsageChart() {
 
   // Создаем полный набор данных со всеми днями месяца
   const generateFullMonthData = () => {
-    if (!data || data.length === 0) return [];
-
     // Определяем начало и конец месяца в зависимости от выбранного диапазона
     const today = new Date();
-    const monthStart = range === 'current_month' 
-      ? startOfMonth(today)
-      : startOfMonth(new Date(today.getFullYear(), today.getMonth() - 1, 1));
+    let monthStart, monthEnd;
     
-    const monthEnd = range === 'current_month'
-      ? today
-      : endOfMonth(new Date(today.getFullYear(), today.getMonth() - 1, 1));
+    if (range === 'current_month') {
+      monthStart = startOfMonth(today);
+      monthEnd = today;
+    } else { // previous_month
+      const prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+      monthStart = startOfMonth(prevMonth);
+      monthEnd = endOfMonth(prevMonth);
+    }
 
     // Получаем все дни в выбранном месяце
     const allDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
     
-    // Преобразуем в формат для графика
+    // Преобразуем в формат для графика, даже если нет данных
     return allDays.map(day => {
       const dateString = format(day, 'yyyy-MM-dd');
-      const existingData = data.find(d => d.date === dateString);
+      const existingData = data?.find(d => d.date === dateString);
       
       return {
         name: dateString,
@@ -122,6 +123,15 @@ export function UsageChart() {
   };
 
   const chartColor = 'rgb(16, 185, 129)';
+
+  // Определяем интервал отображения меток на оси X в зависимости от количества дней
+  const getTickInterval = () => {
+    const daysCount = chartData.length;
+    if (daysCount <= 10) return 0; // Показать все метки
+    if (daysCount <= 20) return 1; // Показать каждую вторую метку
+    if (daysCount <= 31) return 2; // Показать каждую третью метку
+    return Math.floor(daysCount / 10); // Показать около 10 меток
+  };
 
   return (
     <Card className="p-6 bg-gray-900 border-gray-800 text-white mt-2 mb-8">
@@ -172,7 +182,7 @@ export function UsageChart() {
                 <BarChart 
                   data={chartData} 
                   margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                  barCategoryGap={2} // Чуть увеличил интервал для лучшей читаемости
+                  barCategoryGap={2} // Интервал между столбцами
                   barGap={0}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
@@ -181,7 +191,7 @@ export function UsageChart() {
                     tickFormatter={formatXAxis} 
                     stroke="#666"
                     tick={{ fill: '#999' }} 
-                    interval={Math.ceil(chartData.length / 15)} // Динамический интервал в зависимости от количества дней
+                    interval={getTickInterval()}
                     axisLine={{ stroke: '#666' }}
                     tickLine={{ stroke: '#666' }}
                   />
@@ -197,7 +207,7 @@ export function UsageChart() {
                     radius={[4, 4, 0, 0]} 
                     animationDuration={300}
                     name="Запросы"
-                    maxBarSize={20} // Уменьшил максимальную ширину столбца для лучшего отображения множества дней
+                    maxBarSize={20} // Уменьшенная максимальная ширина столбца
                   />
                 </BarChart>
               </ResponsiveContainer>
