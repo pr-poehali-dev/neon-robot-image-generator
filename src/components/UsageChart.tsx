@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -16,7 +15,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       const date = parseISO(label);
       const formattedDate = format(date, 'd MMMM', { locale: ru });
       return (
-        <div className="bg-gray-900 p-3 border border-gray-700 rounded-md shadow-lg">
+        <div className="bg-[#0d0d14] p-3 border border-gray-800 rounded-md shadow-lg">
           <p className="text-gray-400">{formattedDate}</p>
           <p className="font-semibold text-white">{`${payload[0].value} запросов`}</p>
         </div>
