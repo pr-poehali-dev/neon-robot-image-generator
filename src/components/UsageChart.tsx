@@ -7,6 +7,7 @@ import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval } from 'd
 import { ru } from 'date-fns/locale';
 import { DateRange, useRangeStats } from '@/hooks/useRangeStats';
 import Icon from './ui/icon';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Компонент для отображения всплывающей подсказки при наведении на график
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -29,6 +30,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export function UsageChart() {
+  const isMobile = useIsMobile();
   const { 
     data, 
     loading, 
@@ -83,7 +85,7 @@ export function UsageChart() {
     if (range === 'current_month') {
       // Для текущего месяца берем все дни от начала до конца месяца
       monthStart = startOfMonth(today);
-      monthEnd = endOfMonth(today); // Важное изменение: берем конец месяца вместо сегодняшнего дня
+      monthEnd = endOfMonth(today);
     } else { // previous_month
       const prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
       monthStart = startOfMonth(prevMonth);
@@ -128,28 +130,38 @@ export function UsageChart() {
   // Определяем интервал отображения меток на оси X в зависимости от количества дней
   const getTickInterval = () => {
     const daysCount = chartData.length;
-    if (daysCount <= 10) return 0; // Показать все метки
-    if (daysCount <= 20) return 1; // Показать каждую вторую метку
-    if (daysCount <= 31) return 2; // Показать каждую третью метку
-    return Math.floor(daysCount / 10); // Показать около 10 меток
+    if (isMobile) {
+      // На мобильных показываем меньше меток
+      if (daysCount <= 15) return 1; // Каждый второй день
+      return Math.floor(daysCount / 7); // ~7 меток на всю ширину
+    } else {
+      // Для десктопов
+      if (daysCount <= 10) return 0; // Показать все метки
+      if (daysCount <= 20) return 1; // Показать каждую вторую метку
+      if (daysCount <= 31) return 2; // Показать каждую третью метку
+      return Math.floor(daysCount / 10); // Показать около 10 меток
+    }
   };
 
   return (
-    <Card className="p-6 bg-gray-900 border-gray-800 text-white mt-2 mb-8">
-      <CardHeader className="p-0 pb-5">
-        <div className="flex justify-between items-center">
+    <Card className="w-full bg-gray-900 border-gray-800 text-white mt-2 mb-8">
+      <CardHeader className="p-4 md:p-6">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-2 md:space-y-0">
           <CardTitle className="text-xl font-semibold">Использование API</CardTitle>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            {!isMobile && (
+              <Button 
+                variant="ghost" 
+                className="text-foreground"
+                onClick={exportToCSV}
+              >
+                <Icon name="FileText" className="mr-2 h-4 w-4" />
+                Экспорт .csv
+              </Button>
+            )}
             <Button 
               variant="ghost" 
-              className="text-foreground"
-              onClick={exportToCSV}
-            >
-              <Icon name="FileText" className="mr-2 h-4 w-4" />
-              Экспорт .csv
-            </Button>
-            <Button 
-              variant="ghost" 
+              size={isMobile ? "sm" : "default"}
               className={isActiveButton('current_month')}
               onClick={() => setRange('current_month')}
             >
@@ -157,6 +169,7 @@ export function UsageChart() {
             </Button>
             <Button 
               variant="ghost" 
+              size={isMobile ? "sm" : "default"}
               className={isActiveButton('previous_month')}
               onClick={() => setRange('previous_month')}
             >
@@ -165,9 +178,7 @@ export function UsageChart() {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-0">
-        <div className="mb-2 text-xl">Использование</div>
-        
+      <CardContent className="p-4 md:p-6">
         {loading ? (
           <div className="h-72 flex items-center justify-center">
             <Icon name="Loader2" className="animate-spin h-8 w-8 text-[rgb(16,185,129)]" />
@@ -182,8 +193,13 @@ export function UsageChart() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
                   data={chartData} 
-                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                  barCategoryGap={2} // Интервал между столбцами
+                  margin={{ 
+                    top: 20, 
+                    right: isMobile ? 10 : 30, 
+                    left: isMobile ? 5 : 20, 
+                    bottom: 20 
+                  }}
+                  barCategoryGap={isMobile ? 1 : 2}
                   barGap={0}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
@@ -191,15 +207,16 @@ export function UsageChart() {
                     dataKey="name" 
                     tickFormatter={formatXAxis} 
                     stroke="#666"
-                    tick={{ fill: '#999' }} 
+                    tick={{ fill: '#999', fontSize: isMobile ? 10 : 12 }} 
                     interval={getTickInterval()}
                     axisLine={{ stroke: '#666' }}
                     tickLine={{ stroke: '#666' }}
                   />
                   <YAxis 
                     stroke="#666"
-                    tick={{ fill: '#999' }} 
+                    tick={{ fill: '#999', fontSize: isMobile ? 10 : 12 }} 
                     allowDecimals={false}
+                    width={isMobile ? 25 : 40}
                   />
                   <Tooltip content={<CustomTooltip />} />
                   <Bar 
@@ -208,20 +225,20 @@ export function UsageChart() {
                     radius={[4, 4, 0, 0]} 
                     animationDuration={300}
                     name="Запросы"
-                    maxBarSize={20} // Уменьшенная максимальная ширина столбца
+                    maxBarSize={isMobile ? 10 : 20} // Уменьшаем ширину столбцов на мобильных
                   />
                 </BarChart>
               </ResponsiveContainer>
             </div>
             
             <Card className="mt-5 bg-gray-900 border border-gray-700">
-              <CardContent className="p-5 flex justify-between items-center">
+              <CardContent className="p-4 md:p-5 flex justify-between items-center">
                 <div>
-                  <div className="text-lg font-medium text-gray-400">Общая сумма</div>
-                  <div className="text-4xl font-bold text-[rgb(16,185,129)]">${totalCost}</div>
-                  <div className="text-sm text-gray-400">{totalCount} запросов × $0.0025</div>
+                  <div className="text-sm md:text-lg font-medium text-gray-400">Общая сумма</div>
+                  <div className="text-2xl md:text-4xl font-bold text-[rgb(16,185,129)]">${totalCost}</div>
+                  <div className="text-xs md:text-sm text-gray-400">{totalCount} запросов × $0.0025</div>
                 </div>
-                <div className="text-5xl text-[rgb(16,185,129)]">$</div>
+                <div className="text-3xl md:text-5xl text-[rgb(16,185,129)]">$</div>
               </CardContent>
             </Card>
           </>
