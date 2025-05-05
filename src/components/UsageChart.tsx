@@ -219,7 +219,7 @@ export function UsageChart() {
                   />
                   <Tooltip 
                     content={<CustomTooltip />} 
-                    cursor={{ fill: '#222', opacity: 0.4 }} 
+                    cursor={{ fill: '#444', opacity: 0.5 }} 
                   />
                   <Bar 
                     dataKey="count" 
