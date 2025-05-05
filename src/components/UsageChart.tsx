@@ -217,7 +217,10 @@ export function UsageChart() {
                     allowDecimals={false}
                     width={isMobile ? 25 : 40}
                   />
-                  <Tooltip content={<CustomTooltip />} />
+                  <Tooltip 
+                    content={<CustomTooltip />} 
+                    cursor={{ fill: '#111', opacity: 0.2 }} 
+                  />
                   <Bar 
                     dataKey="count" 
                     fill={chartColor}
