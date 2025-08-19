@@ -14,10 +14,13 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     try {
       const date = parseISO(label);
       const formattedDate = format(date, 'd MMMM', { locale: ru });
+      const requestCount = payload[0].value;
+      const cost = (requestCount * 0.0025).toFixed(2);
       return (
         <div className="bg-[#0d0d14] p-3 border border-gray-800 rounded-md shadow-lg">
           <p className="text-gray-400">{formattedDate}</p>
-          <p className="font-semibold text-white">{`${payload[0].value} запросов`}</p>
+          <p className="font-semibold text-white">{`${requestCount} запросов`}</p>
+          <p className="font-semibold text-[rgb(16,185,129)]">${cost}</p>
         </div>
       );
     } catch (e) {
