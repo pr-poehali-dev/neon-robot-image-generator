@@ -23,15 +23,6 @@ export const StatisticsDonutChart = ({ data, loading, isMobile }: DonutChartProp
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>
-        <defs>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
         <Pie
           data={data}
           cx="50%"
@@ -44,14 +35,13 @@ export const StatisticsDonutChart = ({ data, loading, isMobile }: DonutChartProp
           label={({ percent }) => 
             percent > 0.05 ? `${(percent * 100).toFixed(0)}%` : ''
           }
-          stroke="rgba(255,255,255,0.1)"
-          strokeWidth={1}
+          stroke="rgba(255,255,255,0.15)"
+          strokeWidth={2}
         >
           {data.map((entry, index) => (
             <Cell 
               key={`cell-${index}`} 
               fill={entry.color}
-              filter="url(#glow)"
             />
           ))}
         </Pie>
@@ -67,8 +57,8 @@ export const StatisticsDonutChart = ({ data, loading, isMobile }: DonutChartProp
               };
               
               return (
-                <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-3 rounded-2xl shadow-2xl">
-                  <p className={`font-light ${getColorClass(payload[0].name)}`}>
+                <div className="bg-gray-900/95 border border-white/30 p-3 rounded-xl shadow-2xl backdrop-blur-sm">
+                  <p className={`font-medium ${getColorClass(payload[0].name)}`}>
                     {`${payload[0].name}: ${payload[0].value}`}
                   </p>
                 </div>
