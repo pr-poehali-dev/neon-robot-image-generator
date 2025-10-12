@@ -146,9 +146,9 @@ export function UsageChart() {
   };
 
   return (
-    <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 shadow-2xl mt-2 mb-8 overflow-hidden">
+    <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 shadow-2xl overflow-hidden h-full flex flex-col">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 pointer-events-none" />
-      <div className="relative p-4 md:p-6">
+      <div className="relative p-4 md:p-5">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 mb-6">
           <h2 className="text-2xl font-light tracking-wide text-white/90">Использование API</h2>
           <div className="flex flex-wrap gap-2">
@@ -184,7 +184,7 @@ export function UsageChart() {
           </div>
         </div>
       </div>
-      <div className="relative px-4 md:px-6 pb-6">
+      <div className="relative px-4 md:px-5 pb-4 flex-1 flex flex-col">
         {loading ? (
           <div className="h-72 flex items-center justify-center">
             <Icon name="Loader2" className="animate-spin h-8 w-8 text-emerald-400" />
@@ -195,7 +195,7 @@ export function UsageChart() {
           </div>
         ) : (
           <>
-            <div className="h-72 w-full">
+            <div className="flex-1 w-full min-h-0">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
                   data={chartData} 
@@ -246,7 +246,7 @@ export function UsageChart() {
               </ResponsiveContainer>
             </div>
             
-            <div className="mt-6 backdrop-blur-xl bg-gradient-to-br from-emerald-500/10 to-blue-500/10 rounded-2xl border border-white/20 p-5 md:p-6">
+            <div className="mt-4 backdrop-blur-xl bg-gradient-to-br from-emerald-500/10 to-blue-500/10 rounded-2xl border border-white/20 p-4">
               <div className="flex justify-between items-center">
                 <div>
                   <div className="text-sm md:text-base font-light text-white/50 uppercase tracking-wider">Общая сумма</div>
