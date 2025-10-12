@@ -195,7 +195,7 @@ export function UsageChart() {
           </div>
         ) : (
           <>
-            <div className="flex-1 w-full min-h-0">
+            <div className="w-full" style={{ height: '350px' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
                   data={chartData} 
@@ -205,7 +205,7 @@ export function UsageChart() {
                     left: isMobile ? 5 : 20, 
                     bottom: 20 
                   }}
-                  barCategoryGap={isMobile ? "15%" : "20%"}
+                  barCategoryGap={isMobile ? "25%" : "30%"}
                   barGap={0}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
@@ -234,7 +234,7 @@ export function UsageChart() {
                     radius={[8, 8, 0, 0]} 
                     animationDuration={500}
                     name="Запросы"
-                    maxBarSize={isMobile ? 20 : 40}
+                    maxBarSize={isMobile ? 30 : 50}
                   />
                   <defs>
                     <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
