@@ -64,53 +64,55 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none" />
                 <div className="relative p-6 md:p-8">
                   <CollapsibleTrigger className="w-full">
-                    <div className="flex items-center justify-between gap-3 mb-6 cursor-pointer group">
+                    <div className="flex items-center justify-between gap-3 cursor-pointer group">
                       <div className="flex items-center gap-3">
                         <Code className="h-6 w-6 text-emerald-400" />
                         <h2 className="text-2xl font-light tracking-wide text-white/90">Интеграция в ваш проект</h2>
                       </div>
                       <ChevronDown 
-                        className={`h-5 w-5 text-white/60 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                        className={`h-5 w-5 text-white/60 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
                       />
                     </div>
                   </CollapsibleTrigger>
                   
-                  <CollapsibleContent>
-                    <p className="mb-6 text-white/60 font-light">
-                      Для доступа к API требуется секретный ключ X-Auth, который
-                      необходимо передать в заголовке запроса.
-                    </p>
+                  <CollapsibleContent className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2 duration-300">
+                    <div className="pt-6">
+                      <p className="mb-6 text-white/60 font-light">
+                        Для доступа к API требуется секретный ключ X-Auth, который
+                        необходимо передать в заголовке запроса.
+                      </p>
 
-                    <Tabs defaultValue="typescript" className="mt-6">
-                      <TabsList className="bg-white/5 border border-white/10 p-1 rounded-xl">
-                        <TabsTrigger 
-                          value="typescript"
-                          className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-300 rounded-lg font-light"
-                        >
-                          TypeScript
-                        </TabsTrigger>
-                        <TabsTrigger 
-                          value="curl"
-                          className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-300 rounded-lg font-light"
-                        >
-                          cURL
-                        </TabsTrigger>
-                      </TabsList>
-                      <TabsContent value="typescript">
-                        <CodeSnippet
-                          code={typescriptCode}
-                          language="typescript"
-                          title="generate-image.ts"
-                        />
-                      </TabsContent>
-                      <TabsContent value="curl">
-                        <CodeSnippet
-                          code={curlCode}
-                          language="bash"
-                          title="request.sh"
-                        />
-                      </TabsContent>
-                    </Tabs>
+                      <Tabs defaultValue="typescript" className="mt-6">
+                        <TabsList className="bg-white/5 border border-white/10 p-1 rounded-xl">
+                          <TabsTrigger 
+                            value="typescript"
+                            className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-300 rounded-lg font-light"
+                          >
+                            TypeScript
+                          </TabsTrigger>
+                          <TabsTrigger 
+                            value="curl"
+                            className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-300 rounded-lg font-light"
+                          >
+                            cURL
+                          </TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="typescript">
+                          <CodeSnippet
+                            code={typescriptCode}
+                            language="typescript"
+                            title="generate-image.ts"
+                          />
+                        </TabsContent>
+                        <TabsContent value="curl">
+                          <CodeSnippet
+                            code={curlCode}
+                            language="bash"
+                            title="request.sh"
+                          />
+                        </TabsContent>
+                      </Tabs>
+                    </div>
                   </CollapsibleContent>
                 </div>
               </div>
