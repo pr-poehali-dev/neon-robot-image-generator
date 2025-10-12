@@ -13,12 +13,12 @@ export const StatisticsCard = ({
   loading
 }: StatisticsCardProps) => {
   return (
-    <div className="backdrop-blur-xl bg-white/[0.03] rounded-2xl border border-white/10 p-5 hover:bg-white/[0.06] transition-all duration-300 shadow-lg hover:shadow-emerald-500/10">
-      <h4 className="text-xs font-light tracking-wider text-white/50 uppercase mb-2">{title}</h4>
+    <div className="backdrop-blur-xl bg-white/[0.02] rounded-xl border border-white/5 px-4 py-3 transition-all duration-200">
+      <h4 className="text-[10px] font-light tracking-wider text-white/40 uppercase mb-1">{title}</h4>
       {loading || value === null ? (
-        <Skeleton className="h-8 w-20 bg-white/5 rounded-lg" />
+        <Skeleton className="h-7 w-16 bg-white/5 rounded" />
       ) : (
-        <p className="text-3xl font-light text-white/95 tracking-tight">
+        <p className="text-2xl font-light text-white/90 tracking-tight">
           {value}
         </p>
       )}

@@ -77,19 +77,17 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
         </div>
         
         <div className="flex-1 flex flex-col">
-          <HighlightsPanel />
+          <GeneratorForm 
+            prompt={prompt}
+            setPrompt={setPrompt}
+            apiKey={apiKey}
+            setApiKey={setApiKey}
+            isLoading={isLoading}
+            onGenerateClick={() => handleGenerateImage()}
+            onRandomPromptClick={handleGenerateRandomPrompt}
+          />
         </div>
       </div>
-      
-      <GeneratorForm 
-        prompt={prompt}
-        setPrompt={setPrompt}
-        apiKey={apiKey}
-        setApiKey={setApiKey}
-        isLoading={isLoading}
-        onGenerateClick={() => handleGenerateImage()}
-        onRandomPromptClick={handleGenerateRandomPrompt}
-      />
     </div>
   );
 };
