@@ -24,8 +24,10 @@ export function useRangeStats(initialRange: DateRange = "current_month") {
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
+    const fetchData = async (isInitial = false) => {
+      if (isInitial) {
+        setLoading(true);
+      }
       setError(null);
 
       try {
@@ -37,7 +39,6 @@ export function useRangeStats(initialRange: DateRange = "current_month") {
           startDate = startOfMonth(today);
           endDate = today;
         } else {
-          // previous month
           const prevMonth = subMonths(today, 1);
           startDate = startOfMonth(prevMonth);
           endDate = endOfMonth(prevMonth);
@@ -59,7 +60,6 @@ export function useRangeStats(initialRange: DateRange = "current_month") {
         if (result.success) {
           setData(result.data);
 
-          // Вычисляем общую сумму
           const sum = result.data.reduce((acc, item) => acc + item.count, 0);
           setTotalCount(sum);
         } else {
@@ -68,11 +68,19 @@ export function useRangeStats(initialRange: DateRange = "current_month") {
       } catch (err) {
         setError(err instanceof Error ? err.message : "Неизвестная ошибка");
       } finally {
-        setLoading(false);
+        if (isInitial) {
+          setLoading(false);
+        }
       }
     };
 
-    fetchData();
+    fetchData(true);
+
+    const interval = setInterval(() => {
+      fetchData(false);
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, [range]);
 
   return {
