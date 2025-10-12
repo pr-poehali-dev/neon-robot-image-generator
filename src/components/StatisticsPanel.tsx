@@ -33,10 +33,21 @@ export default function StatisticsPanel() {
     <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-5 shadow-2xl overflow-hidden h-full flex flex-col">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 pointer-events-none" />
       <div className="relative flex flex-col h-full justify-between">
-        <h3 className="text-[11px] font-light tracking-widest text-white/40 text-center uppercase mb-4">SKRT.POEHALI</h3>
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <h3 className="text-[11px] font-light tracking-widest text-white/40 uppercase">SKRT.POEHALI</h3>
+          <div className="relative">
+            <div 
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                isGenerating 
+                  ? 'bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50' 
+                  : 'bg-gray-500'
+              }`}
+            />
+          </div>
+        </div>
         
         <div className="flex-1 flex items-center justify-center">
-          <div className="relative w-32 h-32">
+          <div className="relative w-40 h-40">
             <svg viewBox="0 0 100 100" className="transform -rotate-90">
               <defs>
                 <linearGradient id="successGradient" x1="0%" y1="0%" x2="100%" y2="100%">

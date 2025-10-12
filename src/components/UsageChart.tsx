@@ -150,17 +150,7 @@ export function UsageChart() {
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 pointer-events-none" />
       <div className="relative p-4 md:p-5">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 mb-6">
-          <h2 className="text-2xl font-light tracking-wide text-white/90">Использование API</h2>
           <div className="flex flex-wrap gap-2">
-            {!isMobile && (
-              <button
-                onClick={exportToCSV}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 text-sm font-light transition-all duration-200 flex items-center gap-2"
-              >
-                <Icon name="FileText" className="h-4 w-4" />
-                Экспорт .csv
-              </button>
-            )}
             <button
               onClick={() => setRange('current_month')}
               className={`px-4 py-2 rounded-xl text-sm font-light transition-all duration-200 ${
@@ -182,6 +172,15 @@ export function UsageChart() {
               Предыдущий месяц
             </button>
           </div>
+          {!isMobile && (
+            <button
+              onClick={exportToCSV}
+              className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 text-sm font-light transition-all duration-200 flex items-center gap-2"
+            >
+              <Icon name="FileText" className="h-4 w-4" />
+              Экспорт .csv
+            </button>
+          )}
         </div>
       </div>
       <div className="relative px-4 md:px-5 pb-4 flex-1 flex flex-col">
