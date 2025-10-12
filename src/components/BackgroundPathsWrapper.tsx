@@ -1,24 +1,15 @@
 import React from "react";
-import { CanvasRevealEffect } from "./ui/canvas-reveal-effect";
 
 const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-      {/* Canvas Reveal Effect на весь экран */}
-      <div className="fixed inset-0">
-        <CanvasRevealEffect
-          animationSpeed={1.2}
-          containerClassName="bg-black"
-          colors={[
-            [30, 58, 95],
-            [15, 35, 70],
-          ]}
-          dotSize={80}
-          totalSize={100}
-          opacities={[0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65]}
-          showGradient={false}
-        />
-      </div>
+      {/* Космический радиальный градиент */}
+      <div 
+        className="fixed inset-0" 
+        style={{ 
+          background: "radial-gradient(circle at center, #1a2840 0%, #0a1420 50%, #000000 100%)"
+        }} 
+      />
       
       {/* Контент поверх фона */}
       <div className="relative z-10">
