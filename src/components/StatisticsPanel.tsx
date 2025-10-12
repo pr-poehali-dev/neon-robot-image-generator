@@ -23,10 +23,10 @@ export default function StatisticsPanel() {
   const queuePercentage = Math.min(100, Math.floor((queueSize / maxQueueSize) * 100));
   
   return (
-    <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-6 py-8 shadow-2xl mt-6 mb-10 overflow-hidden">
+    <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-6 shadow-2xl overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 pointer-events-none" />
-      <div className="relative flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
-        <div className="w-full md:w-1/3 h-64 p-5 flex items-center justify-center">
+      <div className="relative flex flex-col md:flex-row items-start gap-6">
+        <div className="w-48 h-48 flex-shrink-0">
           <StatisticsDonutChart
             data={pieData}
             loading={loading}
@@ -34,13 +34,13 @@ export default function StatisticsPanel() {
           />
         </div>
 
-        <div className="w-full md:w-2/3 space-y-4">
-          <div className="flex items-center justify-between mb-4">
+        <div className="flex-1 space-y-4">
+          <div className="flex items-center justify-between">
             <h3 className="text-2xl font-light tracking-wide text-white/90">Статистика</h3>
             <GenerationIndicator isGenerating={isGenerating} />
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <StatisticsCard
               title="Успешно"
               value={loading ? "Загрузка..." : String(healthData?.today_stats?.success || 0)}

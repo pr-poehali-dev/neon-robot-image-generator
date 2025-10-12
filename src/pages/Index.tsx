@@ -6,8 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Code } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import BackgroundPathsWrapper from "@/components/BackgroundPathsWrapper";
-import HighlightsPanel from "@/components/skrt-gen-demo/highlights-panel";
-import ImagePreviewSection from "@/components/ImagePreviewSection";
 
 const Index = () => {
   const isMobile = useIsMobile();
@@ -67,17 +65,9 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="space-y-4">
-            <HighlightsPanel />
-          </div>
-          <div>
-            <ImagePreviewSection />
-          </div>
+          <StatisticsPanel />
+          <UsageChart />
         </div>
-
-        <StatisticsPanel />
-
-        <UsageChart />
 
         <div className="space-y-10">
           <section>
