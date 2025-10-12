@@ -3,18 +3,19 @@ import { Meteors } from "./ui/meteors";
 
 const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="relative min-h-screen w-full bg-background overflow-hidden">
-      {/* Тёмный фон с сеткой */}
-      <div className="absolute inset-0 bg-background" 
-           style={{ 
-             background: "hsl(var(--background))",
-             backgroundImage: "radial-gradient(hsla(var(--primary) / 0.15) 1px, transparent 1px)",
-             backgroundSize: "40px 40px" 
-           }} 
+    <div className="relative min-h-screen w-full overflow-hidden">
+      {/* Космический фон */}
+      <div 
+        className="fixed inset-0" 
+        style={{ 
+          background: "radial-gradient(ellipse at center, #0f1729 0%, #050a14 50%, #000000 100%)"
+        }} 
       />
       
-      {/* Meteors эффект */}
-      <Meteors number={30} />
+      {/* Meteors эффект на всю высоту */}
+      <div className="fixed inset-0 pointer-events-none">
+        <Meteors number={40} />
+      </div>
       
       {/* Контент поверх фона */}
       <div className="relative z-10">
