@@ -1,20 +1,27 @@
 import React from "react";
-import { Meteors } from "./ui/meteors";
+import { FlickeringGrid } from "./ui/flickering-grid";
 
 const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-      {/* Космический фон */}
+      {/* Темный космический градиент */}
       <div 
         className="fixed inset-0" 
         style={{ 
-          background: "radial-gradient(ellipse at center, #0f1729 0%, #050a14 50%, #000000 100%)"
+          background: "radial-gradient(ellipse at center, #0a1628 0%, #030912 50%, #000000 100%)"
         }} 
       />
       
-      {/* Meteors эффект на всю высоту */}
+      {/* Flickering Grid эффект */}
       <div className="fixed inset-0 pointer-events-none">
-        <Meteors number={40} />
+        <FlickeringGrid
+          className="absolute inset-0 w-full h-full"
+          squareSize={4}
+          gridGap={6}
+          color="#1e3a5f"
+          maxOpacity={0.15}
+          flickerChance={0.05}
+        />
       </div>
       
       {/* Контент поверх фона */}
