@@ -14,7 +14,7 @@ const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ child
             [15, 35, 70],
           ]}
           dotSize={2}
-          opacities={[0.1, 0.1, 0.15, 0.15, 0.2, 0.2, 0.25, 0.25, 0.3, 0.35]}
+          opacities={[0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0, 1.0]}
           showGradient={false}
         />
       </div>
