@@ -17,10 +17,10 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       const requestCount = payload[0].value;
       const cost = (requestCount * 0.0025).toFixed(2);
       return (
-        <div className="bg-[#0d0d14] p-3 border border-gray-800 rounded-md shadow-lg">
-          <p className="text-gray-400">{formattedDate}</p>
-          <p className="font-semibold text-white">{`${requestCount} запросов`}</p>
-          <p className="font-semibold text-[rgb(16,185,129)]">${cost}</p>
+        <div className="backdrop-blur-xl bg-white/10 p-4 border border-white/20 rounded-2xl shadow-2xl">
+          <p className="text-white/60 text-sm font-light">{formattedDate}</p>
+          <p className="font-light text-white text-lg mt-1">{`${requestCount} запросов`}</p>
+          <p className="font-medium text-emerald-400 text-lg">${cost}</p>
         </div>
       );
     } catch (e) {
@@ -146,47 +146,51 @@ export function UsageChart() {
   };
 
   return (
-    <Card className="w-full bg-gray-900 border-gray-800 text-white mt-2 mb-8">
-      <CardHeader className="p-4 md:p-6">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-2 md:space-y-0">
-          <CardTitle className="text-xl font-semibold">Использование API</CardTitle>
+    <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 shadow-2xl mt-2 mb-8 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 pointer-events-none" />
+      <div className="relative p-4 md:p-6">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0 mb-6">
+          <h2 className="text-2xl font-light tracking-wide text-white/90">Использование API</h2>
           <div className="flex flex-wrap gap-2">
             {!isMobile && (
-              <Button 
-                variant="ghost" 
-                className="text-foreground"
+              <button
                 onClick={exportToCSV}
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 text-sm font-light transition-all duration-200 flex items-center gap-2"
               >
-                <Icon name="FileText" className="mr-2 h-4 w-4" />
+                <Icon name="FileText" className="h-4 w-4" />
                 Экспорт .csv
-              </Button>
+              </button>
             )}
-            <Button 
-              variant="ghost" 
-              size={isMobile ? "sm" : "default"}
-              className={isActiveButton('current_month')}
+            <button
               onClick={() => setRange('current_month')}
+              className={`px-4 py-2 rounded-xl text-sm font-light transition-all duration-200 ${
+                range === 'current_month'
+                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                  : 'bg-white/5 hover:bg-white/10 text-white/70 border border-white/10'
+              }`}
             >
               Текущий месяц
-            </Button>
-            <Button 
-              variant="ghost" 
-              size={isMobile ? "sm" : "default"}
-              className={isActiveButton('previous_month')}
+            </button>
+            <button
               onClick={() => setRange('previous_month')}
+              className={`px-4 py-2 rounded-xl text-sm font-light transition-all duration-200 ${
+                range === 'previous_month'
+                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                  : 'bg-white/5 hover:bg-white/10 text-white/70 border border-white/10'
+              }`}
             >
               Предыдущий месяц
-            </Button>
+            </button>
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="p-4 md:p-6">
+      </div>
+      <div className="relative px-4 md:px-6 pb-6">
         {loading ? (
           <div className="h-72 flex items-center justify-center">
-            <Icon name="Loader2" className="animate-spin h-8 w-8 text-[rgb(16,185,129)]" />
+            <Icon name="Loader2" className="animate-spin h-8 w-8 text-emerald-400" />
           </div>
         ) : error ? (
-          <div className="h-72 flex items-center justify-center text-red-400">
+          <div className="h-72 flex items-center justify-center text-red-300/80">
             {error}
           </div>
         ) : (
@@ -204,51 +208,57 @@ export function UsageChart() {
                   barCategoryGap={isMobile ? 1 : 2}
                   barGap={0}
                 >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
                   <XAxis 
                     dataKey="name" 
                     tickFormatter={formatXAxis} 
-                    stroke="#666"
-                    tick={{ fill: '#999', fontSize: isMobile ? 10 : 12 }} 
+                    stroke="rgba(255,255,255,0.2)"
+                    tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: isMobile ? 10 : 12 }} 
                     interval={getTickInterval()}
-                    axisLine={{ stroke: '#666' }}
-                    tickLine={{ stroke: '#666' }}
+                    axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+                    tickLine={{ stroke: 'rgba(255,255,255,0.1)' }}
                   />
                   <YAxis 
-                    stroke="#666"
-                    tick={{ fill: '#999', fontSize: isMobile ? 10 : 12 }} 
+                    stroke="rgba(255,255,255,0.2)"
+                    tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: isMobile ? 10 : 12 }} 
                     allowDecimals={false}
                     width={isMobile ? 25 : 40}
                   />
                   <Tooltip 
                     content={<CustomTooltip />} 
-                    cursor={{ fill: '#444', opacity: 0.5 }} 
+                    cursor={{ fill: 'rgba(255,255,255,0.05)', opacity: 0.8 }} 
                   />
                   <Bar 
                     dataKey="count" 
-                    fill={chartColor}
-                    radius={[4, 4, 0, 0]} 
-                    animationDuration={300}
+                    fill="url(#barGradient)"
+                    radius={[8, 8, 0, 0]} 
+                    animationDuration={500}
                     name="Запросы"
-                    maxBarSize={isMobile ? 10 : 20} // Уменьшаем ширину столбцов на мобильных
+                    maxBarSize={isMobile ? 12 : 24}
                   />
+                  <defs>
+                    <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="rgb(16, 185, 129)" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="rgb(5, 150, 105)" stopOpacity={0.6} />
+                    </linearGradient>
+                  </defs>
                 </BarChart>
               </ResponsiveContainer>
             </div>
             
-            <Card className="mt-5 bg-gray-900 border border-gray-700">
-              <CardContent className="p-4 md:p-5 flex justify-between items-center">
+            <div className="mt-6 backdrop-blur-xl bg-gradient-to-br from-emerald-500/10 to-blue-500/10 rounded-2xl border border-white/20 p-5 md:p-6">
+              <div className="flex justify-between items-center">
                 <div>
-                  <div className="text-sm md:text-lg font-medium text-gray-400">Общая сумма</div>
-                  <div className="text-2xl md:text-4xl font-bold text-[rgb(16,185,129)]">${totalCost}</div>
-                  <div className="text-xs md:text-sm text-gray-400">{totalCount} запросов × $0.0025</div>
+                  <div className="text-sm md:text-base font-light text-white/50 uppercase tracking-wider">Общая сумма</div>
+                  <div className="text-3xl md:text-5xl font-light text-emerald-400 mt-1 tracking-tight">${totalCost}</div>
+                  <div className="text-xs md:text-sm text-white/40 mt-2 font-light">{totalCount} запросов × $0.0025</div>
                 </div>
-                <div className="text-3xl md:text-5xl text-[rgb(16,185,129)]">$</div>
-              </CardContent>
-            </Card>
+                <div className="text-4xl md:text-6xl text-emerald-400/30 font-extralight">$</div>
+              </div>
+            </div>
           </>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

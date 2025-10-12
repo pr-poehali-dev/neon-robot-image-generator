@@ -10,12 +10,13 @@ const ImagePreview = ({ imageUrl, onImageError, isLoading }: ImagePreviewProps) 
 
   return (
     <div 
-      className="aspect-square w-full rounded-2xl overflow-hidden bg-black/20 backdrop-blur-sm border border-[#252535] cursor-pointer transition-transform hover:scale-[1.02] flex items-center justify-center"
+      className="relative aspect-square w-full rounded-3xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/10 flex items-center justify-center group"
       onClick={imageUrl ? openImageInNewTab : undefined}
     >
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       {isLoading ? (
         <div className="flex items-center justify-center h-full w-full">
-          <Loader2 className="h-12 w-12 animate-spin text-white/70" />
+          <Loader2 className="h-12 w-12 animate-spin text-emerald-400" />
         </div>
       ) : imageUrl ? (
         <img 

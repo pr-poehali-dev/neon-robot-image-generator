@@ -45,25 +45,25 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
 
   return (
     <BackgroundPathsWrapper>
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="flex flex-col items-center justify-center gap-2 mb-6">
-          <div className="flex items-center gap-3 md:gap-6">
+      <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl">
+        <div className="flex flex-col items-center justify-center gap-3 mb-10">
+          <div className="flex items-center gap-4 md:gap-8">
             <img
               src="https://sokratic.ru/favicon.ico"
               alt="Sokratic"
-              className="h-8 md:h-10"
+              className="h-10 md:h-12 drop-shadow-lg"
             />
-            <h1 className={`${isMobile ? "text-2xl" : "text-4xl"} font-bold`}>
+            <h1 className={`${isMobile ? "text-3xl" : "text-5xl"} font-extralight tracking-tight text-white/95`}>
               <span>SKRT.POEHALI</span>
             </h1>
             <img
               src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg"
               alt="POEHALI"
-              className="h-8 md:h-10"
+              className="h-10 md:h-12 drop-shadow-lg"
             />
           </div>
           <p
-            className={`${isMobile ? "text-sm" : "text-base"} text-muted-foreground text-center`}
+            className={`${isMobile ? "text-sm" : "text-lg"} text-white/50 text-center font-light tracking-wide`}
           >
             интерактивная инструкция для инженеров sokratic.ru
           </p>
@@ -79,21 +79,32 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
           </section>
 
           <section className="mt-12">
-            <Card>
-              <CardHeader className="flex flex-row items-center gap-3">
-                <Code className="h-6 w-6 text-primary" />
-                <CardTitle>Интеграция в ваш проект</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-6">
+            <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none" />
+              <div className="relative p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <Code className="h-6 w-6 text-emerald-400" />
+                  <h2 className="text-2xl font-light tracking-wide text-white/90">Интеграция в ваш проект</h2>
+                </div>
+                <p className="mb-6 text-white/60 font-light">
                   Для доступа к API требуется секретный ключ X-Auth, который
                   необходимо передать в заголовке запроса.
                 </p>
 
-                <Tabs defaultValue="typescript" className="mt-4">
-                  <TabsList>
-                    <TabsTrigger value="typescript">TypeScript</TabsTrigger>
-                    <TabsTrigger value="curl">cURL</TabsTrigger>
+                <Tabs defaultValue="typescript" className="mt-6">
+                  <TabsList className="bg-white/5 border border-white/10 p-1 rounded-xl">
+                    <TabsTrigger 
+                      value="typescript"
+                      className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-300 rounded-lg font-light"
+                    >
+                      TypeScript
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="curl"
+                      className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-300 rounded-lg font-light"
+                    >
+                      cURL
+                    </TabsTrigger>
                   </TabsList>
                   <TabsContent value="typescript">
                     <CodeSnippet
@@ -110,8 +121,8 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
                     />
                   </TabsContent>
                 </Tabs>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </section>
         </div>
       </div>
