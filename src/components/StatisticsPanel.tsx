@@ -92,16 +92,28 @@ export default function StatisticsPanel() {
         </div>
         
         <div className="space-y-2 mt-4">
-          <StatisticsCard
-            title="УСПЕШНО"
-            value={loading ? "—" : String(success)}
-            loading={loading}
-          />
-          <StatisticsCard
-            title="429 RL"
-            value={loading ? "—" : String(failed)}
-            loading={loading}
-          />
+          <div className="backdrop-blur-xl bg-white/[0.02] rounded-xl border border-white/5 px-4 py-3 transition-all duration-200">
+            <h4 className="text-[10px] font-light tracking-wider text-white/40 uppercase mb-1">УСПЕШНО</h4>
+            {loading ? (
+              <div className="h-7 w-16 bg-white/5 rounded animate-pulse" />
+            ) : (
+              <div className="flex items-baseline justify-between">
+                <p className="text-2xl font-light text-white/90 tracking-tight">{success}</p>
+                <span className="text-xs text-white/40">{successPercent.toFixed(1)}%</span>
+              </div>
+            )}
+          </div>
+          <div className="backdrop-blur-xl bg-white/[0.02] rounded-xl border border-white/5 px-4 py-3 transition-all duration-200">
+            <h4 className="text-[10px] font-light tracking-wider text-white/40 uppercase mb-1">429 RL</h4>
+            {loading ? (
+              <div className="h-7 w-16 bg-white/5 rounded animate-pulse" />
+            ) : (
+              <div className="flex items-baseline justify-between">
+                <p className="text-2xl font-light text-white/90 tracking-tight">{failed}</p>
+                <span className="text-xs text-white/40">{failedPercent.toFixed(1)}%</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
