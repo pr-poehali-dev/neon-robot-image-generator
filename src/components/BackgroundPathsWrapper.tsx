@@ -1,17 +1,21 @@
 import React from "react";
-import { EtheralShadow } from "./ui/etheral-shadow";
+import { CanvasRevealEffect } from "./ui/canvas-reveal-effect";
 
 const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-      {/* Etheral Shadow эффект на весь экран */}
+      {/* Canvas Reveal Effect на весь экран */}
       <div className="fixed inset-0">
-        <EtheralShadow
-          color="rgba(15, 23, 42, 0.8)"
-          animation={{ scale: 80, speed: 60 }}
-          noise={{ opacity: 0.8, scale: 1.2 }}
-          sizing="fill"
-          className="w-full h-full"
+        <CanvasRevealEffect
+          animationSpeed={0.3}
+          containerClassName="bg-black"
+          colors={[
+            [30, 58, 95],
+            [15, 35, 70],
+          ]}
+          dotSize={2}
+          opacities={[0.1, 0.1, 0.15, 0.15, 0.2, 0.2, 0.25, 0.25, 0.3, 0.35]}
+          showGradient={false}
         />
       </div>
       
