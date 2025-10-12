@@ -37,11 +37,14 @@ export default function StatisticsPanel() {
           <h3 className="text-[11px] font-light tracking-widest text-white/40 uppercase">SKRT.POEHALI</h3>
           <div className="relative">
             <div 
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              className={`w-2 h-2 rounded-full transition-all duration-1000 ease-in-out ${
                 isGenerating 
                   ? 'bg-emerald-500 animate-subtle-pulse shadow-lg shadow-emerald-500/50' 
-                  : 'bg-gray-500'
+                  : 'bg-gray-500 shadow-none'
               }`}
+              style={{
+                transitionProperty: 'background-color, box-shadow'
+              }}
             />
           </div>
         </div>
