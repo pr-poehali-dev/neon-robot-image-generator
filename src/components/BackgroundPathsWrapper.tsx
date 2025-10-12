@@ -7,14 +7,14 @@ const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ child
       {/* Canvas Reveal Effect на весь экран */}
       <div className="fixed inset-0">
         <CanvasRevealEffect
-          animationSpeed={0.3}
+          animationSpeed={3}
           containerClassName="bg-black"
           colors={[
             [30, 58, 95],
             [15, 35, 70],
           ]}
-          dotSize={8}
-          opacities={[0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0, 1.0]}
+          dotSize={80}
+          opacities={[0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65]}
           showGradient={false}
         />
       </div>
