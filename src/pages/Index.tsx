@@ -47,8 +47,8 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
 
   return (
     <BackgroundPathsWrapper>
-      <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 mb-8 items-stretch min-h-[700px]">
+      <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 mb-8 items-stretch min-h-[554px]">
           <StatisticsPanel />
           <UsageChart />
         </div>
@@ -60,9 +60,9 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
               <div className="relative p-4 md:p-6">
                 <CollapsibleTrigger className="w-full">
                   <div className="flex items-center justify-between gap-3 cursor-pointer group">
-                    <div className="flex items-center gap-3">
-                      <Code className="h-6 w-6 text-emerald-400" />
-                      <h2 className="text-2xl font-light tracking-wide text-white/90">Для разработчиков</h2>
+                    <div className="flex items-center gap-2">
+                      <Code className="h-4 w-4 text-emerald-400" />
+                      <h2 className="text-base font-light tracking-wide text-white/90">Для разработчиков</h2>
                     </div>
                     <ChevronDown 
                       className={`h-5 w-5 text-white/60 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
