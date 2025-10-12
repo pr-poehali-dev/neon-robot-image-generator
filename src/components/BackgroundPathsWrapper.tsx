@@ -1,26 +1,17 @@
 import React from "react";
-import { FlickeringGrid } from "./ui/flickering-grid";
+import { EtheralShadow } from "./ui/etheral-shadow";
 
 const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-      {/* Темный космический градиент */}
-      <div 
-        className="fixed inset-0" 
-        style={{ 
-          background: "radial-gradient(ellipse at center, #0a1628 0%, #030912 50%, #000000 100%)"
-        }} 
-      />
-      
-      {/* Flickering Grid эффект */}
-      <div className="fixed inset-0 pointer-events-none">
-        <FlickeringGrid
-          className="absolute inset-0 w-full h-full"
-          squareSize={4}
-          gridGap={6}
-          color="#1e3a5f"
-          maxOpacity={0.15}
-          flickerChance={0.05}
+      {/* Etheral Shadow эффект на весь экран */}
+      <div className="fixed inset-0">
+        <EtheralShadow
+          color="rgba(15, 23, 42, 0.8)"
+          animation={{ scale: 80, speed: 60 }}
+          noise={{ opacity: 0.8, scale: 1.2 }}
+          sizing="fill"
+          className="w-full h-full"
         />
       </div>
       
