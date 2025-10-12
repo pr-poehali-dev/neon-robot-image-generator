@@ -62,7 +62,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
               <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none" />
-                <div className="relative p-6 md:p-8">
+                <div className="relative p-4 md:p-6">
                   <CollapsibleTrigger className="w-full">
                     <div className="flex items-center justify-between gap-3 cursor-pointer group">
                       <div className="flex items-center gap-3">
@@ -76,13 +76,13 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
                   </CollapsibleTrigger>
                   
                   <CollapsibleContent className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2 duration-300">
-                    <div className="pt-6">
-                      <p className="mb-6 text-white/60 font-light">
+                    <div className="pt-4">
+                      <p className="mb-4 text-white/60 font-light">
                         Для доступа к API требуется секретный ключ X-Auth, который
                         необходимо передать в заголовке запроса.
                       </p>
 
-                      <Tabs defaultValue="typescript" className="mt-6">
+                      <Tabs defaultValue="typescript" className="mt-4">
                         <TabsList className="bg-white/5 border border-white/10 p-1 rounded-xl">
                           <TabsTrigger 
                             value="typescript"
