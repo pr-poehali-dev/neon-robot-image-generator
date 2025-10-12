@@ -1,8 +1,9 @@
 import React from "react";
+import { Meteors } from "./ui/meteors";
 
 const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="relative min-h-screen w-full bg-background">
+    <div className="relative min-h-screen w-full bg-background overflow-hidden">
       {/* Тёмный фон с сеткой */}
       <div className="absolute inset-0 bg-background" 
            style={{ 
@@ -11,6 +12,9 @@ const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ child
              backgroundSize: "40px 40px" 
            }} 
       />
+      
+      {/* Meteors эффект */}
+      <Meteors number={30} />
       
       {/* Контент поверх фона */}
       <div className="relative z-10">
