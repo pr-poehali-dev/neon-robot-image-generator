@@ -17,10 +17,10 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       const requestCount = payload[0].value;
       const cost = (requestCount * 0.0025).toFixed(2);
       return (
-        <div className="backdrop-blur-xl bg-white/10 p-4 border border-white/20 rounded-2xl shadow-2xl">
-          <p className="text-white/60 text-sm font-light">{formattedDate}</p>
-          <p className="font-light text-white text-lg mt-1">{`${requestCount} запросов`}</p>
-          <p className="font-medium text-emerald-400 text-lg">${cost}</p>
+        <div className="bg-gray-900/95 border border-white/30 p-3 rounded-xl shadow-2xl backdrop-blur-sm">
+          <p className="text-white/70 text-sm font-medium">{formattedDate}</p>
+          <p className="font-semibold text-white text-base mt-1">{`${requestCount} запросов`}</p>
+          <p className="font-semibold text-emerald-400 text-base">${cost}</p>
         </div>
       );
     } catch (e) {

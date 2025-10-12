@@ -3,10 +3,11 @@ import CodeSnippet from "@/components/CodeSnippet";
 import StatisticsPanel from "@/components/StatisticsPanel";
 import { UsageChart } from "@/components/UsageChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Code } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import BackgroundPathsWrapper from "@/components/BackgroundPathsWrapper";
+import HighlightsPanel from "@/components/skrt-gen-demo/highlights-panel";
+import ImagePreviewSection from "@/components/ImagePreviewSection";
 
 const Index = () => {
   const isMobile = useIsMobile();
@@ -45,28 +46,33 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
 
   return (
     <BackgroundPathsWrapper>
-      <div className="container mx-auto px-4 py-8 md:py-12 max-w-6xl">
-        <div className="flex flex-col items-center justify-center gap-3 mb-10">
-          <div className="flex items-center gap-4 md:gap-8">
+      <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-2">
             <img
               src="https://sokratic.ru/favicon.ico"
               alt="Sokratic"
-              className="h-10 md:h-12 drop-shadow-lg"
+              className="h-5 w-5 opacity-80"
             />
-            <h1 className={`${isMobile ? "text-3xl" : "text-5xl"} font-extralight tracking-tight text-white/95`}>
-              <span>SKRT.POEHALI</span>
-            </h1>
+            <span className="text-sm font-light text-white/60 tracking-wide">SKRT.POEHALI</span>
             <img
               src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg"
               alt="POEHALI"
-              className="h-10 md:h-12 drop-shadow-lg"
+              className="h-5 w-5 opacity-80"
             />
           </div>
-          <p
-            className={`${isMobile ? "text-sm" : "text-lg"} text-white/50 text-center font-light tracking-wide`}
-          >
+          <p className="text-xs text-white/40 font-light">
             интерактивная инструкция для инженеров sokratic.ru
           </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div className="space-y-4">
+            <HighlightsPanel />
+          </div>
+          <div>
+            <ImagePreviewSection />
+          </div>
         </div>
 
         <StatisticsPanel />
