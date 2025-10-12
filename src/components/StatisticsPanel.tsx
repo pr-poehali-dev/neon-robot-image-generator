@@ -39,7 +39,7 @@ export default function StatisticsPanel() {
             <div 
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 isGenerating 
-                  ? 'bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50' 
+                  ? 'bg-emerald-500 animate-subtle-pulse shadow-lg shadow-emerald-500/50' 
                   : 'bg-gray-500'
               }`}
             />
