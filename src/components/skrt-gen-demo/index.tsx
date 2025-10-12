@@ -68,7 +68,7 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row gap-6">
-        <div className="md:w-[300px] lg:w-[360px] xl:w-[400px] shrink-0">
+        <div className="md:w-[420px] lg:w-[480px] xl:w-[520px] shrink-0">
           <ImagePreview 
             imageUrl={imageUrl} 
             onImageError={handleImageError}
