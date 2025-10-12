@@ -45,26 +45,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return (
     <BackgroundPathsWrapper>
       <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-2">
-            <img
-              src="https://sokratic.ru/favicon.ico"
-              alt="Sokratic"
-              className="h-5 w-5 opacity-80"
-            />
-            <span className="text-sm font-light text-white/60 tracking-wide">SKRT.POEHALI</span>
-            <img
-              src="https://poehali.dev/_next/static/media/logo.1d9d82a2.svg"
-              alt="POEHALI"
-              className="h-5 w-5 opacity-80"
-            />
-          </div>
-          <p className="text-xs text-white/40 font-light">
-            интерактивная инструкция для инженеров sokratic.ru
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[20%_80%] gap-6 mb-8">
           <StatisticsPanel />
           <UsageChart />
         </div>

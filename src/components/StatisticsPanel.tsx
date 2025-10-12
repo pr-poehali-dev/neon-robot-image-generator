@@ -23,40 +23,35 @@ export default function StatisticsPanel() {
   const queuePercentage = Math.min(100, Math.floor((queueSize / maxQueueSize) * 100));
   
   return (
-    <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-6 shadow-2xl overflow-hidden">
+    <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-8 shadow-2xl overflow-hidden h-full flex flex-col items-center justify-center">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 pointer-events-none" />
-      <div className="relative flex flex-col md:flex-row items-start gap-6">
-        <div className="w-48 h-48 flex-shrink-0">
+      <div className="relative flex flex-col items-center justify-center space-y-6 w-full">
+        <h3 className="text-lg font-light tracking-wide text-white/70">SKRT.POEHALI</h3>
+        
+        <div className="w-32 h-32">
           <StatisticsDonutChart
             data={pieData}
             loading={loading}
             isMobile={isMobile}
           />
         </div>
-
-        <div className="flex-1 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-light tracking-wide text-white/90">Статистика</h3>
-            <GenerationIndicator isGenerating={isGenerating} />
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <StatisticsCard
-              title="Успешно"
-              value={loading ? "Загрузка..." : String(healthData?.today_stats?.success || 0)}
-              loading={loading}
-            />
-            <StatisticsCard
-              title="429 RL"
-              value={loading ? "Загрузка..." : String(healthData?.today_stats?.failed || 0)}
-              loading={loading}
-            />
-            <StatisticsCard
-              title="Всего запросов"
-              value={loading ? "Загрузка..." : String(healthData?.today_stats?.total || 0)}
-              loading={loading}
-            />
-          </div>
+        
+        <div className="space-y-3 w-full">
+          <StatisticsCard
+            title="Успешно"
+            value={loading ? "Загрузка..." : String(healthData?.today_stats?.success || 0)}
+            loading={loading}
+          />
+          <StatisticsCard
+            title="429 RL"
+            value={loading ? "Загрузка..." : String(healthData?.today_stats?.failed || 0)}
+            loading={loading}
+          />
+          <StatisticsCard
+            title="Всего запросов"
+            value={loading ? "Загрузка..." : String(healthData?.today_stats?.total || 0)}
+            loading={loading}
+          />
         </div>
       </div>
     </div>
