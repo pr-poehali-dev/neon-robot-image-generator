@@ -13,27 +13,46 @@ interface DonutChartProps {
 
 export const StatisticsDonutChart = ({ data, loading, isMobile }: DonutChartProps) => {
   if (loading) {
-    return <Skeleton className="h-36 w-36 rounded-full bg-gray-800" />;
+    return (
+      <div className="flex items-center justify-center">
+        <Skeleton className="h-40 w-40 rounded-full bg-white/5" />
+      </div>
+    );
   }
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
         <Pie
           data={data}
           cx="50%"
           cy="50%"
-          innerRadius={isMobile ? 30 : 40}
-          outerRadius={isMobile ? 60 : 70}
-          paddingAngle={4}
+          innerRadius={isMobile ? 35 : 50}
+          outerRadius={isMobile ? 65 : 85}
+          paddingAngle={2}
           dataKey="value"
           labelLine={false}
           label={({ percent }) => 
             percent > 0.05 ? `${(percent * 100).toFixed(0)}%` : ''
           }
+          stroke="rgba(255,255,255,0.1)"
+          strokeWidth={1}
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
+            <Cell 
+              key={`cell-${index}`} 
+              fill={entry.color}
+              filter="url(#glow)"
+            />
           ))}
         </Pie>
         <Tooltip
@@ -48,8 +67,8 @@ export const StatisticsDonutChart = ({ data, loading, isMobile }: DonutChartProp
               };
               
               return (
-                <div className="bg-gray-800 border border-gray-700 p-2 rounded shadow-lg">
-                  <p className={getColorClass(payload[0].name)}>
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-3 rounded-2xl shadow-2xl">
+                  <p className={`font-light ${getColorClass(payload[0].name)}`}>
                     {`${payload[0].name}: ${payload[0].value}`}
                   </p>
                 </div>
