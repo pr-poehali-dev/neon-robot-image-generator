@@ -48,35 +48,36 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return (
     <BackgroundPathsWrapper>
       <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 mb-8 items-start min-h-[700px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 mb-8 items-stretch min-h-[700px]">
           <StatisticsPanel />
           <UsageChart />
         </div>
 
-        <div className="space-y-10">
-          <section>
-            <SkrtGenDemo />
-          </section>
-
-          <section className="mt-12">
-            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-              <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none" />
-                <div className="relative p-4 md:p-6">
-                  <CollapsibleTrigger className="w-full">
-                    <div className="flex items-center justify-between gap-3 cursor-pointer group">
-                      <div className="flex items-center gap-3">
-                        <Code className="h-6 w-6 text-emerald-400" />
-                        <h2 className="text-2xl font-light tracking-wide text-white/90">Интеграция в ваш проект</h2>
-                      </div>
-                      <ChevronDown 
-                        className={`h-5 w-5 text-white/60 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-                      />
+        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+          <section className="mb-8">
+            <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none" />
+              <div className="relative p-4 md:p-6">
+                <CollapsibleTrigger className="w-full">
+                  <div className="flex items-center justify-between gap-3 cursor-pointer group">
+                    <div className="flex items-center gap-3">
+                      <Code className="h-6 w-6 text-emerald-400" />
+                      <h2 className="text-2xl font-light tracking-wide text-white/90">Для разработчиков</h2>
                     </div>
-                  </CollapsibleTrigger>
-                  
-                  <CollapsibleContent className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2 duration-300">
-                    <div className="pt-4">
+                    <ChevronDown 
+                      className={`h-5 w-5 text-white/60 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                    />
+                  </div>
+                </CollapsibleTrigger>
+                
+                <CollapsibleContent className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2 duration-300">
+                  <div className="pt-4 space-y-8">
+                    <div>
+                      <SkrtGenDemo />
+                    </div>
+
+                    <div>
+                      <h3 className="text-xl font-light text-white/90 mb-4">Интеграция в ваш проект</h3>
                       <p className="mb-4 text-white/60 font-light">
                         Для доступа к API требуется секретный ключ X-Auth, который
                         необходимо передать в заголовке запроса.
@@ -113,12 +114,12 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
                         </TabsContent>
                       </Tabs>
                     </div>
-                  </CollapsibleContent>
-                </div>
+                  </div>
+                </CollapsibleContent>
               </div>
-            </Collapsible>
+            </div>
           </section>
-        </div>
+        </Collapsible>
       </div>
     </BackgroundPathsWrapper>
   );
