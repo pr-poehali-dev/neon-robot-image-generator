@@ -13,9 +13,9 @@ const GeneratorForm = ({
   onRandomPromptClick 
 }: GeneratorFormProps) => {
   return (
-    <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-6 shadow-2xl overflow-hidden">
+    <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-6 shadow-2xl overflow-hidden h-full flex flex-col">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 pointer-events-none" />
-      <div className="relative grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="relative grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 items-center">
         <div className="md:col-span-2">
           <label className="text-sm font-light mb-2 block text-white/50 uppercase tracking-wider">
             Запрос для генерации
