@@ -16,7 +16,7 @@ const BackgroundPathsWrapper: React.FC<{ children: React.ReactNode }> = ({ child
       />
       
       {/* Затемняющий слой */}
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-black/70" />
       
       {/* Контент поверх фона */}
       <div className="relative z-10">
