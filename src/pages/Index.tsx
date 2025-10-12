@@ -45,7 +45,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return (
     <BackgroundPathsWrapper>
       <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 mb-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 mb-8 items-start min-h-[554px]">
           <StatisticsPanel />
           <UsageChart />
         </div>
