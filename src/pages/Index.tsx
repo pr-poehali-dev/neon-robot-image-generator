@@ -61,7 +61,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
                 <CollapsibleTrigger className="w-full">
                   <div className="flex items-center justify-between gap-3 cursor-pointer group">
                     <div className="flex items-center gap-3">
-                      <Code className="h-4 w-4 text-emerald-400" />
+                      <Code className="h-4 w-4 text-white/60" />
                       <h2 className="text-base font-light tracking-wide text-white/60">Для разработчиков</h2>
                     </div>
                     <ChevronDown 
