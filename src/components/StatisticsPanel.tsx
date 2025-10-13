@@ -74,38 +74,44 @@ export default function StatisticsPanel() {
               />
               {!loading && (
                 <>
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    fill="none"
-                    stroke="url(#successGradient)"
-                    strokeWidth="8"
-                    strokeDasharray={`${percent200 * 2.512} ${251.2 - percent200 * 2.512}`}
-                    strokeLinecap="round"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    fill="none"
-                    stroke="url(#failedGradient)"
-                    strokeWidth="8"
-                    strokeDasharray={`${percent429 * 2.512} ${251.2 - percent429 * 2.512}`}
-                    strokeDashoffset={-percent200 * 2.512}
-                    strokeLinecap="round"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    fill="none"
-                    stroke="#EF4444"
-                    strokeWidth="8"
-                    strokeDasharray={`${percent500 * 2.512} ${251.2 - percent500 * 2.512}`}
-                    strokeDashoffset={-(percent200 + percent429) * 2.512}
-                    strokeLinecap="round"
-                  />
+                  {status200 > 0 && (
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="none"
+                      stroke="url(#successGradient)"
+                      strokeWidth="8"
+                      strokeDasharray={`${percent200 * 2.512} ${251.2 - percent200 * 2.512}`}
+                      strokeLinecap="round"
+                    />
+                  )}
+                  {status429 > 0 && (
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="none"
+                      stroke="url(#failedGradient)"
+                      strokeWidth="8"
+                      strokeDasharray={`${percent429 * 2.512} ${251.2 - percent429 * 2.512}`}
+                      strokeDashoffset={-percent200 * 2.512}
+                      strokeLinecap="round"
+                    />
+                  )}
+                  {status500 > 0 && (
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="none"
+                      stroke="#EF4444"
+                      strokeWidth="8"
+                      strokeDasharray={`${percent500 * 2.512} ${251.2 - percent500 * 2.512}`}
+                      strokeDashoffset={-(percent200 + percent429) * 2.512}
+                      strokeLinecap="round"
+                    />
+                  )}
                 </>
               )}
             </svg>
