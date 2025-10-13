@@ -13,6 +13,8 @@ export const useHealthData = () => {
         throw new Error("Не удалось получить данные о состоянии сервиса");
       }
       const data = await response.json();
+      console.log('Health data:', data);
+      console.log('Today stats:', data.today_stats);
       setHealthData(data);
       setError(null);
     } catch (err) {

@@ -27,9 +27,13 @@ export default function StatisticsPanel() {
   const status500 = healthData?.today_stats?.['500'] || 0;
   const total = healthData?.today_stats?.total || 0;
   
+  console.log('Stats:', { status200, status429, status500, total });
+  
   const percent200 = total > 0 ? (status200 / total) * 100 : 0;
   const percent429 = total > 0 ? (status429 / total) * 100 : 0;
   const percent500 = total > 0 ? (status500 / total) * 100 : 0;
+  
+  console.log('Percents:', { percent200, percent429, percent500 });
   
   return (
     <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-5 shadow-2xl overflow-hidden h-full flex flex-col">
