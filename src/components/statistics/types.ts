@@ -5,9 +5,9 @@ export interface HealthData {
   today_stats: {
     success: number;
     failed: number;
-    200: number;
-    429: number;
-    500: number;
+    '200': number;
+    '429': number;
+    '500': number;
     total: number;
   };
   prev_month_stats: {

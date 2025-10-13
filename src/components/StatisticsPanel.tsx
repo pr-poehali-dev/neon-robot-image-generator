@@ -22,9 +22,9 @@ export default function StatisticsPanel() {
   const maxQueueSize = healthData?.gpu_server?.queue?.max_queue_size || 10;
   const queuePercentage = Math.min(100, Math.floor((queueSize / maxQueueSize) * 100));
   
-  const status200 = healthData?.today_stats?.[200] || 0;
-  const status429 = healthData?.today_stats?.[429] || 0;
-  const status500 = healthData?.today_stats?.[500] || 0;
+  const status200 = healthData?.today_stats?.['200'] || 0;
+  const status429 = healthData?.today_stats?.['429'] || 0;
+  const status500 = healthData?.today_stats?.['500'] || 0;
   const total = healthData?.today_stats?.total || 0;
   
   const percent200 = total > 0 ? (status200 / total) * 100 : 0;
