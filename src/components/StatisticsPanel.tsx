@@ -22,12 +22,14 @@ export default function StatisticsPanel() {
   const maxQueueSize = healthData?.gpu_server?.queue?.max_queue_size || 10;
   const queuePercentage = Math.min(100, Math.floor((queueSize / maxQueueSize) * 100));
   
-  const success = healthData?.today_stats?.success || 0;
-  const failed = healthData?.today_stats?.failed || 0;
+  const status200 = healthData?.today_stats?.[200] || 0;
+  const status429 = healthData?.today_stats?.[429] || 0;
+  const status500 = healthData?.today_stats?.[500] || 0;
   const total = healthData?.today_stats?.total || 0;
   
-  const successPercent = total > 0 ? (success / total) * 100 : 0;
-  const failedPercent = total > 0 ? (failed / total) * 100 : 0;
+  const percent200 = total > 0 ? (status200 / total) * 100 : 0;
+  const percent429 = total > 0 ? (status429 / total) * 100 : 0;
+  const percent500 = total > 0 ? (status500 / total) * 100 : 0;
   
   return (
     <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-5 shadow-2xl overflow-hidden h-full flex flex-col">
@@ -79,7 +81,7 @@ export default function StatisticsPanel() {
                     fill="none"
                     stroke="url(#successGradient)"
                     strokeWidth="8"
-                    strokeDasharray={`${successPercent * 2.512} ${251.2 - successPercent * 2.512}`}
+                    strokeDasharray={`${percent200 * 2.512} ${251.2 - percent200 * 2.512}`}
                     strokeLinecap="round"
                   />
                   <circle
@@ -89,8 +91,19 @@ export default function StatisticsPanel() {
                     fill="none"
                     stroke="url(#failedGradient)"
                     strokeWidth="8"
-                    strokeDasharray={`${failedPercent * 2.512} ${251.2 - failedPercent * 2.512}`}
-                    strokeDashoffset={-successPercent * 2.512}
+                    strokeDasharray={`${percent429 * 2.512} ${251.2 - percent429 * 2.512}`}
+                    strokeDashoffset={-percent200 * 2.512}
+                    strokeLinecap="round"
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    fill="none"
+                    stroke="#EF4444"
+                    strokeWidth="8"
+                    strokeDasharray={`${percent500 * 2.512} ${251.2 - percent500 * 2.512}`}
+                    strokeDashoffset={-(percent200 + percent429) * 2.512}
                     strokeLinecap="round"
                   />
                 </>
@@ -107,13 +120,13 @@ export default function StatisticsPanel() {
         
         <div className="space-y-2 mt-4">
           <div className="backdrop-blur-xl bg-white/[0.02] rounded-xl border border-white/5 px-4 py-3 transition-all duration-200">
-            <h4 className="text-[10px] font-light tracking-wider text-white/40 uppercase mb-1">УСПЕШНО</h4>
+            <h4 className="text-[10px] font-light tracking-wider text-white/40 uppercase mb-1">200 OK</h4>
             {loading ? (
               <div className="h-7 w-16 bg-white/5 rounded animate-pulse" />
             ) : (
               <div className="flex items-baseline justify-between">
-                <p className="text-2xl font-light text-white/90 tracking-tight">{success}</p>
-                <span className="text-xs text-white/40">{successPercent.toFixed(1)}%</span>
+                <p className="text-2xl font-light text-white/90 tracking-tight">{status200}</p>
+                <span className="text-xs text-white/40">{percent200.toFixed(1)}%</span>
               </div>
             )}
           </div>
@@ -123,8 +136,19 @@ export default function StatisticsPanel() {
               <div className="h-7 w-16 bg-white/5 rounded animate-pulse" />
             ) : (
               <div className="flex items-baseline justify-between">
-                <p className="text-2xl font-light text-white/90 tracking-tight">{failed}</p>
-                <span className="text-xs text-white/40">{failedPercent.toFixed(1)}%</span>
+                <p className="text-2xl font-light text-white/90 tracking-tight">{status429}</p>
+                <span className="text-xs text-white/40">{percent429.toFixed(1)}%</span>
+              </div>
+            )}
+          </div>
+          <div className="backdrop-blur-xl bg-white/[0.02] rounded-xl border border-white/5 px-4 py-3 transition-all duration-200">
+            <h4 className="text-[10px] font-light tracking-wider text-white/40 uppercase mb-1">500 ERR</h4>
+            {loading ? (
+              <div className="h-7 w-16 bg-white/5 rounded animate-pulse" />
+            ) : (
+              <div className="flex items-baseline justify-between">
+                <p className="text-2xl font-light text-white/90 tracking-tight">{status500}</p>
+                <span className="text-xs text-white/40">{percent500.toFixed(1)}%</span>
               </div>
             )}
           </div>
