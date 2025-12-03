@@ -8,6 +8,12 @@ import { DateRange, useRangeStats } from '@/hooks/useRangeStats';
 import Icon from './ui/icon';
 import { useIsMobile } from '@/hooks/use-mobile';
 
+// Функция определения цены за единицу на основе даты
+const getPricePerUnit = (date: Date): number => {
+  const decemberThreshold = new Date('2024-12-01');
+  return date >= decemberThreshold ? 0.00225 : 0.0025;
+};
+
 // Компонент для отображения всплывающей подсказки при наведении на график
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
@@ -15,7 +21,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       const date = parseISO(label);
       const formattedDate = format(date, 'd MMMM', { locale: ru });
       const requestCount = payload[0].value;
-      const cost = (requestCount * 0.00225).toFixed(2);
+      const pricePerUnit = getPricePerUnit(date);
+      const cost = (requestCount * pricePerUnit).toFixed(2);
       return (
         <div className="bg-gray-900/95 border border-white/30 p-3 rounded-xl shadow-2xl backdrop-blur-sm">
           <p className="text-white/70 text-sm font-medium">{formattedDate}</p>
@@ -43,7 +50,37 @@ export function UsageChart() {
   } = useRangeStats();
 
   // Расчет стоимости на основе количества запросов (с декабря 2024 применяется скидка 10%)
-  const totalCost = (totalCount * 0.00225).toFixed(2);
+  const calculateTotalCost = (): string => {
+    if (!data || data.length === 0) return '0.00';
+    
+    const total = data.reduce((sum, item) => {
+      try {
+        const date = parseISO(item.date);
+        const pricePerUnit = getPricePerUnit(date);
+        return sum + (item.count * pricePerUnit);
+      } catch {
+        return sum;
+      }
+    }, 0);
+    
+    return total.toFixed(2);
+  };
+  
+  const totalCost = calculateTotalCost();
+  
+  // Определяем цену для отображения в итоговой карточке
+  const getCurrentPriceForDisplay = (): number => {
+    if (!data || data.length === 0) return 0.00225;
+    
+    try {
+      const lastDate = parseISO(data[data.length - 1].date);
+      return getPricePerUnit(lastDate);
+    } catch {
+      return 0.00225;
+    }
+  };
+  
+  const displayPrice = getCurrentPriceForDisplay();
 
   // Функция для экспорта данных в CSV
   const exportToCSV = () => {
@@ -250,7 +287,7 @@ export function UsageChart() {
                 <div>
                   <div className="text-sm md:text-base font-light text-white/50 uppercase tracking-wider">Общая сумма</div>
                   <div className="text-3xl md:text-5xl font-light text-emerald-400 mt-1 tracking-tight">${totalCost}</div>
-                  <div className="text-xs md:text-sm text-white/40 mt-2 font-light">{totalCount} запросов × $0.00225</div>
+                  <div className="text-xs md:text-sm text-white/40 mt-2 font-light">{totalCount} запросов × ${displayPrice.toFixed(5)}</div>
                 </div>
                 <div className="text-4xl md:text-6xl text-emerald-400/30 font-extralight">$</div>
               </div>
