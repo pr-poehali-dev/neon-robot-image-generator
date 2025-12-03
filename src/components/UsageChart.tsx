@@ -15,7 +15,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       const date = parseISO(label);
       const formattedDate = format(date, 'd MMMM', { locale: ru });
       const requestCount = payload[0].value;
-      const cost = (requestCount * 0.0025).toFixed(2);
+      const cost = (requestCount * 0.00225).toFixed(2);
       return (
         <div className="bg-gray-900/95 border border-white/30 p-3 rounded-xl shadow-2xl backdrop-blur-sm">
           <p className="text-white/70 text-sm font-medium">{formattedDate}</p>
@@ -42,8 +42,8 @@ export function UsageChart() {
     setRange 
   } = useRangeStats();
 
-  // Расчет стоимости на основе количества запросов
-  const totalCost = (totalCount * 0.0025).toFixed(2);
+  // Расчет стоимости на основе количества запросов (с декабря 2024 применяется скидка 10%)
+  const totalCost = (totalCount * 0.00225).toFixed(2);
 
   // Функция для экспорта данных в CSV
   const exportToCSV = () => {
@@ -250,7 +250,7 @@ export function UsageChart() {
                 <div>
                   <div className="text-sm md:text-base font-light text-white/50 uppercase tracking-wider">Общая сумма</div>
                   <div className="text-3xl md:text-5xl font-light text-emerald-400 mt-1 tracking-tight">${totalCost}</div>
-                  <div className="text-xs md:text-sm text-white/40 mt-2 font-light">{totalCount} запросов × $0.0025</div>
+                  <div className="text-xs md:text-sm text-white/40 mt-2 font-light">{totalCount} запросов × $0.00225</div>
                 </div>
                 <div className="text-4xl md:text-6xl text-emerald-400/30 font-extralight">$</div>
               </div>
