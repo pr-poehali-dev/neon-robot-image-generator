@@ -10,7 +10,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 // Функция определения цены за единицу на основе даты
 const getPricePerUnit = (date: Date): number => {
-  const decemberThreshold = new Date('2024-12-01');
+  const decemberThreshold = new Date('2025-12-01');
   return date >= decemberThreshold ? 0.00225 : 0.0025;
 };
 
