@@ -32,7 +32,7 @@ export default function StatisticsPanel() {
     <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-5 shadow-2xl overflow-hidden h-full flex flex-col">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-500/5 pointer-events-none" />
       <div className="relative flex flex-col h-full justify-between">
-        <div className="flex items-center justify-center gap-2 mb-4">
+        <div className="flex flex-col items-center justify-center gap-2 mb-4">
           <h3 className="text-[11px] font-light tracking-widest text-white/40 uppercase">SKRT.POEHALI</h3>
           <div className="flex gap-1.5">
             {gpuServers.map((server, index) => {
