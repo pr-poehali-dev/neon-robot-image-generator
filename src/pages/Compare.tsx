@@ -51,6 +51,7 @@ const models = [
 
 export default function Compare() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [fullscreenImage, setFullscreenImage] = useState<{ url: string; model: string } | null>(null);
 
   const handlePrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? comparisonData.length - 1 : prev - 1));
@@ -64,6 +65,28 @@ export default function Compare() {
 
   return (
     <BackgroundPathsWrapper>
+      {fullscreenImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+          onClick={() => setFullscreenImage(null)}
+        >
+          <button
+            onClick={() => setFullscreenImage(null)}
+            className="absolute top-4 right-4 p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all"
+          >
+            <Icon name="X" size={24} />
+          </button>
+          <div className="max-w-4xl max-h-[90vh] relative">
+            <p className="text-white/90 text-center mb-4 text-lg font-light">{fullscreenImage.model}</p>
+            <img
+              src={fullscreenImage.url}
+              alt={fullscreenImage.model}
+              className="max-w-full max-h-[80vh] object-contain rounded-xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
         <div className="text-center mb-8">
           <h1 className="text-[28px] font-light tracking-wide text-white/90">
@@ -82,11 +105,17 @@ export default function Compare() {
                     <h3 className="text-[15px] font-light text-white/90 tracking-wide">{model.name}</h3>
                     <p className="text-[10px] text-white/40 uppercase tracking-wider mt-1">{model.description}</p>
                   </div>
-                  <div className="aspect-square rounded-xl overflow-hidden bg-white/[0.02] border border-white/5">
+                  <div 
+                    className="aspect-square rounded-xl overflow-hidden bg-white/[0.02] border border-white/5 cursor-pointer hover:border-emerald-500/50 transition-all"
+                    onClick={() => setFullscreenImage({ 
+                      url: currentData.images[model.key as keyof typeof currentData.images], 
+                      model: model.name 
+                    })}
+                  >
                     <img
                       src={currentData.images[model.key as keyof typeof currentData.images]}
                       alt={`${model.name} result`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform"
                     />
                   </div>
                 </div>
