@@ -15,6 +15,16 @@ interface ComparisonData {
 
 const comparisonData: ComparisonData[] = [
   {
+    goal: "Фотореалистичный пейзаж — Россиюшка",
+    prompt: "Epic patriotic landscape inspired by Russia's natural beauty. Vast open plains and forests stretching to the horizon, a wide river reflecting warm sunrise light. Traditional architectural silhouettes in the distance, wooden textures and classic forms blending naturally into the environment. Rich warm color palette with deep reds, golds, and natural greens. Calm, proud, and timeless atmosphere. Cinematic lighting, soft mist, sense of scale and resilience. Highly detailed, realistic style, majestic and inspiring mood, cultural heritage aesthetic.",
+    images: {
+      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx7.jpg",
+      zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z7.png",
+      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux7.png",
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt7.png"
+    }
+  },
+  {
     goal: "Фотореалистичный дед",
     prompt: "Ultra-realistic cinematic portrait of a powerful wizard, photographed as if in a high-end fantasy film. Elder male wizard shown waist-up, wearing richly detailed, layered robes made of heavy fabric with realistic folds and stitching. Natural skin texture, visible pores and wrinkles, highly detailed long beard and hair with individual strands. Dramatic cinematic lighting with a soft key light and deep shadows, realistic global illumination. Eyes subtly glowing with magical energy. One hand raised, casting a realistic magical effect with volumetric light and particles. Dark atmospheric background with shallow depth of field, light fog, realistic color grading, 85mm lens look, f/1.8, ultra-sharp focus, HDR, extremely high detail, professional photography quality, photorealistic fantasy character.",
     images: {
