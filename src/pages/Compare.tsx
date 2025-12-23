@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BackgroundPathsWrapper from '@/components/BackgroundPathsWrapper';
 import Icon from '@/components/ui/icon';
 
@@ -61,14 +61,14 @@ const models = [
     key: 'sgx', 
     name: 'SGX', 
     price: 0.00225,
-    time: 0.83,
+    time: 1.0,
     priceColor: 'text-emerald-400',
     timeColor: 'text-emerald-400'
   },
   { 
     key: 'zimage', 
     name: 'SGX (Z)', 
-    price: 0.005,
+    price: 0.0045,
     time: 2.0,
     priceColor: 'text-emerald-400',
     timeColor: 'text-yellow-400'
@@ -93,7 +93,7 @@ const models = [
 
 export default function Compare() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [fullscreenImage, setFullscreenImage] = useState<{ url: string; model: string } | null>(null);
+  const [fullscreenImage, setFullscreenImage] = useState<{ url: string; model: string; modelKey: string } | null>(null);
   const [showRelative, setShowRelative] = useState(false);
 
   const handlePrevious = () => {
@@ -103,6 +103,48 @@ export default function Compare() {
   const handleNext = () => {
     setCurrentIndex((prev) => (prev === comparisonData.length - 1 ? 0 : prev + 1));
   };
+
+  const handleFullscreenPrevious = () => {
+    if (!fullscreenImage) return;
+    const currentModelIndex = models.findIndex(m => m.key === fullscreenImage.modelKey);
+    const prevModelIndex = currentModelIndex === 0 ? models.length - 1 : currentModelIndex - 1;
+    const prevModel = models[prevModelIndex];
+    setFullscreenImage({
+      url: currentData.images[prevModel.key as keyof typeof currentData.images],
+      model: prevModel.name,
+      modelKey: prevModel.key
+    });
+  };
+
+  const handleFullscreenNext = () => {
+    if (!fullscreenImage) return;
+    const currentModelIndex = models.findIndex(m => m.key === fullscreenImage.modelKey);
+    const nextModelIndex = currentModelIndex === models.length - 1 ? 0 : currentModelIndex + 1;
+    const nextModel = models[nextModelIndex];
+    setFullscreenImage({
+      url: currentData.images[nextModel.key as keyof typeof currentData.images],
+      model: nextModel.name,
+      modelKey: nextModel.key
+    });
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!fullscreenImage) return;
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handleFullscreenPrevious();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        handleFullscreenNext();
+      } else if (e.key === 'Escape') {
+        setFullscreenImage(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [fullscreenImage]);
 
   const currentData = comparisonData[currentIndex];
   const baseModel = models[0];
@@ -121,10 +163,31 @@ export default function Compare() {
         >
           <button
             onClick={() => setFullscreenImage(null)}
-            className="absolute top-4 right-4 p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all"
+            className="absolute top-4 right-4 p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all z-10"
           >
             <Icon name="X" size={24} />
           </button>
+          
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleFullscreenPrevious();
+            }}
+            className="absolute left-4 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-all z-10"
+          >
+            <Icon name="ChevronLeft" size={32} />
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleFullscreenNext();
+            }}
+            className="absolute right-4 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-all z-10"
+          >
+            <Icon name="ChevronRight" size={32} />
+          </button>
+
           <div className="max-w-4xl max-h-[90vh] relative">
             <p className="text-white/90 text-center mb-4 text-lg font-light">{fullscreenImage.model}</p>
             <img
@@ -154,7 +217,8 @@ export default function Compare() {
                   className="aspect-square rounded-xl overflow-hidden bg-white/[0.02] border border-white/5 cursor-pointer hover:border-emerald-500/50 transition-all mb-3"
                   onClick={() => setFullscreenImage({ 
                     url: currentData.images[model.key as keyof typeof currentData.images], 
-                    model: model.name 
+                    model: model.name,
+                    modelKey: model.key
                   })}
                 >
                   <img
@@ -199,7 +263,7 @@ export default function Compare() {
         </div>
 
         <div className="max-w-2xl mx-auto backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 p-6 mb-6">
-          <div className="flex items-center justify-center gap-8 mb-6">
+          <div className="flex items-center justify-between gap-4 mb-6 max-w-md mx-auto">
             <button
               onClick={handlePrevious}
               className="p-2 rounded-xl hover:bg-white/5 text-white/40 hover:text-white/90 transition-all"
