@@ -5,6 +5,8 @@ import { UsageChart } from "@/components/UsageChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Code, ChevronDown } from "lucide-react";
+import Icon from "@/components/ui/icon";
+import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import BackgroundPathsWrapper from "@/components/BackgroundPathsWrapper";
 import { useState } from "react";
@@ -12,6 +14,7 @@ import { useState } from "react";
 const Index = () => {
   const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const typescriptCode = `// Пример использования SKRT.POEHALI в TypeScript
 
@@ -48,6 +51,16 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return (
     <BackgroundPathsWrapper>
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
+        <div className="flex justify-center mb-6">
+          <button
+            onClick={() => navigate('/compare')}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all group"
+          >
+            <span className="text-[13px] font-light tracking-wide">Сравнение моделей</span>
+            <Icon name="ArrowRight" size={16} className="group-hover:translate-x-0.5 transition-transform" />
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 mb-8 items-stretch min-h-[554px]">
           <StatisticsPanel />
           <UsageChart />

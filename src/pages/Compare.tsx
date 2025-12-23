@@ -75,7 +75,7 @@ const models = [
   },
   { 
     key: 'flux2', 
-    name: 'FLUX-2', 
+    name: 'FLUX-2-TURBO', 
     price: 0.008,
     time: 1.58,
     priceColor: 'text-red-400',
@@ -200,54 +200,6 @@ export default function Compare() {
         </div>
       )}
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
-        <div className="w-full max-w-2xl mx-auto backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 p-6 mb-8">
-          <div className="relative">
-            <button
-              onClick={handlePrevious}
-              className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
-            >
-              <Icon name="ChevronLeft" size={24} />
-            </button>
-
-            <button
-              onClick={handleNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
-            >
-              <Icon name="ChevronRight" size={24} />
-            </button>
-
-            <div className="px-12 flex flex-col items-center gap-4 min-h-[80px]">
-              <div className="flex gap-2">
-                {comparisonData.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentIndex
-                        ? 'bg-emerald-500 w-6'
-                        : 'bg-white/20 hover:bg-white/40'
-                    }`}
-                    aria-label={`Цель ${index + 1}`}
-                  />
-                ))}
-              </div>
-
-              <div className="flex items-center gap-3">
-                <span className="text-[18px] text-white/90 font-light text-center">{currentData.goal}</span>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(currentData.prompt);
-                  }}
-                  className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all"
-                  title="Скопировать промпт"
-                >
-                  <Icon name="Copy" size={16} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {models.map((model) => (
             <div key={model.key} className="backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
@@ -304,7 +256,42 @@ export default function Compare() {
           ))}
         </div>
 
+        <div className="w-full max-w-4xl mx-auto backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 overflow-hidden mb-6">
+          <div className="relative">
+            <div className="absolute top-0 left-0 h-1 bg-emerald-500/30 transition-all duration-300" 
+              style={{ width: `${((currentIndex + 1) / comparisonData.length) * 100}%` }}
+            />
+            
+            <div className="flex items-center justify-between p-4">
+              <button
+                onClick={handlePrevious}
+                className="p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
+              >
+                <Icon name="ChevronLeft" size={20} />
+              </button>
 
+              <div className="flex items-center gap-3 flex-1 justify-center">
+                <span className="text-[16px] text-white/90 font-light text-center">{currentData.goal}</span>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(currentData.prompt);
+                  }}
+                  className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all"
+                  title="Скопировать промпт"
+                >
+                  <Icon name="Copy" size={14} />
+                </button>
+              </div>
+
+              <button
+                onClick={handleNext}
+                className="p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
+              >
+                <Icon name="ChevronRight" size={20} />
+              </button>
+            </div>
+          </div>
+        </div>
 
         <div className="text-center">
           <button
