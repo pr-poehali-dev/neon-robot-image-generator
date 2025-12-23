@@ -130,21 +130,30 @@ export default function Compare() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!fullscreenImage) return;
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        handleFullscreenPrevious();
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        handleFullscreenNext();
-      } else if (e.key === 'Escape') {
-        setFullscreenImage(null);
+      if (fullscreenImage) {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          handleFullscreenPrevious();
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          handleFullscreenNext();
+        } else if (e.key === 'Escape') {
+          setFullscreenImage(null);
+        }
+      } else {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          handlePrevious();
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          handleNext();
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [fullscreenImage]);
+  }, [fullscreenImage, currentIndex]);
 
   const currentData = comparisonData[currentIndex];
   const baseModel = models[0];
