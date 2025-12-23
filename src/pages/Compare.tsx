@@ -14,39 +14,30 @@ interface ComparisonData {
 
 const comparisonData: ComparisonData[] = [
   {
-    prompt: "Промпт 1 - будет добавлен позже",
+    prompt: "Ultra-realistic cinematic portrait of a powerful wizard, photographed as if in a high-end fantasy film. Elder male wizard shown waist-up, wearing richly detailed, layered robes made of heavy fabric with realistic folds and stitching. Natural skin texture, visible pores and wrinkles, highly detailed long beard and hair with individual strands. Dramatic cinematic lighting with a soft key light and deep shadows, realistic global illumination. Eyes subtly glowing with magical energy. One hand raised, casting a realistic magical effect with volumetric light and particles. Dark atmospheric background with shallow depth of field, light fog, realistic color grading, 85mm lens look, f/1.8, ultra-sharp focus, HDR, extremely high detail, professional photography quality, photorealistic fantasy character.",
     images: {
-      sgx: "https://via.placeholder.com/512x512/10b981/ffffff?text=SGX",
-      flux2: "https://via.placeholder.com/512x512/3b82f6/ffffff?text=FLUX-2",
-      zimage: "https://via.placeholder.com/512x512/8b5cf6/ffffff?text=Z-IMAGE",
-      gpt15: "https://via.placeholder.com/512x512/ef4444/ffffff?text=GPT-1.5"
+      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx.jpg",
+      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux.png",
+      zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z.png",
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt.png"
     }
   },
   {
-    prompt: "Промпт 2 - будет добавлен позже",
+    prompt: "Photorealistic portrait of a beautiful woman, mid-20s, natural elegance and confident expression. Soft sensual pose, slightly parted lips, warm inviting gaze. Wearing a minimal stylish outfit that emphasizes her figure without nudity. Golden hour lighting with warm orange and amber tones, soft sunlight wrapping around her skin. Smooth natural skin texture, realistic makeup, subtle highlights. Shallow depth of field, cinematic photography, 85mm lens look, f/1.8. Warm color grading, soft contrast, cozy and intimate mood, ultra-high detail, professional fashion photography, photorealistic.",
     images: {
-      sgx: "https://via.placeholder.com/512x512/10b981/ffffff?text=SGX",
-      flux2: "https://via.placeholder.com/512x512/3b82f6/ffffff?text=FLUX-2",
-      zimage: "https://via.placeholder.com/512x512/8b5cf6/ffffff?text=Z-IMAGE",
-      gpt15: "https://via.placeholder.com/512x512/ef4444/ffffff?text=GPT-1.5"
+      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx2.jpg",
+      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux2.png",
+      zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z2.png",
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt2.png"
     }
   },
   {
-    prompt: "Промпт 3 - будет добавлен позже",
+    prompt: "Cute small robot protagonist with a compact box-shaped body and tank-like tracks instead of legs. Large binocular-style eyes mounted on a thin mechanical neck, expressive and curious gaze. Worn industrial design with subtle scratches, dusty metal surfaces, and functional details like cables, bolts, and panels. Friendly and innocent personality conveyed through posture and eye expression. Warm sunset lighting with golden tones, soft shadows, cinematic atmosphere. Minimal post-apocalyptic environment, simple background, emotional and heartwarming mood. High-quality animated movie style, family-friendly, stylized 3D character, smooth materials, detailed but not realistic.",
     images: {
-      sgx: "https://via.placeholder.com/512x512/10b981/ffffff?text=SGX",
-      flux2: "https://via.placeholder.com/512x512/3b82f6/ffffff?text=FLUX-2",
-      zimage: "https://via.placeholder.com/512x512/8b5cf6/ffffff?text=Z-IMAGE",
-      gpt15: "https://via.placeholder.com/512x512/ef4444/ffffff?text=GPT-1.5"
-    }
-  },
-  {
-    prompt: "Промпт 4 - будет добавлен позже",
-    images: {
-      sgx: "https://via.placeholder.com/512x512/10b981/ffffff?text=SGX",
-      flux2: "https://via.placeholder.com/512x512/3b82f6/ffffff?text=FLUX-2",
-      zimage: "https://via.placeholder.com/512x512/8b5cf6/ffffff?text=Z-IMAGE",
-      gpt15: "https://via.placeholder.com/512x512/ef4444/ffffff?text=GPT-1.5"
+      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx4.jpg",
+      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux4.png",
+      zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z4.png",
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt4.png"
     }
   }
 ];
