@@ -3,6 +3,7 @@ import BackgroundPathsWrapper from '@/components/BackgroundPathsWrapper';
 import Icon from '@/components/ui/icon';
 
 interface ComparisonData {
+  goal: string;
   prompt: string;
   images: {
     sgx: string;
@@ -14,6 +15,7 @@ interface ComparisonData {
 
 const comparisonData: ComparisonData[] = [
   {
+    goal: "Фотореалистичный дед",
     prompt: "Ultra-realistic cinematic portrait of a powerful wizard, photographed as if in a high-end fantasy film. Elder male wizard shown waist-up, wearing richly detailed, layered robes made of heavy fabric with realistic folds and stitching. Natural skin texture, visible pores and wrinkles, highly detailed long beard and hair with individual strands. Dramatic cinematic lighting with a soft key light and deep shadows, realistic global illumination. Eyes subtly glowing with magical energy. One hand raised, casting a realistic magical effect with volumetric light and particles. Dark atmospheric background with shallow depth of field, light fog, realistic color grading, 85mm lens look, f/1.8, ultra-sharp focus, HDR, extremely high detail, professional photography quality, photorealistic fantasy character.",
     images: {
       sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx.jpg",
@@ -23,6 +25,7 @@ const comparisonData: ComparisonData[] = [
     }
   },
   {
+    goal: "Фотореалистичная девушка",
     prompt: "Photorealistic portrait of a beautiful woman, mid-20s, natural elegance and confident expression. Soft sensual pose, slightly parted lips, warm inviting gaze. Wearing a minimal stylish outfit that emphasizes her figure without nudity. Golden hour lighting with warm orange and amber tones, soft sunlight wrapping around her skin. Smooth natural skin texture, realistic makeup, subtle highlights. Shallow depth of field, cinematic photography, 85mm lens look, f/1.8. Warm color grading, soft contrast, cozy and intimate mood, ultra-high detail, professional fashion photography, photorealistic.",
     images: {
       sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx2.jpg",
@@ -32,12 +35,23 @@ const comparisonData: ComparisonData[] = [
     }
   },
   {
+    goal: "Мультяшный персонаж",
     prompt: "Cute small robot protagonist with a compact box-shaped body and tank-like tracks instead of legs. Large binocular-style eyes mounted on a thin mechanical neck, expressive and curious gaze. Worn industrial design with subtle scratches, dusty metal surfaces, and functional details like cables, bolts, and panels. Friendly and innocent personality conveyed through posture and eye expression. Warm sunset lighting with golden tones, soft shadows, cinematic atmosphere. Minimal post-apocalyptic environment, simple background, emotional and heartwarming mood. High-quality animated movie style, family-friendly, stylized 3D character, smooth materials, detailed but not realistic.",
     images: {
       sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx4.jpg",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux4.png",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z4.png",
       gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt4.png"
+    }
+  },
+  {
+    goal: "Дед красками",
+    prompt: "Ultra-realistic cinematic portrait of a powerful wizard, photographed as if in a high-end fantasy film. Elder male wizard shown waist-up, wearing richly detailed, layered robes made of heavy fabric with realistic folds and stitching. Natural skin texture, visible pores and wrinkles, highly detailed long beard and hair with individual strands. Dramatic cinematic lighting with a soft key light and deep shadows, realistic global illumination. Eyes subtly glowing with magical energy. One hand raised, casting a realistic magical effect with volumetric light and particles. Dark atmospheric background with shallow depth of field, light fog, realistic color grading, 85mm lens look, f/1.8, ultra-sharp focus, HDR, extremely high detail, professional photography quality, photorealistic fantasy character.",
+    images: {
+      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx5.jpg",
+      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux5.png",
+      zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z5.png",
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt5.png"
     }
   }
 ];
@@ -49,8 +63,7 @@ const models = [
     price: 0.00225,
     time: 0.83,
     priceColor: 'text-emerald-400',
-    timeColor: 'text-emerald-400',
-    badge: 'Лучшая цена'
+    timeColor: 'text-emerald-400'
   },
   { 
     key: 'flux2', 
@@ -58,17 +71,15 @@ const models = [
     price: 0.008,
     time: 1.58,
     priceColor: 'text-red-400',
-    timeColor: 'text-yellow-400',
-    badge: null
+    timeColor: 'text-yellow-400'
   },
   { 
     key: 'zimage', 
-    name: 'Z-IMAGE', 
+    name: 'SGX (Z)', 
     price: 0.005,
     time: 2.0,
     priceColor: 'text-emerald-400',
-    timeColor: 'text-yellow-400',
-    badge: 'Баланс цены и качества'
+    timeColor: 'text-yellow-400'
   },
   { 
     key: 'gpt15', 
@@ -76,8 +87,7 @@ const models = [
     price: 0.009,
     time: 12.0,
     priceColor: 'text-red-400',
-    timeColor: 'text-red-400',
-    badge: null
+    timeColor: 'text-red-400'
   }
 ];
 
@@ -135,11 +145,6 @@ export default function Compare() {
                 <div className="p-3">
                   <div className="text-center mb-3">
                     <h3 className="text-[15px] font-light text-white/90 tracking-wide">{model.name}</h3>
-                    {model.badge && (
-                      <div className="mt-1 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 inline-block">
-                        <p className="text-[9px] text-emerald-400 uppercase tracking-wider font-light">{model.badge}</p>
-                      </div>
-                    )}
                   </div>
                   <div 
                     className="aspect-square rounded-xl overflow-hidden bg-white/[0.02] border border-white/5 cursor-pointer hover:border-emerald-500/50 transition-all mb-3"
@@ -211,11 +216,20 @@ export default function Compare() {
 
             <div className="text-center">
               <p className="text-[10px] text-white/40 uppercase tracking-wider mb-2">
-                Промпт {currentIndex + 1} из {comparisonData.length}
+                Цель {currentIndex + 1} из {comparisonData.length}
               </p>
-              <p className="text-[15px] text-white/70 font-light leading-relaxed">
-                "{currentData.prompt}"
+              <p className="text-[16px] text-white/90 font-light mb-3">
+                {currentData.goal}
               </p>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(currentData.prompt);
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.02] border border-white/5 text-white/60 hover:text-white/90 hover:bg-white/[0.05] transition-all"
+              >
+                <Icon name="Copy" size={14} />
+                <span className="text-[11px] font-light tracking-wider uppercase">Скопировать промпт</span>
+              </button>
             </div>
           </div>
         </div>
