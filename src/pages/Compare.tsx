@@ -68,7 +68,7 @@ const models = [
   { 
     key: 'zimage', 
     name: 'SGX (Z)', 
-    price: 0.0045,
+    price: 0.004,
     time: 2.0,
     priceColor: 'text-emerald-400',
     timeColor: 'text-yellow-400'
