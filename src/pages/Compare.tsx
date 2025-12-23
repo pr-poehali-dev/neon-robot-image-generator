@@ -145,7 +145,7 @@ export default function Compare() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {models.map((model) => (
-            <div key={model.key} className="backdrop-blur-xl bg-white/[0.02] rounded-2xl border border-white/5 overflow-hidden">
+            <div key={model.key} className="backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
               <div className="p-3">
                 <div className="text-center mb-3">
                   <h3 className="text-[15px] font-light text-white/90 tracking-wide">{model.name}</h3>
@@ -198,13 +198,13 @@ export default function Compare() {
           ))}
         </div>
 
-        <div className="backdrop-blur-xl bg-white/[0.02] rounded-2xl border border-white/5 p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
+        <div className="max-w-2xl mx-auto backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 p-6 mb-6">
+          <div className="flex items-center justify-center gap-8 mb-6">
             <button
               onClick={handlePrevious}
-              className="p-2 rounded-xl bg-white/[0.02] border border-white/5 text-white/60 hover:text-white/90 hover:bg-white/[0.05] transition-all"
+              className="p-2 rounded-xl hover:bg-white/5 text-white/40 hover:text-white/90 transition-all"
             >
-              <Icon name="ChevronLeft" size={20} />
+              <Icon name="ChevronLeft" size={24} />
             </button>
 
             <div className="flex gap-2">
@@ -224,24 +224,24 @@ export default function Compare() {
 
             <button
               onClick={handleNext}
-              className="p-2 rounded-xl bg-white/[0.02] border border-white/5 text-white/60 hover:text-white/90 hover:bg-white/[0.05] transition-all"
+              className="p-2 rounded-xl hover:bg-white/5 text-white/40 hover:text-white/90 transition-all"
             >
-              <Icon name="ChevronRight" size={20} />
+              <Icon name="ChevronRight" size={24} />
             </button>
           </div>
 
-          <div className="text-center space-y-3">
-            <p className="text-[16px] text-white/90 font-light">
+          <div className="text-center space-y-4">
+            <p className="text-[18px] text-white/90 font-light">
               {currentData.goal}
             </p>
             <button
               onClick={() => {
                 navigator.clipboard.writeText(currentData.prompt);
               }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.02] border border-white/5 text-white/60 hover:text-white/90 hover:bg-white/[0.05] transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all"
             >
-              <Icon name="Copy" size={14} />
-              <span className="text-[11px] font-light tracking-wider uppercase">Скопировать промпт</span>
+              <Icon name="Copy" size={16} />
+              <span className="text-[12px] font-light tracking-wider uppercase">Скопировать промпт</span>
             </button>
           </div>
         </div>
