@@ -75,12 +75,9 @@ export default function Compare() {
     <BackgroundPathsWrapper>
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
         <div className="text-center mb-8">
-          <h1 className="text-[28px] font-light tracking-wide text-white/90 mb-3">
+          <h1 className="text-[28px] font-light tracking-wide text-white/90">
             Сравнение моделей генерации
           </h1>
-          <p className="text-[13px] text-white/40 font-light tracking-wider uppercase">
-            Честное сравнение результатов
-          </p>
         </div>
 
         <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-6 shadow-2xl overflow-hidden mb-6">
