@@ -200,49 +200,51 @@ export default function Compare() {
         </div>
       )}
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
-        <div className="max-w-3xl mx-auto backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 p-4 mb-8">
-          <div className="flex items-center justify-between gap-4">
+        <div className="w-full max-w-2xl mx-auto backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 p-6 mb-8">
+          <div className="relative">
             <button
               onClick={handlePrevious}
-              className="p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all flex-shrink-0"
+              className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
             >
-              <Icon name="ChevronLeft" size={20} />
+              <Icon name="ChevronLeft" size={24} />
             </button>
 
-            <div className="flex items-center gap-3 flex-1 justify-center">
-              <div className="flex gap-1.5">
+            <button
+              onClick={handleNext}
+              className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
+            >
+              <Icon name="ChevronRight" size={24} />
+            </button>
+
+            <div className="px-12 flex flex-col items-center gap-4 min-h-[80px]">
+              <div className="flex gap-2">
                 {comparisonData.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       index === currentIndex
-                        ? 'bg-emerald-500 w-4'
+                        ? 'bg-emerald-500 w-6'
                         : 'bg-white/20 hover:bg-white/40'
                     }`}
                     aria-label={`Цель ${index + 1}`}
                   />
                 ))}
               </div>
-              <span className="text-[15px] text-white/90 font-light">{currentData.goal}</span>
+
+              <div className="flex items-center gap-3">
+                <span className="text-[18px] text-white/90 font-light text-center">{currentData.goal}</span>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(currentData.prompt);
+                  }}
+                  className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all"
+                  title="Скопировать промпт"
+                >
+                  <Icon name="Copy" size={16} />
+                </button>
+              </div>
             </div>
-
-            <button
-              onClick={handleNext}
-              className="p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all flex-shrink-0"
-            >
-              <Icon name="ChevronRight" size={20} />
-            </button>
-
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(currentData.prompt);
-              }}
-              className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all flex-shrink-0"
-              title="Скопировать промпт"
-            >
-              <Icon name="Copy" size={16} />
-            </button>
           </div>
         </div>
 
