@@ -43,10 +43,42 @@ const comparisonData: ComparisonData[] = [
 ];
 
 const models = [
-  { key: 'sgx', name: 'SGX', description: 'Наша модель' },
-  { key: 'flux2', name: 'FLUX-2', description: 'Black Forest Labs' },
-  { key: 'zimage', name: 'Z-IMAGE', description: 'Zhipu AI' },
-  { key: 'gpt15', name: 'GPT-1.5', description: 'OpenAI' }
+  { 
+    key: 'sgx', 
+    name: 'SGX', 
+    price: 0.00225,
+    time: 0.83,
+    priceColor: 'text-emerald-400',
+    timeColor: 'text-emerald-400',
+    badge: 'Лучшая цена'
+  },
+  { 
+    key: 'flux2', 
+    name: 'FLUX-2', 
+    price: 0.008,
+    time: 1.58,
+    priceColor: 'text-red-400',
+    timeColor: 'text-yellow-400',
+    badge: null
+  },
+  { 
+    key: 'zimage', 
+    name: 'Z-IMAGE', 
+    price: 0.005,
+    time: 2.0,
+    priceColor: 'text-emerald-400',
+    timeColor: 'text-yellow-400',
+    badge: 'Баланс цены и качества'
+  },
+  { 
+    key: 'gpt15', 
+    name: 'GPT-1.5', 
+    price: 0.009,
+    time: 12.0,
+    priceColor: 'text-red-400',
+    timeColor: 'text-red-400',
+    badge: null
+  }
 ];
 
 export default function Compare() {
@@ -103,10 +135,14 @@ export default function Compare() {
                 <div className="p-3">
                   <div className="text-center mb-3">
                     <h3 className="text-[15px] font-light text-white/90 tracking-wide">{model.name}</h3>
-                    <p className="text-[10px] text-white/40 uppercase tracking-wider mt-1">{model.description}</p>
+                    {model.badge && (
+                      <div className="mt-1 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 inline-block">
+                        <p className="text-[9px] text-emerald-400 uppercase tracking-wider font-light">{model.badge}</p>
+                      </div>
+                    )}
                   </div>
                   <div 
-                    className="aspect-square rounded-xl overflow-hidden bg-white/[0.02] border border-white/5 cursor-pointer hover:border-emerald-500/50 transition-all"
+                    className="aspect-square rounded-xl overflow-hidden bg-white/[0.02] border border-white/5 cursor-pointer hover:border-emerald-500/50 transition-all mb-3"
                     onClick={() => setFullscreenImage({ 
                       url: currentData.images[model.key as keyof typeof currentData.images], 
                       model: model.name 
@@ -117,6 +153,22 @@ export default function Compare() {
                       alt={`${model.name} result`}
                       className="w-full h-full object-cover hover:scale-105 transition-transform"
                     />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between px-2 py-1.5 rounded-lg bg-white/[0.02]">
+                      <div className="flex items-center gap-1.5">
+                        <Icon name="DollarSign" size={12} className="text-white/40" />
+                        <span className="text-[10px] text-white/40 uppercase tracking-wider">Цена</span>
+                      </div>
+                      <span className={`text-[13px] font-light ${model.priceColor}`}>${model.price}</span>
+                    </div>
+                    <div className="flex items-center justify-between px-2 py-1.5 rounded-lg bg-white/[0.02]">
+                      <div className="flex items-center gap-1.5">
+                        <Icon name="Zap" size={12} className="text-white/40" />
+                        <span className="text-[10px] text-white/40 uppercase tracking-wider">Время</span>
+                      </div>
+                      <span className={`text-[13px] font-light ${model.timeColor}`}>{model.time}с</span>
+                    </div>
                   </div>
                 </div>
               </div>
