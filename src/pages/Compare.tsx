@@ -46,10 +46,10 @@ const comparisonData: ComparisonData[] = [
   },
   {
     goal: "Дед красками",
-    prompt: "Ultra-realistic cinematic portrait of a powerful wizard, photographed as if in a high-end fantasy film. Elder male wizard shown waist-up, wearing richly detailed, layered robes made of heavy fabric with realistic folds and stitching. Natural skin texture, visible pores and wrinkles, highly detailed long beard and hair with individual strands. Dramatic cinematic lighting with a soft key light and deep shadows, realistic global illumination. Eyes subtly glowing with magical energy. One hand raised, casting a realistic magical effect with volumetric light and particles. Dark atmospheric background with shallow depth of field, light fog, realistic color grading, 85mm lens look, f/1.8, ultra-sharp focus, HDR, extremely high detail, professional photography quality, photorealistic fantasy character.",
+    prompt: "A highly detailed oil painting of a powerful wizard, painted in the classic JGLC fantasy style. The wizard is depicted waist-up, wearing layered, ornate robes with rich textures and intricate embroidery. Long flowing beard and hair, illuminated by warm, dramatic lighting. His eyes glow faintly with arcane energy. One hand is raised, conjuring a swirling magical aura made of soft luminous brushstrokes. The background is dark and atmospheric, with subtle mist and painterly shadows. Thick oil paint texture, visible brush strokes, high contrast, deep shadows, warm highlights, cinematic fantasy mood, Renaissance-inspired composition, masterful craftsmanship, epic, timeless, ultra-detailed.",
     images: {
       sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx5.jpg",
-      zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z5.png",
+      zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z-image-wizard-fp4_r32_8steps_2.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux5.png",
       gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt5.png"
     }
