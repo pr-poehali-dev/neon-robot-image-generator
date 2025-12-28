@@ -44,7 +44,24 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
         }
     
     if method == 'GET':
-        token = event.get('headers', {}).get('x-auth-token', '')
+        headers = event.get('headers', {})
+        token = (
+            headers.get('x-auth-token') or 
+            headers.get('X-Auth-Token') or 
+            headers.get('X-AUTH-TOKEN') or ''
+        )
+        
+        if not token:
+            return {
+                'statusCode': 401,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({'success': False, 'error': 'Token not provided', 'headers_received': list(headers.keys())}),
+                'isBase64Encoded': False
+            }
+        
         if verify_token(token, admin_password):
             return {
                 'statusCode': 200,
@@ -62,7 +79,7 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                'body': json.dumps({'success': False, 'error': 'Invalid token'}),
+                'body': json.dumps({'success': False, 'error': 'Invalid token', 'token_received': token[:10] + '...'}),
                 'isBase64Encoded': False
             }
     
