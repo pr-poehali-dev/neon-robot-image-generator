@@ -16,7 +16,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     setLoading(true);
 
     try {
-      const response = await fetch('https://skrt.poehali.dev/check-auth', {
+      const response = await fetch('https://functions.poehali.dev/a65ab76a-3714-4869-bb65-544cdb4ecf1b', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
