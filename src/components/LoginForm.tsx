@@ -24,8 +24,8 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
       const data = await response.json();
 
-      if (data.success) {
-        localStorage.setItem('skrt_auth', 'true');
+      if (data.success && data.token) {
+        localStorage.setItem('skrt_token', data.token);
         onSuccess();
       } else {
         setError(data.error || 'Неверный пароль');

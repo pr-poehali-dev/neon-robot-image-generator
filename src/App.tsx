@@ -13,11 +13,44 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    const auth = localStorage.getItem('skrt_auth');
-    setIsAuthenticated(auth === 'true');
-  }, []);
+    const checkAuth = async () => {
+      const token = localStorage.getItem('skrt_token');
+      if (!token) {
+        setIsAuthenticated(false);
+        setIsChecking(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('https://functions.poehali.dev/a65ab76a-3714-4869-bb65-544cdb4ecf1b', {
+          method: 'GET',
+          headers: { 'X-Auth-Token': token },
+        });
+        const data = await response.json();
+        setIsAuthenticated(data.success);
+        if (!data.success) {
+          localStorage.removeItem('skrt_token');
+        }
+      } catch {
+        setIsAuthenticated(false);
+        localStorage.removeItem('skrt_token');
+      }
+      setIsChecking(false);
+    };
+
+    checkAuth();
+  }, []); 
+
+  if (isChecking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a2f35] via-[#0d1b2a] to-[#000000]">
+        <div className="text-emerald-400 text-xl">Загрузка...</div>
+      </div>
+    );
+  }
 
   if (!isAuthenticated) {
     return (
