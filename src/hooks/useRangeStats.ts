@@ -48,7 +48,7 @@ export function useRangeStats(initialRange: DateRange = "current_month") {
         const formattedEndDate = format(endDate, "yyyy-MM-dd");
 
         const response = await fetch(
-          `https://skrt.arnld.ai/stats/range?start_date=${formattedStartDate}&end_date=${formattedEndDate}`,
+          `https://skrt.poehali.dev/stats/range?start_date=${formattedStartDate}&end_date=${formattedEndDate}`,
         );
 
         if (!response.ok) {

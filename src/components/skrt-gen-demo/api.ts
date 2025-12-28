@@ -5,7 +5,7 @@ export const generateImageAPI = async (
   prompt: string,
   apiKey: string,
 ): Promise<string> => {
-  const response = await fetch("https://skrt.arnld.ai/generate", {
+  const response = await fetch("https://skrt.poehali.dev/generate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

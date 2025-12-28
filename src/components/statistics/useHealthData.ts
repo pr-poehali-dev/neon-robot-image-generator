@@ -8,7 +8,7 @@ export const useHealthData = () => {
 
   const fetchHealthData = async () => {
     try {
-      const response = await fetch("https://skrt.arnld.ai/health");
+      const response = await fetch("https://skrt.poehali.dev/health");
       if (!response.ok) {
         throw new Error("Не удалось получить данные о состоянии сервиса");
       }

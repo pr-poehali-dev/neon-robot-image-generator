@@ -23,7 +23,7 @@ interface SkrtPoehaliResponse {
 }
 
 async function generateImage(prompt: string, apiKey: string): Promise<string> {
-  const response = await fetch("https://skrt.arnld.ai/generate", {
+  const response = await fetch("https://skrt.poehali.dev/generate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +43,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return data.imageURL;
 }`;
 
-  const curlCode = `curl -X POST https://skrt.arnld.ai/generate \\
+  const curlCode = `curl -X POST https://skrt.poehali.dev/generate \\
   -H "Content-Type: application/json" \\
   -H "X-Auth: ваш_ключ_доступа" \\
   -d '{"prompt": "ваш запрос для генерации изображения"}'`;
