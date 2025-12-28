@@ -91,11 +91,6 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
               )}
             </button>
           </form>
-
-          <div className="mt-6 flex items-center justify-center gap-1 text-xs text-gray-500">
-            <Icon name="Shield" size={14} />
-            <span>Защищенный доступ</span>
-          </div>
         </div>
       </div>
     </div>
