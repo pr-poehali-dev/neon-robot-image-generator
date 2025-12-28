@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import Icon from '@/components/ui/icon';
 
 interface LoginFormProps {
@@ -16,13 +15,23 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     setError('');
     setLoading(true);
 
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'skrt2024';
+    try {
+      const response = await fetch('https://skrt.poehali.dev/check-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
 
-    if (password === adminPassword) {
-      localStorage.setItem('skrt_auth', 'true');
-      onSuccess();
-    } else {
-      setError('Неверный пароль');
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem('skrt_auth', 'true');
+        onSuccess();
+      } else {
+        setError(data.error || 'Неверный пароль');
+      }
+    } catch (err) {
+      setError('Ошибка подключения');
     }
     
     setLoading(false);
@@ -30,35 +39,9 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0a2f35] via-[#0d1b2a] to-[#000000]">
-        <div className="absolute inset-0 opacity-30">
-          {[...Array(50)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-emerald-400 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                opacity: [0.2, 0.8, 0.2],
-                scale: [1, 1.5, 1],
-              }}
-              transition={{
-                duration: 2 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0a2f35] via-[#0d1b2a] to-[#000000]" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative w-full max-w-md"
-      >
+      <div className="relative w-full max-w-md">
         <div className="bg-[#1a3940]/80 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 shadow-2xl">
           <div className="flex items-center justify-center mb-8">
             <div className="flex items-center gap-2">
@@ -84,14 +67,10 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
             </div>
 
             {error && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/30 rounded-lg p-3"
-              >
+              <div className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/30 rounded-lg p-3">
                 <Icon name="AlertCircle" size={16} />
                 {error}
-              </motion.div>
+              </div>
             )}
 
             <button
@@ -101,12 +80,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
             >
               {loading ? (
                 <>
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  >
-                    <Icon name="Loader2" size={20} />
-                  </motion.div>
+                  <Icon name="Loader2" size={20} className="animate-spin" />
                   Проверка...
                 </>
               ) : (
@@ -123,7 +97,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
             <span>Защищенный доступ</span>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
