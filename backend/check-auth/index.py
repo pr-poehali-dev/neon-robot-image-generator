@@ -1,19 +1,17 @@
 import json
 import os
 import hashlib
-import time
 from typing import Dict, Any
 
 def generate_token(password: str) -> str:
-    '''Генерация токена на основе пароля и времени'''
-    timestamp = str(int(time.time() / 3600))
-    return hashlib.sha256(f"{password}:{timestamp}".encode()).hexdigest()
+    '''Генерация постоянного токена на основе пароля'''
+    secret_salt = "skrt_poehali_2024"
+    return hashlib.sha256(f"{password}:{secret_salt}".encode()).hexdigest()
 
 def verify_token(token: str, password: str) -> bool:
     '''Проверка токена'''
-    current_token = generate_token(password)
-    prev_token = hashlib.sha256(f"{password}:{str(int(time.time() / 3600) - 1)}".encode()).hexdigest()
-    return token == current_token or token == prev_token
+    expected_token = generate_token(password)
+    return token == expected_token
 
 def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
     '''Проверка пароля для доступа к дашборду'''
