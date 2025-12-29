@@ -52,17 +52,29 @@ export function UsageChart() {
 
   // Расчет стоимости на основе количества запросов с учётом динамической цены
   const calculateTotalCost = () => {
-    if (!data || data.length === 0) return '0.00';
+    if (!data || data.length === 0) return { total: '0.00', oldPrice: 0, newPrice: 0 };
+    
+    let oldPriceCount = 0;
+    let newPriceCount = 0;
     
     const total = data.reduce((sum, item) => {
       const pricePerRequest = getPriceForDate(item.date);
+      if (pricePerRequest === 0.00225) {
+        oldPriceCount += item.count;
+      } else {
+        newPriceCount += item.count;
+      }
       return sum + (item.count * pricePerRequest);
     }, 0);
     
-    return total.toFixed(2);
+    return { 
+      total: total.toFixed(2), 
+      oldPrice: oldPriceCount, 
+      newPrice: newPriceCount 
+    };
   };
   
-  const totalCost = calculateTotalCost();
+  const { total: totalCost, oldPrice: oldPriceCount, newPrice: newPriceCount } = calculateTotalCost();
 
   // Функция для экспорта данных в CSV
   const exportToCSV = () => {
@@ -269,7 +281,18 @@ export function UsageChart() {
                 <div>
                   <div className="text-sm md:text-base font-light text-white/50 uppercase tracking-wider">Общая сумма</div>
                   <div className="text-3xl md:text-5xl font-light text-emerald-400 mt-1 tracking-tight">${totalCost}</div>
-                  <div className="text-xs md:text-sm text-white/40 mt-2 font-light">{totalCount} запросов × $0.00225</div>
+                  <div className="flex flex-col gap-1 mt-2">
+                    {oldPriceCount > 0 && (
+                      <div className="text-xs md:text-sm text-white/40 font-light">
+                        {oldPriceCount.toLocaleString()} запросов × $0.00225
+                      </div>
+                    )}
+                    {newPriceCount > 0 && (
+                      <div className="text-xs md:text-sm text-white/40 font-light">
+                        {newPriceCount.toLocaleString()} запросов × $0.004
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="text-4xl md:text-6xl text-emerald-400/30 font-extralight">$</div>
               </div>
