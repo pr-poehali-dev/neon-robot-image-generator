@@ -8,6 +8,13 @@ import { DateRange, useRangeStats } from '@/hooks/useRangeStats';
 import Icon from './ui/icon';
 import { useIsMobile } from '@/hooks/use-mobile';
 
+// Функция для расчета стоимости с учётом изменения цены с 29 декабря 2025
+const getPriceForDate = (dateString: string): number => {
+  const date = new Date(dateString);
+  const priceChangeDate = new Date('2025-12-29');
+  return date >= priceChangeDate ? 0.004 : 0.00225;
+};
+
 // Компонент для отображения всплывающей подсказки при наведении на график
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
@@ -15,7 +22,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       const date = parseISO(label);
       const formattedDate = format(date, 'd MMMM', { locale: ru });
       const requestCount = payload[0].value;
-      const cost = (requestCount * 0.00225).toFixed(2);
+      const pricePerRequest = getPriceForDate(label);
+      const cost = (requestCount * pricePerRequest).toFixed(2);
       return (
         <div className="bg-gray-900/95 border border-white/30 p-3 rounded-xl shadow-2xl backdrop-blur-sm">
           <p className="text-white/70 text-sm font-medium">{formattedDate}</p>
@@ -42,8 +50,19 @@ export function UsageChart() {
     setRange 
   } = useRangeStats();
 
-  // Расчет стоимости на основе количества запросов (с декабря 2024 применяется скидка 10%)
-  const totalCost = (totalCount * 0.00225).toFixed(2);
+  // Расчет стоимости на основе количества запросов с учётом динамической цены
+  const calculateTotalCost = () => {
+    if (!data || data.length === 0) return '0.00';
+    
+    const total = data.reduce((sum, item) => {
+      const pricePerRequest = getPriceForDate(item.date);
+      return sum + (item.count * pricePerRequest);
+    }, 0);
+    
+    return total.toFixed(2);
+  };
+  
+  const totalCost = calculateTotalCost();
 
   // Функция для экспорта данных в CSV
   const exportToCSV = () => {

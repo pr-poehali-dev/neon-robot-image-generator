@@ -70,7 +70,7 @@ const models = [
   { 
     key: 'sgx', 
     name: 'SGX', 
-    price: 0.00225,
+    price: 0.004,
     time: 1.0,
     priceColor: 'text-emerald-400',
     timeColor: 'text-emerald-400'
