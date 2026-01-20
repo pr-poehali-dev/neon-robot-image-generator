@@ -36,12 +36,15 @@ export default function StatisticsPanel() {
           <h3 className="text-[11px] font-light tracking-widest text-white/40 uppercase">SKRT.POEHALI</h3>
           <div className="flex gap-1.5">
             {gpuServers.map((server, index) => {
+              const isDown = server?.status?.includes('down') || false;
               const isGenerating = server?.queue?.is_generating || false;
               return (
                 <div key={index} className="relative">
                   <div 
                     className={`w-2 h-2 rounded-full transition-all duration-1000 ease-in-out ${
-                      isGenerating 
+                      isDown
+                        ? 'bg-blue-500/50 shadow-none'
+                        : isGenerating 
                         ? 'bg-emerald-500 animate-subtle-pulse shadow-lg shadow-emerald-500/50' 
                         : 'bg-gray-500 shadow-none'
                     }`}
