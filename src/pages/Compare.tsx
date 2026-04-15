@@ -6,7 +6,6 @@ interface ComparisonData {
   goal: string;
   prompt: string;
   images: {
-    sgx: string;
     zimage: string;
     flux2: string;
     gpt15: string;
@@ -19,7 +18,6 @@ const comparisonData: ComparisonData[] = [
     goal: "Фотореалистичный пейзаж — Россиюшка",
     prompt: "Epic patriotic landscape inspired by Russia's natural beauty. Vast open plains and forests stretching to the horizon, a wide river reflecting warm sunrise light. Traditional architectural silhouettes in the distance, wooden textures and classic forms blending naturally into the environment. Rich warm color palette with deep reds, golds, and natural greens. Calm, proud, and timeless atmosphere. Cinematic lighting, soft mist, sense of scale and resilience. Highly detailed, realistic style, majestic and inspiring mood, cultural heritage aesthetic.",
     images: {
-      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx7.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z7.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux7.png",
       gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt7.png",
@@ -30,7 +28,6 @@ const comparisonData: ComparisonData[] = [
     goal: "Фотореалистичный дед",
     prompt: "Ultra-realistic cinematic portrait of a powerful wizard, photographed as if in a high-end fantasy film. Elder male wizard shown waist-up, wearing richly detailed, layered robes made of heavy fabric with realistic folds and stitching. Natural skin texture, visible pores and wrinkles, highly detailed long beard and hair with individual strands. Dramatic cinematic lighting with a soft key light and deep shadows, realistic global illumination. Eyes subtly glowing with magical energy. One hand raised, casting a realistic magical effect with volumetric light and particles. Dark atmospheric background with shallow depth of field, light fog, realistic color grading, 85mm lens look, f/1.8, ultra-sharp focus, HDR, extremely high detail, professional photography quality, photorealistic fantasy character.",
     images: {
-      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z-1-from-sgx.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux.png",
       gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt.png",
@@ -41,7 +38,6 @@ const comparisonData: ComparisonData[] = [
     goal: "Фотореалистичная девушка",
     prompt: "Photorealistic portrait of a beautiful woman, mid-20s, natural elegance and confident expression. Soft sensual pose, slightly parted lips, warm inviting gaze. Wearing a minimal stylish outfit that emphasizes her figure without nudity. Golden hour lighting with warm orange and amber tones, soft sunlight wrapping around her skin. Smooth natural skin texture, realistic makeup, subtle highlights. Shallow depth of field, cinematic photography, 85mm lens look, f/1.8. Warm color grading, soft contrast, cozy and intimate mood, ultra-high detail, professional fashion photography, photorealistic.",
     images: {
-      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx2.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z2.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux2.png",
       gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt2.png",
@@ -52,7 +48,6 @@ const comparisonData: ComparisonData[] = [
     goal: "Мультяшный персонаж",
     prompt: "Cute small robot protagonist with a compact box-shaped body and tank-like tracks instead of legs. Large binocular-style eyes mounted on a thin mechanical neck, expressive and curious gaze. Worn industrial design with subtle scratches, dusty metal surfaces, and functional details like cables, bolts, and panels. Friendly and innocent personality conveyed through posture and eye expression. Warm sunset lighting with golden tones, soft shadows, cinematic atmosphere. Minimal post-apocalyptic environment, simple background, emotional and heartwarming mood. High-quality animated movie style, family-friendly, stylized 3D character, smooth materials, detailed but not realistic.",
     images: {
-      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx4.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z4.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux4.png",
       gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt4.png",
@@ -63,7 +58,6 @@ const comparisonData: ComparisonData[] = [
     goal: "Дед красками",
     prompt: "A highly detailed oil painting of a powerful wizard, painted in the classic JGLC fantasy style. The wizard is depicted waist-up, wearing layered, ornate robes with rich textures and intricate embroidery. Long flowing beard and hair, illuminated by warm, dramatic lighting. His eyes glow faintly with arcane energy. One hand is raised, conjuring a swirling magical aura made of soft luminous brushstrokes. The background is dark and atmospheric, with subtle mist and painterly shadows. Thick oil paint texture, visible brush strokes, high contrast, deep shadows, warm highlights, cinematic fantasy mood, Renaissance-inspired composition, masterful craftsmanship, epic, timeless, ultra-detailed.",
     images: {
-      sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx5.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z-image-wizard-fp4_r32_8steps_2.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux5.png",
       gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt5.png",
@@ -89,15 +83,6 @@ const models = [
     time: 3.0,
     priceColor: 'text-yellow-400',
     timeColor: 'text-yellow-400',
-    highlight: false
-  },
-  { 
-    key: 'sgx', 
-    name: 'SGX', 
-    price: 0.004,
-    time: 1.0,
-    priceColor: 'text-emerald-400',
-    timeColor: 'text-emerald-400',
     highlight: false
   },
   { 
