@@ -10,6 +10,7 @@ interface ComparisonData {
     zimage: string;
     flux2: string;
     gpt15: string;
+    ernie: string;
   };
 }
 
@@ -21,7 +22,8 @@ const comparisonData: ComparisonData[] = [
       sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx7.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z7.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux7.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt7.png"
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt7.png",
+      ernie: "https://cdn.poehali.dev/files/5ae38fe6-cd17-42cb-aff6-d8d844efb7e4.jpg"
     }
   },
   {
@@ -31,7 +33,8 @@ const comparisonData: ComparisonData[] = [
       sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z-1-from-sgx.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt.png"
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt.png",
+      ernie: "https://cdn.poehali.dev/files/fb071dd6-bf55-442e-ab02-80f88434c3da.jpg"
     }
   },
   {
@@ -41,7 +44,8 @@ const comparisonData: ComparisonData[] = [
       sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx2.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z2.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux2.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt2.png"
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt2.png",
+      ernie: "https://cdn.poehali.dev/files/1d615e6e-e6d3-4a22-b802-db95d965b67f.jpg"
     }
   },
   {
@@ -51,7 +55,8 @@ const comparisonData: ComparisonData[] = [
       sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx4.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z4.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux4.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt4.png"
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt4.png",
+      ernie: "https://cdn.poehali.dev/files/43c0413d-e4c4-4440-9a3b-83a7e033447c.jpg"
     }
   },
   {
@@ -61,7 +66,8 @@ const comparisonData: ComparisonData[] = [
       sgx: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/sgx5.jpg",
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z-image-wizard-fp4_r32_8steps_2.png",
       flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux5.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt5.png"
+      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt5.png",
+      ernie: "https://cdn.poehali.dev/files/8bdb4fd7-e373-42e1-9a6e-f9494667fbdf.jpg"
     }
   }
 ];
@@ -98,6 +104,14 @@ const models = [
     time: 12.0,
     priceColor: 'text-red-400',
     timeColor: 'text-red-400'
+  },
+  { 
+    key: 'ernie', 
+    name: 'ERNIE-TURBO', 
+    price: 0.01,
+    time: 3.0,
+    priceColor: 'text-red-400',
+    timeColor: 'text-yellow-400'
   }
 ];
 
