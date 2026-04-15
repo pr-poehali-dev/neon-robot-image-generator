@@ -233,7 +233,7 @@ export default function Compare() {
         </div>
       )}
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
           {models.map((model) => (
             <div key={model.key} className="backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
               <div className="p-3">
