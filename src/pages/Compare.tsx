@@ -74,36 +74,13 @@ const comparisonData: ComparisonData[] = [
 
 const models = [
   { 
-    key: 'sgx', 
-    name: 'SGX', 
-    price: 0.004,
-    time: 1.0,
-    priceColor: 'text-emerald-400',
-    timeColor: 'text-emerald-400'
-  },
-  { 
     key: 'zimage', 
     name: 'SGX (Z)', 
     price: 0.004,
     time: 2.0,
     priceColor: 'text-emerald-400',
-    timeColor: 'text-yellow-400'
-  },
-  { 
-    key: 'flux2', 
-    name: 'FLUX-2-TURBO', 
-    price: 0.008,
-    time: 1.58,
-    priceColor: 'text-red-400',
-    timeColor: 'text-yellow-400'
-  },
-  { 
-    key: 'gpt15', 
-    name: 'GPT-1.5', 
-    price: 0.009,
-    time: 12.0,
-    priceColor: 'text-red-400',
-    timeColor: 'text-red-400'
+    timeColor: 'text-yellow-400',
+    highlight: true
   },
   { 
     key: 'ernie', 
@@ -111,7 +88,35 @@ const models = [
     price: 0.01,
     time: 3.0,
     priceColor: 'text-yellow-400',
-    timeColor: 'text-yellow-400'
+    timeColor: 'text-yellow-400',
+    highlight: false
+  },
+  { 
+    key: 'sgx', 
+    name: 'SGX', 
+    price: 0.004,
+    time: 1.0,
+    priceColor: 'text-emerald-400',
+    timeColor: 'text-emerald-400',
+    highlight: false
+  },
+  { 
+    key: 'flux2', 
+    name: 'FLUX-2-TURBO', 
+    price: 0.008,
+    time: 1.58,
+    priceColor: 'text-red-400',
+    timeColor: 'text-yellow-400',
+    highlight: false
+  },
+  { 
+    key: 'gpt15', 
+    name: 'GPT-1.5', 
+    price: 0.009,
+    time: 12.0,
+    priceColor: 'text-red-400',
+    timeColor: 'text-red-400',
+    highlight: false
   }
 ];
 
@@ -235,7 +240,7 @@ export default function Compare() {
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
           {models.map((model) => (
-            <div key={model.key} className="backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+            <div key={model.key} className={`backdrop-blur-xl bg-white/5 rounded-2xl border overflow-hidden ${model.highlight ? 'border-emerald-500/50 shadow-[0_0_16px_0_rgba(52,211,153,0.15)]' : 'border-white/10'}`}>
               <div className="p-3">
                 <div className="text-center mb-3">
                   <h3 className="text-[15px] font-light text-white/90 tracking-wide">{model.name}</h3>
