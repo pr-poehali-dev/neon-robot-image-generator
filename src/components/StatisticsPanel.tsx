@@ -34,24 +34,41 @@ export default function StatisticsPanel() {
       <div className="relative flex flex-col h-full justify-between">
         <div className="flex flex-col items-center justify-center gap-2 mb-4">
           <h3 className="text-[11px] font-light tracking-widest text-white/40 uppercase">SKRT.POEHALI</h3>
-          <div className="flex gap-1.5">
+          <div className="flex gap-1.5 items-end">
             {gpuServers.map((server, index) => {
               const isDown = server?.status?.includes('down') || false;
               const isGenerating = server?.queue?.is_generating || false;
+              const queueSize = server?.queue?.queue_size || 0;
+              const maxQueueSize = server?.queue?.max_queue_size || 7;
+              const busyCells = isDown ? 0 : queueSize + (isGenerating ? 1 : 0);
+              const cells = Array.from({ length: maxQueueSize });
+              const loadRatio = busyCells / maxQueueSize;
               return (
-                <div key={index} className="relative">
-                  <div 
-                    className={`w-2 h-2 rounded-full transition-all duration-1000 ease-in-out ${
-                      isDown
-                        ? 'bg-cyan-400/40 shadow-none'
-                        : isGenerating 
-                        ? 'bg-emerald-500 animate-subtle-pulse shadow-lg shadow-emerald-500/50' 
-                        : 'bg-gray-500 shadow-none'
-                    }`}
-                    style={{
-                      transitionProperty: 'background-color, box-shadow'
-                    }}
-                  />
+                <div
+                  key={index}
+                  className="flex flex-col-reverse gap-[2px]"
+                  title={isDown ? 'down' : `${busyCells}/${maxQueueSize}`}
+                >
+                  {cells.map((_, i) => {
+                    const isBusy = i < busyCells;
+                    const colorClass = isDown
+                      ? 'bg-cyan-400/30'
+                      : isBusy
+                      ? loadRatio >= 0.85
+                        ? 'bg-red-500 shadow-md shadow-red-500/40'
+                        : loadRatio >= 0.6
+                        ? 'bg-amber-400 shadow-md shadow-amber-400/40'
+                        : 'bg-emerald-500 shadow-md shadow-emerald-500/40'
+                      : 'bg-white/10';
+                    return (
+                      <div
+                        key={i}
+                        className={`w-2 h-[3px] rounded-[1px] transition-all duration-700 ease-in-out ${colorClass} ${
+                          isBusy && i === busyCells - 1 && isGenerating ? 'animate-subtle-pulse' : ''
+                        }`}
+                      />
+                    );
+                  })}
                 </div>
               );
             })}
