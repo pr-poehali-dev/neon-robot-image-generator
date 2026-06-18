@@ -16,6 +16,14 @@ const getPriceForDate = (dateString: string): number => {
   return date >= priceChangeDate ? 0.004 : 0.00225;
 };
 
+// Символ валюты: знак рубля рендерим в шрифте, где он выглядит аккуратно на macOS
+const CurrencySymbol = ({ symbol }: { symbol: string }) =>
+  symbol === '₽' ? (
+    <span style={{ fontFamily: "'PT Sans', 'Roboto', 'Segoe UI', Arial, sans-serif" }}>₽</span>
+  ) : (
+    <>{symbol}</>
+  );
+
 // Фабрика всплывающей подсказки с учётом выбранной валюты ($ / ₽)
 const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
   ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number }>; label?: string }) => {
@@ -27,14 +35,14 @@ const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
         const pricePerRequest = getPriceForDate(label);
         const costUsd = requestCount * pricePerRequest;
         const isRub = currency === 'RUB' && rubRate !== null;
-        const costText = isRub
-          ? `₽${(costUsd * (rubRate as number)).toLocaleString('en-US', { maximumFractionDigits: 0 })}`
-          : `$${costUsd.toFixed(2)}`;
+        const costAmount = isRub
+          ? (costUsd * (rubRate as number)).toLocaleString('en-US', { maximumFractionDigits: 0 })
+          : costUsd.toFixed(2);
         return (
           <div className="bg-gray-900/95 border border-white/30 p-3 rounded-xl shadow-2xl backdrop-blur-sm">
             <p className="text-white/70 text-sm font-medium">{formattedDate}</p>
             <p className="font-semibold text-white text-base mt-1">{`${requestCount} запросов`}</p>
-            <p className="font-semibold text-emerald-400 text-base">{costText}</p>
+            <p className="font-semibold text-emerald-400 text-base"><CurrencySymbol symbol={isRub ? '₽' : '$'} />{costAmount}</p>
           </div>
         );
       } catch (e) {
@@ -44,14 +52,6 @@ const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
 
     return null;
   };
-
-// Символ валюты: знак рубля рендерим в шрифте, где он выглядит аккуратно на macOS
-const CurrencySymbol = ({ symbol }: { symbol: string }) =>
-  symbol === '₽' ? (
-    <span style={{ fontFamily: "'PT Sans', 'Roboto', 'Segoe UI', Arial, sans-serif" }}>₽</span>
-  ) : (
-    <>{symbol}</>
-  );
 
 export function UsageChart() {
   const isMobile = useIsMobile();
