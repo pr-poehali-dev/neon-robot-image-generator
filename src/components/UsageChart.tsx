@@ -45,6 +45,14 @@ const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
     return null;
   };
 
+// Символ валюты: знак рубля рендерим в шрифте, где он выглядит аккуратно на macOS
+const CurrencySymbol = ({ symbol }: { symbol: string }) =>
+  symbol === '₽' ? (
+    <span style={{ fontFamily: "'PT Sans', 'Roboto', 'Segoe UI', Arial, sans-serif" }}>₽</span>
+  ) : (
+    <>{symbol}</>
+  );
+
 export function UsageChart() {
   const isMobile = useIsMobile();
   const { rate } = useUsdtRate();
@@ -318,7 +326,7 @@ export function UsageChart() {
                       </button>
                     </div>
                   </div>
-                  <div className="text-3xl md:text-5xl font-light text-emerald-400 mt-1 tracking-tight">{currencySymbol}{displayTotal}</div>
+                  <div className="text-3xl md:text-5xl font-light text-emerald-400 mt-1 tracking-tight"><CurrencySymbol symbol={currencySymbol} />{displayTotal}</div>
                   <div className="flex flex-col gap-1 mt-2">
                     {oldPriceCount > 0 && (
                       <div className="text-xs md:text-sm text-white/40 font-light">
@@ -332,7 +340,7 @@ export function UsageChart() {
                     )}
                   </div>
                 </div>
-                <div className="text-4xl md:text-6xl text-emerald-400/30 font-extralight">{currencySymbol}</div>
+                <div className="text-4xl md:text-6xl text-emerald-400/30 font-extralight"><CurrencySymbol symbol={currencySymbol} /></div>
               </div>
             </div>
           </>
