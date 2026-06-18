@@ -28,7 +28,7 @@ const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
         const costUsd = requestCount * pricePerRequest;
         const isRub = currency === 'RUB' && rubRate !== null;
         const costText = isRub
-          ? `₽${(costUsd * (rubRate as number)).toLocaleString('ru-RU', { maximumFractionDigits: 0 })}`
+          ? `₽${(costUsd * (rubRate as number)).toLocaleString('en-US', { maximumFractionDigits: 0 })}`
           : `$${costUsd.toFixed(2)}`;
         return (
           <div className="bg-gray-900/95 border border-white/30 p-3 rounded-xl shadow-2xl backdrop-blur-sm">
@@ -87,7 +87,7 @@ export function UsageChart() {
   const rubRate = rate?.bid ?? null;
   const isRub = currency === 'RUB' && rubRate !== null;
   const displayTotal = isRub
-    ? (parseFloat(totalCost) * (rubRate as number)).toLocaleString('ru-RU', { maximumFractionDigits: 0 })
+    ? (parseFloat(totalCost) * (rubRate as number)).toLocaleString('en-US', { maximumFractionDigits: 0 })
     : totalCost;
   const currencySymbol = isRub ? '₽' : '$';
 
@@ -322,12 +322,12 @@ export function UsageChart() {
                   <div className="flex flex-col gap-1 mt-2">
                     {oldPriceCount > 0 && (
                       <div className="text-xs md:text-sm text-white/40 font-light">
-                        {oldPriceCount.toLocaleString()} запросов × $0.00225{isRub && rubRate !== null ? ` × ${rubRate.toLocaleString('ru-RU')} (Rapira)` : ''}
+                        {oldPriceCount.toLocaleString()} запросов × $0.00225{isRub && rubRate !== null ? ` × ${rubRate.toLocaleString('en-US')} (Rapira)` : ''}
                       </div>
                     )}
                     {newPriceCount > 0 && (
                       <div className="text-xs md:text-sm text-white/40 font-light">
-                        {newPriceCount.toLocaleString()} запросов × $0.004{isRub && rubRate !== null ? ` × ${rubRate.toLocaleString('ru-RU')} (Rapira)` : ''}
+                        {newPriceCount.toLocaleString()} запросов × $0.004{isRub && rubRate !== null ? ` × ${rubRate.toLocaleString('en-US')} (Rapira)` : ''}
                       </div>
                     )}
                   </div>
