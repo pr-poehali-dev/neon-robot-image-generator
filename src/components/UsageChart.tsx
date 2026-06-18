@@ -16,29 +16,34 @@ const getPriceForDate = (dateString: string): number => {
   return date >= priceChangeDate ? 0.004 : 0.00225;
 };
 
-// Компонент для отображения всплывающей подсказки при наведении на график
-const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number }>; label?: string }) => {
-  if (active && payload && payload.length && label) {
-    try {
-      const date = parseISO(label);
-      const formattedDate = format(date, 'd MMMM', { locale: ru });
-      const requestCount = payload[0].value;
-      const pricePerRequest = getPriceForDate(label);
-      const cost = (requestCount * pricePerRequest).toFixed(2);
-      return (
-        <div className="bg-gray-900/95 border border-white/30 p-3 rounded-xl shadow-2xl backdrop-blur-sm">
-          <p className="text-white/70 text-sm font-medium">{formattedDate}</p>
-          <p className="font-semibold text-white text-base mt-1">{`${requestCount} запросов`}</p>
-          <p className="font-semibold text-emerald-400 text-base">${cost}</p>
-        </div>
-      );
-    } catch (e) {
-      return null;
+// Фабрика всплывающей подсказки с учётом выбранной валюты ($ / ₽)
+const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
+  ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number }>; label?: string }) => {
+    if (active && payload && payload.length && label) {
+      try {
+        const date = parseISO(label);
+        const formattedDate = format(date, 'd MMMM', { locale: ru });
+        const requestCount = payload[0].value;
+        const pricePerRequest = getPriceForDate(label);
+        const costUsd = requestCount * pricePerRequest;
+        const isRub = currency === 'RUB' && rubRate !== null;
+        const costText = isRub
+          ? `₽${(costUsd * (rubRate as number)).toLocaleString('ru-RU', { maximumFractionDigits: 0 })}`
+          : `$${costUsd.toFixed(2)}`;
+        return (
+          <div className="bg-gray-900/95 border border-white/30 p-3 rounded-xl shadow-2xl backdrop-blur-sm">
+            <p className="text-white/70 text-sm font-medium">{formattedDate}</p>
+            <p className="font-semibold text-white text-base mt-1">{`${requestCount} запросов`}</p>
+            <p className="font-semibold text-emerald-400 text-base">{costText}</p>
+          </div>
+        );
+      } catch (e) {
+        return null;
+      }
     }
-  }
 
-  return null;
-};
+    return null;
+  };
 
 export function UsageChart() {
   const isMobile = useIsMobile();
@@ -85,6 +90,8 @@ export function UsageChart() {
     ? (parseFloat(totalCost) * (rubRate as number)).toLocaleString('ru-RU', { maximumFractionDigits: 0 })
     : totalCost;
   const currencySymbol = isRub ? '₽' : '$';
+
+  const ChartTooltip = makeCustomTooltip(currency, rubRate);
 
   // Функция для экспорта данных в CSV
   const exportToCSV = () => {
@@ -265,7 +272,7 @@ export function UsageChart() {
                     width={isMobile ? 25 : 40}
                   />
                   <Tooltip 
-                    content={<CustomTooltip />} 
+                    content={<ChartTooltip />} 
                     cursor={{ fill: 'rgba(255,255,255,0.05)', opacity: 0.8 }} 
                   />
                   <Bar 
