@@ -48,7 +48,7 @@ const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
 export function UsageChart() {
   const isMobile = useIsMobile();
   const { rate } = useUsdtRate();
-  const [currency, setCurrency] = React.useState<'USD' | 'RUB'>('USD');
+  const [currency, setCurrency] = React.useState<'USD' | 'RUB'>('RUB');
   const { 
     data, 
     loading, 
