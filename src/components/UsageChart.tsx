@@ -7,6 +7,7 @@ import { ru } from 'date-fns/locale';
 import { DateRange, useRangeStats } from '@/hooks/useRangeStats';
 import Icon from './ui/icon';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useUsdtRate } from '@/hooks/useUsdtRate';
 
 // Функция для расчета стоимости с учётом изменения цены с 29 декабря 2025
 const getPriceForDate = (dateString: string): number => {
@@ -16,8 +17,8 @@ const getPriceForDate = (dateString: string): number => {
 };
 
 // Компонент для отображения всплывающей подсказки при наведении на график
-const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
+const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number }>; label?: string }) => {
+  if (active && payload && payload.length && label) {
     try {
       const date = parseISO(label);
       const formattedDate = format(date, 'd MMMM', { locale: ru });
@@ -41,6 +42,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export function UsageChart() {
   const isMobile = useIsMobile();
+  const { rate } = useUsdtRate();
+  const [currency, setCurrency] = React.useState<'USD' | 'RUB'>('USD');
   const { 
     data, 
     loading, 
@@ -75,6 +78,13 @@ export function UsageChart() {
   };
   
   const { total: totalCost, oldPrice: oldPriceCount, newPrice: newPriceCount } = calculateTotalCost();
+
+  const rubRate = rate?.bid ?? null;
+  const isRub = currency === 'RUB' && rubRate !== null;
+  const displayTotal = isRub
+    ? (parseFloat(totalCost) * (rubRate as number)).toLocaleString('ru-RU', { maximumFractionDigits: 0 })
+    : totalCost;
+  const currencySymbol = isRub ? '₽' : '$';
 
   // Функция для экспорта данных в CSV
   const exportToCSV = () => {
@@ -279,9 +289,35 @@ export function UsageChart() {
             <div className="mt-4 backdrop-blur-xl bg-gradient-to-br from-emerald-500/10 to-blue-500/10 rounded-2xl border border-white/20 p-4">
               <div className="flex justify-between items-center">
                 <div>
-                  <div className="text-sm md:text-base font-light text-white/50 uppercase tracking-wider">Общая сумма</div>
-                  <div className="text-3xl md:text-5xl font-light text-emerald-400 mt-1 tracking-tight">${totalCost}</div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-sm md:text-base font-light text-white/50 uppercase tracking-wider">Общая сумма</div>
+                    <div className="flex rounded-lg bg-white/5 border border-white/10 p-0.5">
+                      <button
+                        onClick={() => setCurrency('USD')}
+                        className={`px-2 py-0.5 text-xs rounded-md transition-all ${
+                          currency === 'USD' ? 'bg-emerald-500/30 text-emerald-300' : 'text-white/40 hover:text-white/70'
+                        }`}
+                      >
+                        $
+                      </button>
+                      <button
+                        onClick={() => setCurrency('RUB')}
+                        disabled={rubRate === null}
+                        className={`px-2 py-0.5 text-xs rounded-md transition-all disabled:opacity-30 ${
+                          currency === 'RUB' ? 'bg-emerald-500/30 text-emerald-300' : 'text-white/40 hover:text-white/70'
+                        }`}
+                      >
+                        ₽
+                      </button>
+                    </div>
+                  </div>
+                  <div className="text-3xl md:text-5xl font-light text-emerald-400 mt-1 tracking-tight">{currencySymbol}{displayTotal}</div>
                   <div className="flex flex-col gap-1 mt-2">
+                    {isRub && rubRate !== null && (
+                      <div className="text-xs md:text-sm text-white/40 font-light">
+                        по курсу {rubRate.toLocaleString('ru-RU')} ₽ за USDT (Rapira)
+                      </div>
+                    )}
                     {oldPriceCount > 0 && (
                       <div className="text-xs md:text-sm text-white/40 font-light">
                         {oldPriceCount.toLocaleString()} запросов × $0.00225
@@ -294,7 +330,7 @@ export function UsageChart() {
                     )}
                   </div>
                 </div>
-                <div className="text-4xl md:text-6xl text-emerald-400/30 font-extralight">$</div>
+                <div className="text-4xl md:text-6xl text-emerald-400/30 font-extralight">{currencySymbol}</div>
               </div>
             </div>
           </>

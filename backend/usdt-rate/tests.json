@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Returns USDT/RUB bid rate",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "symbol": "USDT/RUB"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
