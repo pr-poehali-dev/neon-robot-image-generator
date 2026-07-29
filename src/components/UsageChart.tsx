@@ -8,6 +8,7 @@ import { DateRange, useRangeStats } from '@/hooks/useRangeStats';
 import Icon from './ui/icon';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useUsdtRate } from '@/hooks/useUsdtRate';
+import * as XLSX from 'xlsx';
 
 // Функция для расчета стоимости с учётом изменения цены с 29 декабря 2025
 const getPriceForDate = (dateString: string): number => {
@@ -101,37 +102,41 @@ export function UsageChart() {
 
   const ChartTooltip = makeCustomTooltip(currency, rubRate);
 
-  // Функция для экспорта данных в CSV
-  const exportToCSV = () => {
+  // Функция для экспорта данных в Excel (.xlsx)
+  const exportToXLSX = () => {
     if (!data || data.length === 0) return;
 
-    // Создаем заголовок CSV
-    const csvHeader = 'Дата,Количество запросов\n';
-    
-    // Преобразуем данные в строки CSV
-    const csvData = data.map(item => {
+    // Формируем строки в формате эталона: Дата | Количество запросов | USDT
+    const rows = data.map(item => {
+      let formattedDate = item.date;
       try {
-        const date = parseISO(item.date);
-        const formattedDate = format(date, 'dd.MM.yyyy', { locale: ru });
-        return `${formattedDate},${item.count}`;
+        formattedDate = format(parseISO(item.date), 'dd.MM.yyyy', { locale: ru });
       } catch (e) {
-        return `${item.date},${item.count}`;
+        formattedDate = item.date;
       }
-    }).join('\n');
+      const usdt = Math.round(item.count * getPriceForDate(item.date) * 100) / 100;
+      return {
+        'Дата': formattedDate,
+        'Количество запросов': item.count,
+        'USDT': usdt,
+      };
+    });
 
-    // Объединяем заголовок и данные
-    const csvContent = `data:text/csv;charset=utf-8,${csvHeader}${csvData}`;
-    
-    // Создаем ссылку для скачивания
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `api-usage-${range}-${format(new Date(), 'yyyy-MM-dd')}.csv`);
-    document.body.appendChild(link);
-    
-    // Имитируем клик и удаляем ссылку
-    link.click();
-    document.body.removeChild(link);
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    worksheet['!cols'] = [{ wch: 14 }, { wch: 22 }, { wch: 12 }];
+
+    // Название листа по первому месяцу в данных
+    let sheetName = 'Отчёт';
+    try {
+      sheetName = format(parseISO(data[0].date), 'LLLL yyyy', { locale: ru });
+      sheetName = sheetName.charAt(0).toUpperCase() + sheetName.slice(1);
+    } catch (e) {
+      sheetName = 'Отчёт';
+    }
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+    XLSX.writeFile(workbook, `api-usage-${range}-${format(new Date(), 'yyyy-MM-dd')}.xlsx`);
   };
 
   // Создаем полный набор данных со всеми днями месяца
@@ -230,11 +235,11 @@ export function UsageChart() {
           </div>
           {!isMobile && (
             <button
-              onClick={exportToCSV}
+              onClick={exportToXLSX}
               className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 text-sm font-light transition-all duration-200 flex items-center gap-2"
             >
-              <Icon name="FileText" className="h-4 w-4" />
-              Экспорт .csv
+              <Icon name="FileSpreadsheet" className="h-4 w-4" />
+              Экспорт .xlsx
             </button>
           )}
         </div>
