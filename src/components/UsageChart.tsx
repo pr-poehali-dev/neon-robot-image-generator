@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Button } from "./ui/button";
 import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
-import { ru } from 'date-fns/locale';
+import { ru, enUS } from 'date-fns/locale';
 import { DateRange, useRangeStats } from '@/hooks/useRangeStats';
 import Icon from './ui/icon';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -153,10 +153,18 @@ export function UsageChart() {
     const blob = new Blob([buffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
+    // Имя файла по месяцу данных, например may-2026.xlsx
+    let fileName = `api-usage-${format(new Date(), 'yyyy-MM-dd')}`;
+    try {
+      fileName = format(parseISO(data[0].date), 'MMMM-yyyy', { locale: enUS }).toLowerCase();
+    } catch (e) {
+      fileName = `api-usage-${format(new Date(), 'yyyy-MM-dd')}`;
+    }
+
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `api-usage-${range}-${format(new Date(), 'yyyy-MM-dd')}.xlsx`;
+    link.download = `${fileName}.xlsx`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
