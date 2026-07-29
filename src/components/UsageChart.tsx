@@ -122,6 +122,11 @@ export function UsageChart() {
       };
     });
 
+    // Итоговая строка с суммами
+    const totalCount = rows.reduce((sum, r) => sum + r['Количество запросов'], 0);
+    const totalUsdt = Math.round(rows.reduce((sum, r) => sum + r['USDT'], 0) * 100) / 100;
+    rows.push({ 'Дата': 'Итого', 'Количество запросов': totalCount, 'USDT': totalUsdt });
+
     const worksheet = XLSX.utils.json_to_sheet(rows);
     worksheet['!cols'] = [{ wch: 14 }, { wch: 22 }, { wch: 12 }];
 
