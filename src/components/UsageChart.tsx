@@ -8,7 +8,7 @@ import { DateRange, useRangeStats } from '@/hooks/useRangeStats';
 import Icon from './ui/icon';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useUsdtRate } from '@/hooks/useUsdtRate';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 
 // Функция для расчета стоимости с учётом изменения цены с 29 декабря 2025
 const getPriceForDate = (dateString: string): number => {
@@ -103,32 +103,8 @@ export function UsageChart() {
   const ChartTooltip = makeCustomTooltip(currency, rubRate);
 
   // Функция для экспорта данных в Excel (.xlsx)
-  const exportToXLSX = () => {
+  const exportToXLSX = async () => {
     if (!data || data.length === 0) return;
-
-    // Формируем строки в формате эталона: Дата | Количество запросов | USDT
-    const rows = data.map(item => {
-      let formattedDate = item.date;
-      try {
-        formattedDate = format(parseISO(item.date), 'dd.MM.yyyy', { locale: ru });
-      } catch (e) {
-        formattedDate = item.date;
-      }
-      const usdt = Math.round(item.count * getPriceForDate(item.date) * 100) / 100;
-      return {
-        'Дата': formattedDate,
-        'Количество запросов': item.count,
-        'USDT': usdt,
-      };
-    });
-
-    // Итоговая строка с суммами
-    const totalCount = rows.reduce((sum, r) => sum + r['Количество запросов'], 0);
-    const totalUsdt = Math.round(rows.reduce((sum, r) => sum + r['USDT'], 0) * 100) / 100;
-    rows.push({ 'Дата': 'Итого', 'Количество запросов': totalCount, 'USDT': totalUsdt });
-
-    const worksheet = XLSX.utils.json_to_sheet(rows);
-    worksheet['!cols'] = [{ wch: 14 }, { wch: 22 }, { wch: 12 }];
 
     // Название листа по первому месяцу в данных
     let sheetName = 'Отчёт';
@@ -139,9 +115,52 @@ export function UsageChart() {
       sheetName = 'Отчёт';
     }
 
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
-    XLSX.writeFile(workbook, `api-usage-${range}-${format(new Date(), 'yyyy-MM-dd')}.xlsx`);
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet(sheetName);
+    worksheet.columns = [
+      { header: 'Дата', key: 'date', width: 14 },
+      { header: 'Количество запросов', key: 'count', width: 22 },
+      { header: 'USDT', key: 'usdt', width: 12 },
+    ];
+
+    let totalCount = 0;
+    let totalUsdt = 0;
+    data.forEach(item => {
+      let formattedDate = item.date;
+      try {
+        formattedDate = format(parseISO(item.date), 'dd.MM.yyyy', { locale: ru });
+      } catch (e) {
+        formattedDate = item.date;
+      }
+      const usdt = Math.round(item.count * getPriceForDate(item.date) * 100) / 100;
+      totalCount += item.count;
+      totalUsdt += usdt;
+      worksheet.addRow({ date: formattedDate, count: item.count, usdt });
+    });
+
+    // Итоговая строка
+    const totalRow = worksheet.addRow({
+      date: 'Итого',
+      count: totalCount,
+      usdt: Math.round(totalUsdt * 100) / 100,
+    });
+
+    // Жирным выделяем шапку и итоговую строку
+    worksheet.getRow(1).font = { bold: true };
+    totalRow.font = { bold: true };
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `api-usage-${range}-${format(new Date(), 'yyyy-MM-dd')}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   // Создаем полный набор данных со всеми днями месяца
