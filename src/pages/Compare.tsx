@@ -7,9 +7,7 @@ interface ComparisonData {
   prompt: string;
   images: {
     zimage: string;
-    flux2: string;
-    gpt15: string;
-    ernie: string;
+    ideogram: string;
   };
 }
 
@@ -19,9 +17,7 @@ const comparisonData: ComparisonData[] = [
     prompt: "Epic patriotic landscape inspired by Russia's natural beauty. Vast open plains and forests stretching to the horizon, a wide river reflecting warm sunrise light. Traditional architectural silhouettes in the distance, wooden textures and classic forms blending naturally into the environment. Rich warm color palette with deep reds, golds, and natural greens. Calm, proud, and timeless atmosphere. Cinematic lighting, soft mist, sense of scale and resilience. Highly detailed, realistic style, majestic and inspiring mood, cultural heritage aesthetic.",
     images: {
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z7.png",
-      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux7.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt7.png",
-      ernie: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/e11562d1-fdb1-4a12-a256-3b7fb30f3ca4.jpg"
+      ideogram: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/bafc7205-0751-44e4-8ed9-e2479d982d1c.png"
     }
   },
   {
@@ -29,9 +25,7 @@ const comparisonData: ComparisonData[] = [
     prompt: "Ultra-realistic cinematic portrait of a powerful wizard, photographed as if in a high-end fantasy film. Elder male wizard shown waist-up, wearing richly detailed, layered robes made of heavy fabric with realistic folds and stitching. Natural skin texture, visible pores and wrinkles, highly detailed long beard and hair with individual strands. Dramatic cinematic lighting with a soft key light and deep shadows, realistic global illumination. Eyes subtly glowing with magical energy. One hand raised, casting a realistic magical effect with volumetric light and particles. Dark atmospheric background with shallow depth of field, light fog, realistic color grading, 85mm lens look, f/1.8, ultra-sharp focus, HDR, extremely high detail, professional photography quality, photorealistic fantasy character.",
     images: {
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z-1-from-sgx.png",
-      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt.png",
-      ernie: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/cccc3de7-20e6-4eb8-a260-1644cb3bbc8b.jpg"
+      ideogram: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/b76aa452-3c40-42f7-8e0d-60a4fbebc906.png"
     }
   },
   {
@@ -39,9 +33,7 @@ const comparisonData: ComparisonData[] = [
     prompt: "Photorealistic portrait of a beautiful woman, mid-20s, natural elegance and confident expression. Soft sensual pose, slightly parted lips, warm inviting gaze. Wearing a minimal stylish outfit that emphasizes her figure without nudity. Golden hour lighting with warm orange and amber tones, soft sunlight wrapping around her skin. Smooth natural skin texture, realistic makeup, subtle highlights. Shallow depth of field, cinematic photography, 85mm lens look, f/1.8. Warm color grading, soft contrast, cozy and intimate mood, ultra-high detail, professional fashion photography, photorealistic.",
     images: {
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z2.png",
-      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux2.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt2.png",
-      ernie: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/3aeb4e56-6cca-4e57-b3a1-89f6dfb6cd2a.jpg"
+      ideogram: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/7206f206-d1df-4f4d-99bd-5666f95b7438.png"
     }
   },
   {
@@ -49,9 +41,7 @@ const comparisonData: ComparisonData[] = [
     prompt: "Cute small robot protagonist with a compact box-shaped body and tank-like tracks instead of legs. Large binocular-style eyes mounted on a thin mechanical neck, expressive and curious gaze. Worn industrial design with subtle scratches, dusty metal surfaces, and functional details like cables, bolts, and panels. Friendly and innocent personality conveyed through posture and eye expression. Warm sunset lighting with golden tones, soft shadows, cinematic atmosphere. Minimal post-apocalyptic environment, simple background, emotional and heartwarming mood. High-quality animated movie style, family-friendly, stylized 3D character, smooth materials, detailed but not realistic.",
     images: {
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z4.png",
-      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux4.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt4.png",
-      ernie: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/476a5169-0c4c-40f3-88df-da57b238445c.jpg"
+      ideogram: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/5ee6e911-7170-4621-8e4e-12e43e3e8f9c.png"
     }
   },
   {
@@ -59,9 +49,15 @@ const comparisonData: ComparisonData[] = [
     prompt: "A highly detailed oil painting of a powerful wizard, painted in the classic JGLC fantasy style. The wizard is depicted waist-up, wearing layered, ornate robes with rich textures and intricate embroidery. Long flowing beard and hair, illuminated by warm, dramatic lighting. His eyes glow faintly with arcane energy. One hand is raised, conjuring a swirling magical aura made of soft luminous brushstrokes. The background is dark and atmospheric, with subtle mist and painterly shadows. Thick oil paint texture, visible brush strokes, high contrast, deep shadows, warm highlights, cinematic fantasy mood, Renaissance-inspired composition, masterful craftsmanship, epic, timeless, ultra-detailed.",
     images: {
       zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/z-image-wizard-fp4_r32_8steps_2.png",
-      flux2: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/flux5.png",
-      gpt15: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/gpt5.png",
-      ernie: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/a44128e5-29f0-4f1a-b9f0-d8b8c331d175.jpg"
+      ideogram: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/0f0dea30-ce6d-498d-b1ae-8e1975d35aff.png"
+    }
+  },
+  {
+    goal: "Груша",
+    prompt: "Груша",
+    images: {
+      zimage: "",
+      ideogram: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/3eb32be3-9dad-4c6d-bff9-12479ffac261.png"
     }
   }
 ];
@@ -71,36 +67,14 @@ const models = [
     key: 'zimage', 
     name: 'SGX (Z)', 
     price: 0.004,
-    time: 2.0,
     priceColor: 'text-emerald-400',
-    timeColor: 'text-yellow-400',
     highlight: true
   },
   { 
-    key: 'ernie', 
-    name: 'ERNIE-TURBO', 
-    price: 0.01,
-    time: 3.0,
+    key: 'ideogram', 
+    name: 'Ideogram-4-0', 
+    price: 0.007,
     priceColor: 'text-yellow-400',
-    timeColor: 'text-yellow-400',
-    highlight: false
-  },
-  { 
-    key: 'flux2', 
-    name: 'FLUX-2-TURBO', 
-    price: 0.008,
-    time: 1.58,
-    priceColor: 'text-red-400',
-    timeColor: 'text-yellow-400',
-    highlight: false
-  },
-  { 
-    key: 'gpt15', 
-    name: 'GPT-1.5', 
-    price: 0.009,
-    time: 12.0,
-    priceColor: 'text-red-400',
-    timeColor: 'text-red-400',
     highlight: false
   }
 ];
@@ -223,7 +197,7 @@ export default function Compare() {
         </div>
       )}
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 max-w-4xl mx-auto w-full">
           {models.map((model) => (
             <div key={model.key} className={`backdrop-blur-xl bg-white/5 rounded-2xl border overflow-hidden ${model.highlight ? 'border-emerald-500/50 shadow-[0_0_16px_0_rgba(52,211,153,0.15)]' : 'border-white/10'}`}>
               <div className="p-3">
@@ -231,18 +205,25 @@ export default function Compare() {
                   <h3 className="text-[15px] font-light text-white/90 tracking-wide">{model.name}</h3>
                 </div>
                 <div 
-                  className="aspect-square rounded-xl overflow-hidden bg-white/[0.02] border border-white/5 cursor-pointer hover:border-emerald-500/50 transition-all mb-3"
-                  onClick={() => setFullscreenImage({ 
-                    url: currentData.images[model.key as keyof typeof currentData.images], 
-                    model: model.name,
-                    modelKey: model.key
-                  })}
+                  className="aspect-square rounded-xl overflow-hidden bg-white/[0.02] border border-white/5 cursor-pointer hover:border-emerald-500/50 transition-all mb-3 flex items-center justify-center"
+                  onClick={() => {
+                    const url = currentData.images[model.key as keyof typeof currentData.images];
+                    if (!url) return;
+                    setFullscreenImage({ url, model: model.name, modelKey: model.key });
+                  }}
                 >
-                  <img
-                    src={currentData.images[model.key as keyof typeof currentData.images]}
-                    alt={`${model.name} result`}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform"
-                  />
+                  {currentData.images[model.key as keyof typeof currentData.images] ? (
+                    <img
+                      src={currentData.images[model.key as keyof typeof currentData.images]}
+                      alt={`${model.name} result`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center gap-2 text-white/30">
+                      <Icon name="ImageOff" size={28} />
+                      <span className="text-[11px] font-light">Скоро</span>
+                    </div>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <div 
@@ -257,20 +238,6 @@ export default function Compare() {
                       {showRelative && model.key !== 'sgx' 
                         ? getRelativeValue(model.price, baseModel.price)
                         : `$${model.price}`}
-                    </span>
-                  </div>
-                  <div 
-                    className="flex items-center justify-between px-2 py-1.5 rounded-lg bg-white/[0.02] cursor-pointer hover:bg-white/[0.05] transition-all"
-                    onClick={() => setShowRelative(!showRelative)}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      <Icon name="Zap" size={12} className="text-white/40" />
-                      <span className="text-[10px] text-white/40 uppercase tracking-wider">Время</span>
-                    </div>
-                    <span className={`text-[13px] font-light ${model.timeColor}`}>
-                      {showRelative && model.key !== 'sgx'
-                        ? getRelativeValue(model.time, baseModel.time)
-                        : `${model.time}с`}
                     </span>
                   </div>
                 </div>
