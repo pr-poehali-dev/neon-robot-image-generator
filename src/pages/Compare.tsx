@@ -131,6 +131,31 @@ export default function Compare() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; model: string; modelKey: string } | null>(null);
   const [showRelative, setShowRelative] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  useEffect(() => {
+    setImagesLoaded(false);
+    const urls = models
+      .map((m) => comparisonData[currentIndex].images[m.key as keyof ComparisonData['images']])
+      .filter(Boolean);
+    let cancelled = false;
+    Promise.all(
+      urls.map(
+        (url) =>
+          new Promise<void>((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve();
+            img.onerror = () => resolve();
+            img.src = url;
+          })
+      )
+    ).then(() => {
+      if (!cancelled) setImagesLoaded(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [currentIndex]);
 
   const handlePrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? comparisonData.length - 1 : prev - 1));
@@ -261,11 +286,16 @@ export default function Compare() {
                   }}
                 >
                   {currentData.images[model.key as keyof typeof currentData.images] ? (
-                    <img
-                      src={currentData.images[model.key as keyof typeof currentData.images]}
-                      alt={`${model.name} result`}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform"
-                    />
+                    <div className="relative w-full h-full">
+                      {!imagesLoaded && (
+                        <div className="absolute inset-0 animate-pulse bg-white/[0.06]" />
+                      )}
+                      <img
+                        src={currentData.images[model.key as keyof typeof currentData.images]}
+                        alt={`${model.name} result`}
+                        className={`w-full h-full object-cover hover:scale-105 transition-all duration-500 ${imagesLoaded ? 'opacity-100' : 'opacity-0'}`}
+                      />
+                    </div>
                   ) : (
                     <div className="flex flex-col items-center gap-2 text-white/30">
                       <Icon name="ImageOff" size={28} />
