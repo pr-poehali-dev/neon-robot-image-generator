@@ -1,17 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 import BackgroundPathsWrapper from '@/components/BackgroundPathsWrapper';
 import Icon from '@/components/ui/icon';
+import { batchComparisons } from '@/data/batchComparisons';
 
-interface ComparisonData {
+export interface ComparisonData {
   goal: string;
   prompt: string;
+  thumb?: string;
   images: {
     zimage: string;
     ideogram: string;
   };
 }
 
-const comparisonData: ComparisonData[] = [
+const legacyComparisons: ComparisonData[] = [
   {
     goal: "Фотореалистичный пейзаж — Россиюшка",
     prompt: "Epic patriotic landscape inspired by Russia's natural beauty. Vast open plains and forests stretching to the horizon, a wide river reflecting warm sunrise light. Traditional architectural silhouettes in the distance, wooden textures and classic forms blending naturally into the environment. Rich warm color palette with deep reds, golds, and natural greens. Calm, proud, and timeless atmosphere. Cinematic lighting, soft mist, sense of scale and resilience. Highly detailed, realistic style, majestic and inspiring mood, cultural heritage aesthetic.",
@@ -109,6 +111,8 @@ const comparisonData: ComparisonData[] = [
     }
   }
 ];
+
+const comparisonData: ComparisonData[] = [...batchComparisons, ...legacyComparisons];
 
 const models = [
   { 
@@ -387,8 +391,8 @@ export default function Compare() {
                     : 'border-white/10 opacity-50 hover:opacity-100 hover:border-white/30'
                 }`}
               >
-                {item.images.ideogram ? (
-                  <img src={item.images.ideogram} alt={item.goal} loading="lazy" className="w-full h-full object-cover" />
+                {item.thumb || item.images.ideogram ? (
+                  <img src={item.thumb || item.images.ideogram} alt={item.goal} loading="lazy" className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-white/[0.03] text-white/25">
                     <Icon name="ImageOff" size={16} />
