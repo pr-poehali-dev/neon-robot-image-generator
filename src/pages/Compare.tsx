@@ -56,7 +56,7 @@ const comparisonData: ComparisonData[] = [
     goal: "Груша",
     prompt: "Груша",
     images: {
-      zimage: "",
+      zimage: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/ba968b09-10fe-45ea-97bc-a3ce832aa0ae.png",
       ideogram: "https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/3eb32be3-9dad-4c6d-bff9-12479ffac261.png"
     }
   }
