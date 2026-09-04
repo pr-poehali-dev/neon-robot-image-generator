@@ -51,6 +51,16 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
   return (
     <BackgroundPathsWrapper>
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={() => navigate('/compare')}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 transition-all"
+          >
+            <Icon name="Images" size={16} />
+            <span className="text-[12px] font-light tracking-wider uppercase">Сравнение моделей</span>
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 mb-8 items-stretch min-h-[554px] mt-6">
           <StatisticsPanel />
           <UsageChart />
