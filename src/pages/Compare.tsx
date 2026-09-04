@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import BackgroundPathsWrapper from '@/components/BackgroundPathsWrapper';
 import Icon from '@/components/ui/icon';
 
@@ -132,6 +132,22 @@ export default function Compare() {
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; model: string; modelKey: string } | null>(null);
   const [showRelative, setShowRelative] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const filmstripRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = filmstripRef.current?.querySelector<HTMLElement>(`[data-idx="${currentIndex}"]`);
+    el?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [currentIndex]);
+
+  useEffect(() => {
+    [currentIndex + 1, currentIndex - 1].forEach((i) => {
+      const item = comparisonData[(i + comparisonData.length) % comparisonData.length];
+      models.forEach((m) => {
+        const url = item.images[m.key as keyof ComparisonData['images']];
+        if (url) new Image().src = url;
+      });
+    });
+  }, [currentIndex]);
 
   useEffect(() => {
     setImagesLoaded(false);
@@ -325,39 +341,61 @@ export default function Compare() {
         </div>
 
         <div className="w-full max-w-4xl mx-auto backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 overflow-hidden mb-6">
-          <div className="relative">
-            <div className="absolute top-0 left-0 h-1 bg-emerald-500/30 transition-all duration-300" 
-              style={{ width: `${((currentIndex + 1) / comparisonData.length) * 100}%` }}
-            />
-            
-            <div className="flex items-center justify-between p-4">
-              <button
-                onClick={handlePrevious}
-                className="p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
-              >
-                <Icon name="ChevronLeft" size={20} />
-              </button>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
+            <button
+              onClick={handlePrevious}
+              className="p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
+            >
+              <Icon name="ChevronLeft" size={18} />
+            </button>
 
-              <div className="flex items-center gap-3 flex-1 justify-center">
-                <span className="text-[16px] text-white/90 font-light text-center">{currentData.goal}</span>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(currentData.prompt);
-                  }}
-                  className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all"
-                  title="Скопировать промпт"
-                >
-                  <Icon name="Copy" size={14} />
-                </button>
-              </div>
-
+            <div className="flex items-center gap-3 flex-1 justify-center min-w-0">
+              <span className="text-[15px] text-white/90 font-light text-center truncate">{currentData.goal}</span>
               <button
-                onClick={handleNext}
-                className="p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
+                onClick={() => navigator.clipboard.writeText(currentData.prompt)}
+                className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all shrink-0"
+                title="Скопировать промпт"
               >
-                <Icon name="ChevronRight" size={20} />
+                <Icon name="Copy" size={14} />
               </button>
+              <span className="text-[11px] text-white/30 font-light tabular-nums shrink-0">
+                {currentIndex + 1} / {comparisonData.length}
+              </span>
             </div>
+
+            <button
+              onClick={handleNext}
+              className="p-2 rounded-xl hover:bg-white/5 text-white/60 hover:text-white/90 transition-all"
+            >
+              <Icon name="ChevronRight" size={18} />
+            </button>
+          </div>
+
+          <div
+            ref={filmstripRef}
+            className="flex gap-2 overflow-x-auto p-3 scroll-smooth [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:bg-white/15 [&::-webkit-scrollbar-thumb]:rounded-full"
+          >
+            {comparisonData.map((item, idx) => (
+              <button
+                key={idx}
+                data-idx={idx}
+                onClick={() => setCurrentIndex(idx)}
+                title={item.goal}
+                className={`relative shrink-0 w-16 h-16 rounded-lg overflow-hidden border transition-all ${
+                  idx === currentIndex
+                    ? 'border-emerald-400 ring-2 ring-emerald-400/30 scale-105'
+                    : 'border-white/10 opacity-50 hover:opacity-100 hover:border-white/30'
+                }`}
+              >
+                {item.images.zimage ? (
+                  <img src={item.images.zimage} alt={item.goal} loading="lazy" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-white/[0.03] text-white/25">
+                    <Icon name="ImageOff" size={16} />
+                  </div>
+                )}
+              </button>
+            ))}
           </div>
         </div>
 
