@@ -64,17 +64,17 @@ const comparisonData: ComparisonData[] = [
 
 const models = [
   { 
+    key: 'ideogram', 
+    name: 'Ideogram-4-0', 
+    price: 0.007,
+    priceColor: 'text-emerald-400',
+    highlight: false
+  },
+  { 
     key: 'zimage', 
     name: 'SGX (Z)', 
     price: 0.004,
     priceColor: 'text-emerald-400',
-    highlight: true
-  },
-  { 
-    key: 'ideogram', 
-    name: 'Ideogram-4-0', 
-    price: 0.007,
-    priceColor: 'text-yellow-400',
     highlight: false
   }
 ];
