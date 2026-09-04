@@ -387,8 +387,8 @@ export default function Compare() {
                     : 'border-white/10 opacity-50 hover:opacity-100 hover:border-white/30'
                 }`}
               >
-                {item.images.zimage ? (
-                  <img src={item.images.zimage} alt={item.goal} loading="lazy" className="w-full h-full object-cover" />
+                {item.images.ideogram ? (
+                  <img src={item.images.ideogram} alt={item.goal} loading="lazy" className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-white/[0.03] text-white/25">
                     <Icon name="ImageOff" size={16} />
