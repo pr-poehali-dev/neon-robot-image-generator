@@ -56,7 +56,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<string> {
             onClick={() => navigate('/compare')}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all group"
           >
-            <span className="text-[13px] font-light tracking-wide">🔥 Тестим Ideogram-4-0</span>
+            <span className="text-[13px] font-light tracking-wide">🔥 Тестим Ideogram-4</span>
             <Icon name="ArrowRight" size={16} className="group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
