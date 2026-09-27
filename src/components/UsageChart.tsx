@@ -8,6 +8,7 @@ import { DateRange, useRangeStats } from '@/hooks/useRangeStats';
 import Icon from './ui/icon';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useUsdtRate } from '@/hooks/useUsdtRate';
+import { useToast } from '@/hooks/use-toast';
 import ExcelJS from 'exceljs';
 
 // Функция для расчета стоимости с учётом изменения цены с 29 декабря 2025
@@ -44,6 +45,7 @@ const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
             <p className="text-white/70 text-sm font-medium">{formattedDate}</p>
             <p className="font-semibold text-white text-base mt-1">{`${requestCount} запросов`}</p>
             <p className="font-semibold text-emerald-400 text-base"><CurrencySymbol symbol={isRub ? '₽' : '$'} />{costAmount}</p>
+            <p className="text-white/40 text-xs mt-1.5">Клик — скопировать</p>
           </div>
         );
       } catch (e) {
@@ -56,6 +58,7 @@ const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
 
 export function UsageChart() {
   const isMobile = useIsMobile();
+  const { toast } = useToast();
   const { rate } = useUsdtRate();
   const [currency, setCurrency] = React.useState<'USD' | 'RUB'>('RUB');
   const { 
@@ -222,6 +225,33 @@ export function UsageChart() {
 
   const chartColor = 'rgb(16, 185, 129)';
 
+  // Копирование значения столбика в буфер обмена по клику
+  const handleBarClick = async (barData: { name?: string; count?: number }) => {
+    if (!barData || typeof barData.count !== 'number') return;
+
+    const count = barData.count;
+    let dateLabel = barData.name ?? '';
+    try {
+      dateLabel = format(parseISO(barData.name as string), 'd MMMM', { locale: ru });
+    } catch {
+      dateLabel = barData.name ?? '';
+    }
+
+    try {
+      await navigator.clipboard.writeText(String(count));
+      toast({
+        title: 'Скопировано',
+        description: `${dateLabel} — ${count} запросов`,
+      });
+    } catch {
+      toast({
+        title: 'Не удалось скопировать',
+        description: 'Браузер заблокировал доступ к буферу обмена',
+        variant: 'destructive',
+      });
+    }
+  };
+
   // Определяем интервал отображения меток на оси X в зависимости от количества дней
   const getTickInterval = () => {
     const daysCount = chartData.length;
@@ -327,6 +357,8 @@ export function UsageChart() {
                     animationDuration={500}
                     name="Запросы"
                     maxBarSize={isMobile ? 40 : 60}
+                    cursor="pointer"
+                    onClick={handleBarClick}
                   />
                   <defs>
                     <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
