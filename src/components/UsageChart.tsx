@@ -45,7 +45,7 @@ const makeCustomTooltip = (currency: 'USD' | 'RUB', rubRate: number | null) =>
             <p className="text-white/70 text-sm font-medium">{formattedDate}</p>
             <p className="font-semibold text-white text-base mt-1">{`${requestCount} запросов`}</p>
             <p className="font-semibold text-emerald-400 text-base"><CurrencySymbol symbol={isRub ? '₽' : '$'} />{costAmount}</p>
-            <p className="text-white/40 text-xs mt-1.5">Клик — скопировать</p>
+            <p className="text-white/40 text-xs mt-1.5">Клик — скопировать сумму</p>
           </div>
         );
       } catch (e) {
@@ -230,18 +230,24 @@ export function UsageChart() {
     if (!barData || typeof barData.count !== 'number') return;
 
     const count = barData.count;
-    let dateLabel = barData.name ?? '';
+    const dateString = barData.name ?? '';
+    let dateLabel = dateString;
     try {
-      dateLabel = format(parseISO(barData.name as string), 'd MMMM', { locale: ru });
+      dateLabel = format(parseISO(dateString), 'd MMMM', { locale: ru });
     } catch {
-      dateLabel = barData.name ?? '';
+      dateLabel = dateString;
     }
 
+    const costUsd = count * getPriceForDate(dateString);
+    const copyValue = isRub
+      ? Math.round(costUsd * (rubRate as number)).toString()
+      : costUsd.toFixed(2);
+
     try {
-      await navigator.clipboard.writeText(String(count));
+      await navigator.clipboard.writeText(copyValue);
       toast({
-        title: 'Скопировано',
-        description: `${dateLabel} — ${count} запросов`,
+        title: 'Сумма скопирована',
+        description: `${dateLabel} — ${currencySymbol}${copyValue} (${count} запросов)`,
       });
     } catch {
       toast({
