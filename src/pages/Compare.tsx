@@ -10,8 +10,24 @@ export interface ComparisonData {
   images: {
     zimage: string;
     ideogram: string;
+    qwen?: string;
+    qwenpe?: string;
   };
 }
+
+const QWEN_CDN = 'https://cdn.poehali.dev/projects/24978873-a7e9-4cb8-89fc-9c43c8a622a4/bucket/compare';
+
+const withQwen = (item: ComparisonData, fileNum: number): ComparisonData => {
+  const n = String(fileNum).padStart(3, '0');
+  return {
+    ...item,
+    images: {
+      ...item.images,
+      qwen: `${QWEN_CDN}/${n}_qwen.webp`,
+      qwenpe: `${QWEN_CDN}/${n}_qwenpe.webp`,
+    },
+  };
+};
 
 const legacyComparisons: ComparisonData[] = [
   {
@@ -112,7 +128,10 @@ const legacyComparisons: ComparisonData[] = [
   }
 ];
 
-const comparisonData: ComparisonData[] = [...batchComparisons, ...legacyComparisons];
+const comparisonData: ComparisonData[] = [
+  ...batchComparisons.map((item, i) => withQwen(item, i)),
+  ...legacyComparisons.map((item, i) => withQwen(item, batchComparisons.length + legacyComparisons.length - 1 - i)),
+];
 
 const models = [
   { 
@@ -128,6 +147,13 @@ const models = [
     price: 0.004,
     priceColor: 'text-emerald-400',
     highlight: false
+  },
+  { 
+    key: 'qwen', 
+    name: 'Qwen-Image-2.1', 
+    price: 0.007,
+    priceColor: 'text-emerald-400',
+    highlight: false
   }
 ];
 
@@ -136,7 +162,13 @@ export default function Compare() {
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; model: string; modelKey: string } | null>(null);
   const [showRelative, setShowRelative] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [qwenPe, setQwenPe] = useState(false);
   const filmstripRef = useRef<HTMLDivElement>(null);
+
+  const getImageUrl = (item: ComparisonData, key: string) => {
+    if (key === 'qwen') return (qwenPe ? item.images.qwenpe : item.images.qwen) ?? '';
+    return item.images[key as keyof ComparisonData['images']] ?? '';
+  };
 
   useEffect(() => {
     const el = filmstripRef.current?.querySelector<HTMLElement>(`[data-idx="${currentIndex}"]`);
@@ -147,8 +179,8 @@ export default function Compare() {
     [currentIndex + 1, currentIndex - 1].forEach((i) => {
       const item = comparisonData[(i + comparisonData.length) % comparisonData.length];
       models.forEach((m) => {
-        const url = item.images[m.key as keyof ComparisonData['images']];
-        if (url) new Image().src = url;
+        [item.images[m.key as keyof ComparisonData['images']], m.key === 'qwen' ? item.images.qwenpe : undefined]
+          .forEach((url) => { if (url) new Image().src = url; });
       });
     });
   }, [currentIndex]);
@@ -156,7 +188,7 @@ export default function Compare() {
   useEffect(() => {
     setImagesLoaded(false);
     const urls = models
-      .map((m) => comparisonData[currentIndex].images[m.key as keyof ComparisonData['images']])
+      .map((m) => getImageUrl(comparisonData[currentIndex], m.key))
       .filter(Boolean);
     let cancelled = false;
     Promise.all(
@@ -175,7 +207,7 @@ export default function Compare() {
     return () => {
       cancelled = true;
     };
-  }, [currentIndex]);
+  }, [currentIndex, qwenPe]);
 
   const handlePrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? comparisonData.length - 1 : prev - 1));
@@ -191,7 +223,7 @@ export default function Compare() {
     const prevModelIndex = currentModelIndex === 0 ? models.length - 1 : currentModelIndex - 1;
     const prevModel = models[prevModelIndex];
     setFullscreenImage({
-      url: currentData.images[prevModel.key as keyof typeof currentData.images],
+      url: getImageUrl(currentData, prevModel.key),
       model: prevModel.name,
       modelKey: prevModel.key
     });
@@ -203,7 +235,7 @@ export default function Compare() {
     const nextModelIndex = currentModelIndex === models.length - 1 ? 0 : currentModelIndex + 1;
     const nextModel = models[nextModelIndex];
     setFullscreenImage({
-      url: currentData.images[nextModel.key as keyof typeof currentData.images],
+      url: getImageUrl(currentData, nextModel.key),
       model: nextModel.name,
       modelKey: nextModel.key
     });
@@ -290,28 +322,41 @@ export default function Compare() {
         </div>
       )}
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 max-w-4xl mx-auto w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 max-w-6xl mx-auto w-full">
           {models.map((model) => (
             <div key={model.key} className={`backdrop-blur-xl bg-white/5 rounded-2xl border overflow-hidden ${model.highlight ? 'border-emerald-500/50 shadow-[0_0_16px_0_rgba(52,211,153,0.15)]' : 'border-white/10'}`}>
               <div className="p-3">
-                <div className="text-center mb-3">
+                <div className="text-center mb-3 h-6 flex items-center justify-center gap-2">
                   <h3 className="text-[15px] font-light text-white/90 tracking-wide">{model.name}</h3>
+                  {model.key === 'qwen' && (
+                    <button
+                      onClick={() => setQwenPe(!qwenPe)}
+                      title="Улучшение промпта"
+                      className={`px-2 py-0.5 rounded-md text-[10px] uppercase tracking-wider border transition-all ${
+                        qwenPe
+                          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                          : 'bg-white/5 text-white/40 border-white/10 hover:text-white/70'
+                      }`}
+                    >
+                      PE
+                    </button>
+                  )}
                 </div>
                 <div 
                   className="aspect-square rounded-xl overflow-hidden bg-white/[0.02] border border-white/5 cursor-pointer hover:border-emerald-500/50 transition-all mb-3 flex items-center justify-center"
                   onClick={() => {
-                    const url = currentData.images[model.key as keyof typeof currentData.images];
+                    const url = getImageUrl(currentData, model.key);
                     if (!url) return;
                     setFullscreenImage({ url, model: model.name, modelKey: model.key });
                   }}
                 >
-                  {currentData.images[model.key as keyof typeof currentData.images] ? (
+                  {getImageUrl(currentData, model.key) ? (
                     <div className="relative w-full h-full">
                       {!imagesLoaded && (
                         <div className="absolute inset-0 animate-pulse bg-white/[0.06]" />
                       )}
                       <img
-                        src={currentData.images[model.key as keyof typeof currentData.images]}
+                        src={getImageUrl(currentData, model.key)}
                         alt={`${model.name} result`}
                         className={`w-full h-full object-cover hover:scale-105 transition-all duration-500 ${imagesLoaded ? 'opacity-100' : 'opacity-0'}`}
                       />
