@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import BackgroundPathsWrapper from '@/components/BackgroundPathsWrapper';
 import Icon from '@/components/ui/icon';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { batchComparisons } from '@/data/batchComparisons';
 
 export interface ComparisonData {
@@ -329,17 +330,26 @@ export default function Compare() {
                 <div className="text-center mb-3 h-6 flex items-center justify-center gap-2">
                   <h3 className="text-[15px] font-light text-white/90 tracking-wide">{model.name}</h3>
                   {model.key === 'qwen' && (
-                    <button
-                      onClick={() => setQwenPe(!qwenPe)}
-                      title="Улучшение промпта"
-                      className={`px-2 py-0.5 rounded-md text-[10px] uppercase tracking-wider border transition-all ${
-                        qwenPe
-                          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
-                          : 'bg-white/5 text-white/40 border-white/10 hover:text-white/70'
-                      }`}
-                    >
-                      PE
-                    </button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => setQwenPe(!qwenPe)}
+                          className={`px-2 py-0.5 rounded-md text-[10px] uppercase tracking-wider border transition-all ${
+                            qwenPe
+                              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                              : 'bg-white/5 text-white/40 border-white/10 hover:text-white/70'
+                          }`}
+                        >
+                          PE
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom" className="max-w-[260px] bg-gray-900/95 border-white/20 text-white">
+                        <p className="text-xs font-medium mb-1">Prompt Enhancement {qwenPe ? '— включено' : '— выключено'}</p>
+                        <p className="text-[11px] text-white/60 font-light leading-snug">
+                          Перед генерацией модель расширяет и уточняет промпт: добавляет детали сцены, света и композиции. Нажми, чтобы сравнить с генерацией по исходному промпту.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
                   )}
                 </div>
                 <div 
