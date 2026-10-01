@@ -142,16 +142,16 @@ const models = [
     highlight: false
   },
   { 
-    key: 'zimage', 
-    name: 'SGX (Z)', 
-    price: 0.004,
+    key: 'qwen', 
+    name: 'Qwen-Image-2.1', 
+    price: 0.007,
     priceColor: 'text-emerald-400',
     highlight: false
   },
   { 
-    key: 'qwen', 
-    name: 'Qwen-Image-2.1', 
-    price: 0.007,
+    key: 'zimage', 
+    name: 'SGX (Z)', 
+    price: 0.004,
     priceColor: 'text-emerald-400',
     highlight: false
   }
