@@ -137,14 +137,14 @@ const models = [
   { 
     key: 'ideogram', 
     name: 'Ideogram-4-0', 
-    price: 0.007,
+    price: 0.0065,
     priceColor: 'text-emerald-400',
     highlight: false
   },
   { 
     key: 'qwen', 
     name: 'Qwen-Image-2.1', 
-    price: 0.007,
+    price: 0.0065,
     priceColor: 'text-emerald-400',
     highlight: false
   },
