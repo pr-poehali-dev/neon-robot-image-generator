@@ -162,7 +162,7 @@ export default function Compare() {
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; model: string; modelKey: string } | null>(null);
   const [showRelative, setShowRelative] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
-  const [qwenPe, setQwenPe] = useState(false);
+  const [qwenPe, setQwenPe] = useState(true);
   const filmstripRef = useRef<HTMLDivElement>(null);
 
   const getImageUrl = (item: ComparisonData, key: string) => {
