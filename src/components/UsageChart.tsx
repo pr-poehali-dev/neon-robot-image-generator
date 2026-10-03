@@ -11,11 +11,16 @@ import { useUsdtRate } from '@/hooks/useUsdtRate';
 import { useToast } from '@/hooks/use-toast';
 import ExcelJS from 'exceljs';
 
-// Функция для расчета стоимости с учётом изменения цены с 29 декабря 2025
+const PRICE_TIERS: { from: string; price: number }[] = [
+  { from: '2026-10-04', price: 0.0065 },
+  { from: '2025-12-29', price: 0.004 },
+  { from: '1970-01-01', price: 0.00225 },
+];
+
 const getPriceForDate = (dateString: string): number => {
   const date = new Date(dateString);
-  const priceChangeDate = new Date('2025-12-29');
-  return date >= priceChangeDate ? 0.004 : 0.00225;
+  const tier = PRICE_TIERS.find((t) => date >= new Date(t.from));
+  return tier ? tier.price : PRICE_TIERS[PRICE_TIERS.length - 1].price;
 };
 
 // Символ валюты: знак рубля рендерим в шрифте, где он выглядит аккуратно на macOS
@@ -72,29 +77,19 @@ export function UsageChart() {
 
   // Расчет стоимости на основе количества запросов с учётом динамической цены
   const calculateTotalCost = () => {
-    if (!data || data.length === 0) return { total: '0.00', oldPrice: 0, newPrice: 0 };
-    
-    let oldPriceCount = 0;
-    let newPriceCount = 0;
-    
+    const counts = new Map<number, number>();
+    if (!data || data.length === 0) return { total: '0.00', counts };
+
     const total = data.reduce((sum, item) => {
       const pricePerRequest = getPriceForDate(item.date);
-      if (pricePerRequest === 0.00225) {
-        oldPriceCount += item.count;
-      } else {
-        newPriceCount += item.count;
-      }
+      counts.set(pricePerRequest, (counts.get(pricePerRequest) ?? 0) + item.count);
       return sum + (item.count * pricePerRequest);
     }, 0);
-    
-    return { 
-      total: total.toFixed(2), 
-      oldPrice: oldPriceCount, 
-      newPrice: newPriceCount 
-    };
+
+    return { total: total.toFixed(2), counts };
   };
-  
-  const { total: totalCost, oldPrice: oldPriceCount, newPrice: newPriceCount } = calculateTotalCost();
+
+  const { total: totalCost, counts: priceCounts } = calculateTotalCost();
 
   const rubRate = rate?.bid ?? null;
   const isRub = currency === 'RUB' && rubRate !== null;
@@ -403,16 +398,15 @@ export function UsageChart() {
                   </div>
                   <div className="text-3xl md:text-5xl font-light text-emerald-400 mt-1 tracking-tight"><CurrencySymbol symbol={currencySymbol} />{displayTotal}</div>
                   <div className="flex flex-col gap-1 mt-2">
-                    {oldPriceCount > 0 && (
-                      <div className="text-xs md:text-sm text-white/40 font-light">
-                        {oldPriceCount.toLocaleString()} запросов × $0.00225{isRub && rubRate !== null ? ` × ${rubRate.toLocaleString('en-US')} (Rapira)` : ''}
-                      </div>
-                    )}
-                    {newPriceCount > 0 && (
-                      <div className="text-xs md:text-sm text-white/40 font-light">
-                        {newPriceCount.toLocaleString()} запросов × $0.004{isRub && rubRate !== null ? ` × ${rubRate.toLocaleString('en-US')} (Rapira)` : ''}
-                      </div>
-                    )}
+                    {[...PRICE_TIERS].reverse().map(({ price }) => {
+                      const count = priceCounts.get(price) ?? 0;
+                      if (count <= 0) return null;
+                      return (
+                        <div key={price} className="text-xs md:text-sm text-white/40 font-light">
+                          {count.toLocaleString()} запросов × ${price}{isRub && rubRate !== null ? ` × ${rubRate.toLocaleString('en-US')} (Rapira)` : ''}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
                 <div className="text-4xl md:text-6xl text-emerald-400/30 font-extralight"><CurrencySymbol symbol={currencySymbol} /></div>
