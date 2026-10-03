@@ -12,6 +12,10 @@ export interface GeneratorFormProps {
   setApiKey: (apiKey: string) => void;
   ratio: Ratio;
   setRatio: (ratio: Ratio) => void;
+  magic: boolean;
+  setMagic: (magic: boolean) => void;
+  magicPrompt: string | null;
+  stage: "magic" | "image" | null;
   isLoading: boolean;
   onGenerateClick: () => void;
   onRandomPromptClick: () => void;

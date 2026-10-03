@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Dices } from "lucide-react";
+import { Loader2, Dices, Sparkles, Copy } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "@/components/ui/use-toast";
 import { GeneratorFormProps, RATIOS } from "./types";
 
 const GeneratorForm = ({ 
@@ -10,6 +11,10 @@ const GeneratorForm = ({
   setApiKey, 
   ratio,
   setRatio,
+  magic,
+  setMagic,
+  magicPrompt,
+  stage,
   isLoading, 
   onGenerateClick, 
   onRandomPromptClick 
@@ -74,6 +79,48 @@ const GeneratorForm = ({
               })}
             </div>
           </div>
+
+          <div className="w-full rounded-xl border border-white/10 bg-white/[0.03] p-3">
+            <label className="flex items-center justify-between gap-3 cursor-pointer">
+              <span className="flex items-center gap-2">
+                <Sparkles className={`h-4 w-4 ${magic ? "text-emerald-400" : "text-white/40"}`} />
+                <span className="flex flex-col">
+                  <span className="text-sm text-white/80 font-light">Magic Prompt</span>
+                  <span className="text-[11px] text-white/40 font-light">Ideogram расширит запрос деталями перед генерацией</span>
+                </span>
+              </span>
+              <Switch checked={magic} onCheckedChange={setMagic} disabled={isLoading} />
+            </label>
+            {magic && (stage === "magic" || magicPrompt) && (
+              <div className="mt-3 pt-3 border-t border-white/10">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] font-light text-white/40 uppercase tracking-widest">Улучшенный промпт</span>
+                  {magicPrompt && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(magicPrompt);
+                        toast({ title: "Скопировано" });
+                      }}
+                      className="text-white/40 hover:text-white/80 transition-colors"
+                      title="Скопировать"
+                    >
+                      <Copy className="h-3.5 w-3.5" />
+                    </button>
+                  )}
+                </div>
+                {stage === "magic" ? (
+                  <div className="flex items-center gap-2 text-xs text-white/50 font-light">
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" /> Улучшаю промпт...
+                  </div>
+                ) : (
+                  <p className="text-xs text-white/70 font-light leading-relaxed max-h-40 overflow-y-auto whitespace-pre-wrap break-words">
+                    {magicPrompt}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
         
         <div className="flex gap-3 mt-4">
@@ -94,7 +141,7 @@ const GeneratorForm = ({
             {isLoading ? (
               <span className="flex items-center gap-2 justify-center">
                 <Loader2 className="h-5 w-5 animate-spin" />
-                Генерирую...
+                {stage === "magic" ? "Улучшаю промпт..." : "Генерирую..."}
               </span>
             ) : (
               "Сгенерировать"

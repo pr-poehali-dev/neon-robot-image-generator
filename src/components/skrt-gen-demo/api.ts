@@ -1,3 +1,18 @@
+import func2url from "../../../backend/func2url.json";
+
+export const magicPromptAPI = async (prompt: string, ratio: string): Promise<string> => {
+  const response = await fetch(func2url["magic-prompt"], {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt, ratio }),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || !data.magicPrompt) {
+    throw new Error(data.error || `Magic Prompt: ошибка ${response.status}`);
+  }
+  return data.magicPrompt;
+};
+
 /**
  * API-клиент для взаимодействия с сервисом генерации изображений
  */

@@ -4,12 +4,15 @@ import { SkrtGenDemoProps, Ratio } from "./types";
 import ImagePreview from "./image-preview";
 import HighlightsPanel from "./highlights-panel";
 import GeneratorForm from "./generator-form";
-import { generateImageAPI, generateRandomPromptText } from "./api";
+import { generateImageAPI, generateRandomPromptText, magicPromptAPI } from "./api";
 
 const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
   const [prompt, setPrompt] = useState<string>("neon robot test");
   const [apiKey, setApiKey] = useState<string>("");
   const [ratio, setRatio] = useState<Ratio>("1:1");
+  const [magic, setMagic] = useState<boolean>(false);
+  const [magicPrompt, setMagicPrompt] = useState<string | null>(null);
+  const [stage, setStage] = useState<"magic" | "image" | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const { toast } = useToast();
@@ -42,9 +45,17 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
 
     setIsLoading(true);
     setImageUrl(null);
+    setMagicPrompt(null);
 
     try {
-      const imageURL = await generateImageAPI(currentPrompt, apiKey, ratio);
+      let finalPrompt = currentPrompt;
+      if (magic) {
+        setStage("magic");
+        finalPrompt = await magicPromptAPI(currentPrompt, ratio);
+        setMagicPrompt(finalPrompt);
+      }
+      setStage("image");
+      const imageURL = await generateImageAPI(finalPrompt, apiKey, ratio);
       setImageUrl(imageURL);
       
       if (onImageGenerated) {
@@ -63,6 +74,7 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
       });
     } finally {
       setIsLoading(false);
+      setStage(null);
     }
   };
 
@@ -84,6 +96,10 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
             apiKey={apiKey}
             setApiKey={setApiKey}
             ratio={ratio}
+            magic={magic}
+            setMagic={setMagic}
+            magicPrompt={magicPrompt}
+            stage={stage}
             setRatio={setRatio}
             isLoading={isLoading}
             onGenerateClick={() => handleGenerateImage()}
