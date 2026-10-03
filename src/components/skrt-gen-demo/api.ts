@@ -31,7 +31,9 @@ export const generateImageAPI = async (
   });
 
   if (!response.ok) {
-    if (response.status === 429) {
+    if (response.status === 401 || response.status === 403) {
+      throw new Error("Неверный X-Auth ключ. Проверьте ключ API в форме.");
+    } else if (response.status === 429) {
       throw new Error(
         "Превышен лимит запросов. Пожалуйста, подождите и попробуйте снова.",
       );
