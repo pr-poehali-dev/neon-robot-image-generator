@@ -1,4 +1,5 @@
 import json
+import time
 import os
 import urllib.request
 import urllib.error
@@ -12,14 +13,14 @@ def _resp(status: int, body: dict) -> dict:
     return {'statusCode': status, 'headers': {**CORS, 'Content-Type': 'application/json'}, 'body': json.dumps(body, ensure_ascii=False)}
 
 
-def _call(payload: dict, key: str):
+def _call(payload: dict, key: str, use_proxy: bool = False):
     req = urllib.request.Request(
         API_URL,
         data=json.dumps(payload).encode(),
         headers={'Api-Key': key, 'Content-Type': 'application/json'},
         method='POST',
     )
-    proxy = os.environ.get('IDEOGRAM_PROXY', '').strip()
+    proxy = os.environ.get('IDEOGRAM_PROXY', '').strip() if use_proxy else ''
     if proxy and '://' not in proxy:
         parts = proxy.split(':')
         if len(parts) == 4:
@@ -29,11 +30,17 @@ def _call(payload: dict, key: str):
             proxy = f'http://{proxy}'
     handlers = [urllib.request.ProxyHandler({'http': proxy, 'https': proxy})] if proxy else []
     opener = urllib.request.build_opener(*handlers)
+    t = time.time()
     try:
-        with opener.open(req, timeout=25) as r:
-            return r.status, json.loads(r.read().decode() or '{}')
+        with opener.open(req, timeout=float(os.environ.get('IDEOGRAM_TIMEOUT', '28'))) as r:
+            raw = r.read().decode()
+            print(f'ideogram ok via_proxy={bool(proxy)} {time.time()-t:.2f}s')
+            return r.status, json.loads(raw or '{}')
     except urllib.error.HTTPError as e:
         return e.code, {'error': e.read().decode(errors='ignore')[:500]}
+    except Exception as e:
+        print(f'ideogram fail via_proxy={bool(proxy)} {time.time()-t:.2f}s {type(e).__name__}: {e}')
+        return 599, {'error': f'{type(e).__name__}: {e}'}
 
 
 def _to_text(data) -> str:
