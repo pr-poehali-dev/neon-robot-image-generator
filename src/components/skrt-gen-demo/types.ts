@@ -10,19 +10,25 @@ export interface GeneratorFormProps {
   setPrompt: (prompt: string) => void;
   apiKey: string;
   setApiKey: (apiKey: string) => void;
-  ratio: Ratio;
-  setRatio: (ratio: Ratio) => void;
+  ratios: Ratio[];
+  toggleRatio: (ratio: Ratio) => void;
   magic: boolean;
   setMagic: (magic: boolean) => void;
-  magicPrompt: string | null;
   stage: "magic" | "image" | null;
   isLoading: boolean;
   onGenerateClick: () => void;
   onRandomPromptClick: () => void;
 }
 
+export interface GenResult {
+  ratio: Ratio;
+  url: string | null;
+  loading: boolean;
+  error?: string;
+}
+
 export interface ImagePreviewProps {
-  imageUrl: string | null;
+  results: GenResult[];
   onImageError: () => void;
   isLoading: boolean;
 }

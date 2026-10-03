@@ -8,8 +8,8 @@ const GeneratorForm = ({
   setPrompt, 
   apiKey, 
   setApiKey, 
-  ratio,
-  setRatio,
+  ratios,
+  toggleRatio,
   magic,
   setMagic,
   stage,
@@ -49,7 +49,7 @@ const GeneratorForm = ({
 
           <div className="w-full">
             <label className="text-[10px] font-light text-white/40 uppercase tracking-widest mb-2 block">
-              Формат
+              Формат{ratios.length > 1 && <span className="normal-case tracking-normal text-white/30"> · {ratios.length} варианта</span>}
             </label>
             <div className="grid grid-cols-3 gap-2">
               {RATIOS.map((r) => {
@@ -59,10 +59,10 @@ const GeneratorForm = ({
                   <button
                     key={r}
                     type="button"
-                    onClick={() => setRatio(r)}
+                    onClick={() => toggleRatio(r)}
                     disabled={isLoading}
                     className={`h-12 rounded-xl border flex items-center justify-center gap-2 text-sm font-light transition-all disabled:opacity-50 ${
-                      ratio === r
+                      ratios.includes(r)
                         ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-300"
                         : "bg-white/[0.03] border-white/10 text-white/50 hover:bg-white/[0.06] hover:text-white/80"
                     }`}
