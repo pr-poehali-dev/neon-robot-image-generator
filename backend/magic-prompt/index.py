@@ -32,7 +32,7 @@ def _call(payload: dict, key: str, use_proxy: bool = False):
     opener = urllib.request.build_opener(*handlers)
     t = time.time()
     try:
-        with opener.open(req, timeout=float(os.environ.get('IDEOGRAM_TIMEOUT', '28'))) as r:
+        with opener.open(req, timeout=float(os.environ.get('IDEOGRAM_TIMEOUT', '50'))) as r:
             raw = r.read().decode()
             print(f'ideogram ok via_proxy={bool(proxy)} {time.time()-t:.2f}s')
             return r.status, json.loads(raw or '{}')
