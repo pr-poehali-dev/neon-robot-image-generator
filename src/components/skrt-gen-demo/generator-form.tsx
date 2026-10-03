@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, Dices } from "lucide-react";
-import { GeneratorFormProps } from "./types";
+import { GeneratorFormProps, RATIOS } from "./types";
 
 const GeneratorForm = ({ 
   prompt, 
   setPrompt, 
   apiKey, 
   setApiKey, 
+  ratio,
+  setRatio,
   isLoading, 
   onGenerateClick, 
   onRandomPromptClick 
@@ -40,6 +42,37 @@ const GeneratorForm = ({
               onChange={(e) => setApiKey(e.target.value)}
               className="h-12 bg-white/[0.03] border-white/10 text-white/90 placeholder:text-white/30 focus:bg-white/[0.06] focus:border-emerald-500/30 rounded-xl transition-all"
             />
+          </div>
+
+          <div className="w-full">
+            <label className="text-[10px] font-light text-white/40 uppercase tracking-widest mb-2 block">
+              Формат
+            </label>
+            <div className="grid grid-cols-3 gap-2">
+              {RATIOS.map((r) => {
+                const [w, h] = r.split(":").map(Number);
+                const k = 14 / Math.max(w, h);
+                return (
+                  <button
+                    key={r}
+                    type="button"
+                    onClick={() => setRatio(r)}
+                    disabled={isLoading}
+                    className={`h-12 rounded-xl border flex items-center justify-center gap-2 text-sm font-light transition-all disabled:opacity-50 ${
+                      ratio === r
+                        ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-300"
+                        : "bg-white/[0.03] border-white/10 text-white/50 hover:bg-white/[0.06] hover:text-white/80"
+                    }`}
+                  >
+                    <span
+                      className="border border-current rounded-[3px]"
+                      style={{ width: w * k, height: h * k }}
+                    />
+                    {r}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
         

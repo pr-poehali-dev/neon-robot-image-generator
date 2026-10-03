@@ -4,6 +4,7 @@
 export const generateImageAPI = async (
   prompt: string,
   apiKey: string,
+  ratio: string = "1:1",
 ): Promise<string> => {
   const response = await fetch("https://skrt.poehali.dev/generate", {
     method: "POST",
@@ -11,7 +12,7 @@ export const generateImageAPI = async (
       "Content-Type": "application/json",
       "X-Auth": apiKey,
     },
-    body: JSON.stringify({ prompt }),
+    body: JSON.stringify({ prompt, ratio }),
   });
 
   if (!response.ok) {

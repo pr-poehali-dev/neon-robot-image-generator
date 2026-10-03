@@ -22,7 +22,7 @@ const ImagePreview = ({ imageUrl, onImageError, isLoading }: ImagePreviewProps) 
         <img 
           src={imageUrl} 
           alt="Сгенерированное изображение" 
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
           onError={onImageError}
         />
       ) : (

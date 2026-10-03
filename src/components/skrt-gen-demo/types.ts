@@ -1,3 +1,6 @@
+export const RATIOS = ["1:1", "16:9", "9:16"] as const;
+export type Ratio = typeof RATIOS[number];
+
 export interface SkrtGenDemoProps {
   onImageGenerated?: (imageUrl: string) => void;
 }
@@ -7,6 +10,8 @@ export interface GeneratorFormProps {
   setPrompt: (prompt: string) => void;
   apiKey: string;
   setApiKey: (apiKey: string) => void;
+  ratio: Ratio;
+  setRatio: (ratio: Ratio) => void;
   isLoading: boolean;
   onGenerateClick: () => void;
   onRandomPromptClick: () => void;

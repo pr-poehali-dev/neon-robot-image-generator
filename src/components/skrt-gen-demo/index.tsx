@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { SkrtGenDemoProps } from "./types";
+import { SkrtGenDemoProps, Ratio } from "./types";
 import ImagePreview from "./image-preview";
 import HighlightsPanel from "./highlights-panel";
 import GeneratorForm from "./generator-form";
@@ -9,6 +9,7 @@ import { generateImageAPI, generateRandomPromptText } from "./api";
 const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
   const [prompt, setPrompt] = useState<string>("neon robot test");
   const [apiKey, setApiKey] = useState<string>("");
+  const [ratio, setRatio] = useState<Ratio>("1:1");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const { toast } = useToast();
@@ -43,7 +44,7 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
     setImageUrl(null);
 
     try {
-      const imageURL = await generateImageAPI(currentPrompt, apiKey);
+      const imageURL = await generateImageAPI(currentPrompt, apiKey, ratio);
       setImageUrl(imageURL);
       
       if (onImageGenerated) {
@@ -82,6 +83,8 @@ const SkrtGenDemo = ({ onImageGenerated }: SkrtGenDemoProps) => {
             setPrompt={setPrompt}
             apiKey={apiKey}
             setApiKey={setApiKey}
+            ratio={ratio}
+            setRatio={setRatio}
             isLoading={isLoading}
             onGenerateClick={() => handleGenerateImage()}
             onRandomPromptClick={handleGenerateRandomPrompt}
