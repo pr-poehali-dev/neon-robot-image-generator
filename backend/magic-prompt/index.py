@@ -19,8 +19,18 @@ def _call(payload: dict, key: str):
         headers={'Api-Key': key, 'Content-Type': 'application/json'},
         method='POST',
     )
+    proxy = os.environ.get('IDEOGRAM_PROXY', '').strip()
+    if proxy and '://' not in proxy:
+        parts = proxy.split(':')
+        if len(parts) == 4:
+            host, port, user, pwd = parts
+            proxy = f'http://{user}:{pwd}@{host}:{port}'
+        else:
+            proxy = f'http://{proxy}'
+    handlers = [urllib.request.ProxyHandler({'http': proxy, 'https': proxy})] if proxy else []
+    opener = urllib.request.build_opener(*handlers)
     try:
-        with urllib.request.urlopen(req, timeout=25) as r:
+        with opener.open(req, timeout=25) as r:
             return r.status, json.loads(r.read().decode() or '{}')
     except urllib.error.HTTPError as e:
         return e.code, {'error': e.read().decode(errors='ignore')[:500]}
