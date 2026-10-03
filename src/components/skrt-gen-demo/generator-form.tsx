@@ -89,7 +89,7 @@ const GeneratorForm = ({
                   <span className="text-[11px] text-white/40 font-light">Ideogram расширит запрос деталями перед генерацией</span>
                 </span>
               </span>
-              <Switch checked={magic} onCheckedChange={setMagic} disabled={isLoading} />
+              <Switch checked={magic} onCheckedChange={setMagic} disabled={isLoading} className="data-[state=checked]:bg-white data-[state=unchecked]:bg-white/15" />
             </label>
             {magic && (stage === "magic" || magicPrompt) && (
               <div className="mt-3 pt-3 border-t border-white/10">
