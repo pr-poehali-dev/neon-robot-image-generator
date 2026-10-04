@@ -55,7 +55,7 @@ async function generateImage(
   return (
     <BackgroundPathsWrapper>
       <div className="container mx-auto px-4 max-w-7xl min-h-screen flex flex-col justify-center py-12">
-        <div className="flex justify-center mb-6">
+        <div className="hidden justify-center mb-6">
           <button
             onClick={() => navigate('/compare')}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all group"
